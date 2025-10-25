@@ -7,109 +7,122 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Crect width='128' height='128' rx='28' fill='%23070b12'/%3E%3Cpath d='M40 78a22 22 0 0 1 0-44h18a8 8 0 0 1 0 16H40a6 6 0 0 0 0 12h18a22 22 0 0 1 0 44H40a8 8 0 0 1 0-16h18a6 6 0 0 0 0-12z' fill='%2389ffd2'/%3E%3C/svg%3E"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Crect width='128' height='128' rx='28' fill='%23070b12'/%3E%3Cpath d='M40 78a22 22 0 0 1 0 0' fill='%23fff'/%3E%3C/svg%3E" />
 <style>
   :root{
-    --bg:#060913; --bg-2:#0b1330; --ink:#eaf2ff; --muted:#9fb1ca;
-    --glass:color-mix(in oklab, #fff 8%, transparent);
-    --glass-2:color-mix(in oklab, #fff 12%, transparent);
-    --shadow:0 30px 80px rgba(0,0,0,.35);
-    --mint:#84ffd3; --blue:#76b7ff; --violet:#caa2ff; --rose:#ff9ac2; --amber:#ffd37a; --accent:var(--mint);
-    --font:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; --mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
-    --h1:clamp(2.6rem,6vw,4.6rem); --h2:clamp(1.7rem,3.4vw,2.6rem); --lead:clamp(1.02rem,1.5vw,1.15rem);
-    --rad:18px; --rad-lg:28px; --blur:18px; --grid:min(1180px,92%); --space:14px; --space-lg:20px;
+    /* improved, accessible palette */
+    --bg-900:#05060a; --bg-800:#071028; --bg-700:#0d1b3a;
+    --card:#0f1724; --glass:rgba(255,255,255,0.04); --glass-2:rgba(255,255,255,0.06);
+    --ink:#eaf2ff; --muted:#9fb1ca;
+    --mint:#66ffd3; --blue:#68a8ff; --violet:#caa2ff; --rose:#ff9ac2; --amber:#ffd37a;
+    --accent:var(--mint);
+    --font:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    --mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+    --h1:clamp(2.4rem,6vw,4.2rem); --h2:clamp(1.5rem,3.4vw,2.4rem); --lead:clamp(1rem,1.4vw,1.08rem);
+    --rad:16px; --rad-lg:26px; --blur:18px; --grid:min(1180px,92%); --space:14px; --space-lg:20px;
     --ease:cubic-bezier(.22,.61,.36,1); --dur:.7s;
-    --focus: 0 0 0 3px color-mix(in oklab, var(--accent) 55%, transparent);
+    --focus: 0 0 0 3px color-mix(in oklab, var(--accent) 50%, transparent);
+    --fs:1;
   }
   @media (prefers-color-scheme: light){
-    :root{ --bg:#f7f9ff; --bg-2:#eaf0ff; --ink:#0b0f1a; --muted:#4b5b73; --glass:#ffffffc2; --glass-2:#fff; --shadow:0 18px 50px rgba(6,10,23,.12) }
+    :root{
+      --bg-900:#f7f9ff; --bg-800:#eef4ff; --bg-700:#e3eeff;
+      --card:#ffffff; --glass:rgba(0,0,0,0.04); --glass-2:rgba(0,0,0,0.02);
+      --ink:#081022; --muted:#4b5b73; --accent:var(--blue);
+      --shadow:0 18px 40px rgba(6,10,23,.06);
+    }
   }
+
   *{box-sizing:border-box}
   html,body{height:100%}
   html{scroll-behavior:smooth}
   body{
     margin:0;color:var(--ink);font-family:var(--font);
     background:
-      radial-gradient(1600px 800px at 10% -10%, #17244b 0%, transparent 60%),
-      radial-gradient(1600px 800px at 95% 0%, #11203a 0%, transparent 58%),
-      linear-gradient(160deg, var(--bg), var(--bg-2));
-    -webkit-font-smoothing:antialiased;letter-spacing:.2px;overflow-x:hidden
+      radial-gradient(1000px 700px at 8% -8%, rgba(104,138,255,0.08) 0%, transparent 50%),
+      radial-gradient(900px 600px at 95% 10%, rgba(202,162,255,0.06) 0%, transparent 50%),
+      linear-gradient(180deg,var(--bg-900), var(--bg-800));
+    -webkit-font-smoothing:antialiased;letter-spacing:.2px;overflow-x:hidden;
+    font-size:calc(16px * var(--fs));
   }
 
-  /* Continuous feel: hide borders globally */
+  /* Global borderless & accessible focus */
   *{border-color:transparent}
   .card,.pill,.btn,.input,select,textarea{border:none}
+  :focus{outline:none}
+  :focus-visible{box-shadow:var(--focus); border-radius:10px}
 
   /* Ambient layers */
-  .particles{position:fixed;inset:0;z-index:0;pointer-events:none}
+  .particles{position:fixed;inset:0;z-index:0;pointer-events:none;mix-blend-mode:screen;opacity:.6}
   .aurora,.spotlight{position:fixed;inset:0;pointer-events:none;z-index:1}
   .aurora{
-    filter:blur(80px) saturate(105%);
+    filter:blur(80px) saturate(110%);
     background:
-      radial-gradient(420px 420px at 12% 25%, color-mix(in oklab,var(--accent) 80%, transparent), transparent 60%),
-      radial-gradient(520px 520px at 80% 12%, color-mix(in oklab,var(--blue) 68%, transparent), transparent 60%),
-      radial-gradient(520px 520px at 60% 82%, color-mix(in oklab,var(--violet) 65%, transparent), transparent 60%);
-    opacity:.58; animation:waves 22s ease-in-out infinite alternate
+      radial-gradient(420px 420px at 12% 25%, color-mix(in oklab,var(--accent) 72%, transparent), transparent 60%),
+      radial-gradient(520px 520px at 80% 12%, color-mix(in oklab,var(--blue) 52%, transparent), transparent 60%),
+      radial-gradient(520px 520px at 60% 82%, color-mix(in oklab,var(--violet) 42%, transparent), transparent 60%);
+    opacity:.5; animation:waves 26s ease-in-out infinite alternate;
+    z-index:0;
   }
   @keyframes waves{0%{transform:translateY(-2%) scale(1)}50%{transform:translateY(3%) scale(1.05)}100%{transform:translateY(-1%) scale(1.02)}}
   .spotlight{
     background:radial-gradient(700px 700px at var(--mx,50%) var(--my,50%), color-mix(in oklab, var(--accent) 18%, transparent), transparent 60%);
-    mix-blend-mode:screen; opacity:.6
+    mix-blend-mode:screen; opacity:.5; z-index:1;
   }
 
   /* Cursor */
   .cursor-dot,.cursor-ring{position:fixed;top:0;left:0;translate:-50% -50%;pointer-events:none;z-index:300}
-  .cursor-dot{width:6px;height:6px;border-radius:999px;background:var(--accent);opacity:0;transition:opacity .2s}
-  .cursor-ring{width:34px;height:34px;border:1.6px solid color-mix(in oklab, var(--accent) 78%, #fff 0%);border-radius:999px;backdrop-filter:blur(2px);opacity:0;transition:opacity .2s,width .15s,height .15s}
+  .cursor-dot{width:6px;height:6px;border-radius:999px;background:var(--accent);opacity:0;transition:opacity .18s, transform .12s}
+  .cursor-ring{width:34px;height:34px;border:1.2px solid color-mix(in oklab, var(--accent) 78%, #fff 0%);border-radius:999px;backdrop-filter:blur(2px);opacity:0;transition:opacity .18s,width .15s,height .15s}
   .cursor-pulse{position:fixed;width:4px;height:4px;border-radius:50%;background:var(--accent);pointer-events:none;opacity:.9;z-index:301}
   @media (pointer:coarse){.cursor-dot,.cursor-ring{display:none}}
 
   /* App layout */
   .app{position:relative;z-index:2;min-height:100dvh;display:grid;grid-template-columns:84px 1fr}
-  .sidebar{position:sticky;top:0;height:100dvh;padding:10px;background:var(--glass);backdrop-filter:blur(var(--blur));display:flex;flex-direction:column;align-items:center;gap:10px}
-  .sb-logo{width:50px;height:50px;border-radius:16px;display:grid;place-items:center;font-weight:900;background:conic-gradient(from 120deg, var(--mint), var(--blue), var(--violet), var(--rose));box-shadow:var(--shadow)}
-  .sb-btn{width:56px;height:56px;border-radius:16px;background:var(--glass);display:grid;place-items:center;cursor:pointer;transition:translate .18s var(--ease), background .18s var(--ease);font-size:20px}
-  .sb-btn:hover{translate:0 -2px;background:var(--glass-2)}
-  .sb-btn.active{outline:2px solid color-mix(in oklab, var(--accent) 46%, transparent);background:linear-gradient(135deg, color-mix(in oklab, var(--accent) 18%, transparent), transparent)}
+  .sidebar{position:sticky;top:0;height:100dvh;padding:10px;background:linear-gradient(180deg,var(--glass),transparent);backdrop-filter:blur(calc(var(--blur)*.7));display:flex;flex-direction:column;align-items:center;gap:10px}
+  .sb-logo{width:54px;height:54px;border-radius:14px;display:grid;place-items:center;font-weight:900;background:conic-gradient(from 120deg, var(--mint), var(--blue), var(--violet), var(--rose));box-shadow:0 8px 30px rgba(0,0,0,.25);font-size:22px}
+  .sb-btn{width:56px;height:56px;border-radius:14px;background:linear-gradient(180deg,var(--glass),var(--glass-2));display:grid;place-items:center;cursor:pointer;transition:transform .18s var(--ease), background .18s var(--ease);font-size:18px}
+  .sb-btn:hover{transform:translateY(-4px)}
+  .sb-btn.active{outline:2px solid color-mix(in oklab, var(--accent) 46%, transparent);background:linear-gradient(135deg, color-mix(in oklab, var(--accent) 20%, transparent), transparent)}
   .sb-btn:focus-visible{box-shadow:var(--focus)}
   .sb-bottom{margin-top:auto;display:grid;gap:10px}
 
-  main{width:var(--grid);margin-inline:auto;padding:18px 0 60px;scroll-snap-type:y proximity}
-  .section{padding:70px 0;position:relative;scroll-snap-align:start;scroll-padding-top:80px}
+  main{width:var(--grid);margin-inline:auto;padding:18px 0 80px;scroll-snap-type:y proximity}
+  .section{padding:70px 0;position:relative;scroll-snap-align:start;scroll-padding-top:92px}
   .row{display:grid;gap:12px}
   .cols-2{grid-template-columns:1.1fr .9fr}
   .cols-3{grid-template-columns:repeat(3,1fr)}
   @media (max-width:1000px){.app{grid-template-columns:74px 1fr}.cols-2{grid-template-columns:1fr}.cols-3{grid-template-columns:1fr 1fr}}
   @media (max-width:680px){.cols-3{grid-template-columns:1fr}}
 
-  .topbar{position:sticky;top:0;z-index:120;background:linear-gradient(180deg, color-mix(in oklab,#000 28%, transparent), transparent);backdrop-filter:blur(10px)}
-  .topbar .inner{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:8px 0;width:var(--grid);margin-inline:auto}
-  .progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),color-mix(in oklab,var(--blue) 60%,var(--accent)));z-index:200;transform-origin:0 50%}
+  .topbar{position:sticky;top:0;z-index:120;background:linear-gradient(180deg, rgba(0,0,0,0.08), transparent);backdrop-filter:blur(8px);padding:8px 0}
+  .topbar .inner{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:6px 0;width:var(--grid);margin-inline:auto}
+  .progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),color-mix(in oklab,var(--blue) 60%,var(--accent)));z-index:220;transform-origin:0 50%}
 
-  .pill{padding:8px 12px;border-radius:999px;background:var(--glass);white-space:nowrap;display:inline-flex;align-items:center;gap:8px}
+  .pill{padding:8px 12px;border-radius:999px;background:linear-gradient(180deg,var(--glass),transparent);white-space:nowrap;display:inline-flex;align-items:center;gap:8px;color:var(--muted)}
 
-  .card{background:var(--glass);border-radius:var(--rad);padding:14px;box-shadow:var(--shadow);backdrop-filter:blur(calc(var(--blur)*1.15))}
-  .btn{display:inline-flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;cursor:pointer;background:var(--glass);color:var(--ink);font-weight:800;transition:transform .14s var(--ease), background .14s var(--ease)}
-  .btn:hover{transform:translateY(-1px);background:var(--glass-2)}
+  .card{background:linear-gradient(180deg,var(--card), color-mix(in oklab,var(--card) 96%, transparent));border-radius:var(--rad);padding:14px;box-shadow:0 18px 50px rgba(2,6,23,.45);backdrop-filter:blur(calc(var(--blur)*.8));color:var(--ink)}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;cursor:pointer;background:linear-gradient(180deg,var(--glass),var(--glass-2));color:var(--ink);font-weight:800;transition:transform .12s var(--ease)}
+  .btn:hover{transform:translateY(-3px);background:linear-gradient(180deg,var(--glass-2),transparent)}
   .btn:focus-visible{box-shadow:var(--focus)}
-  .cta{border:none;color:#06121a;background:linear-gradient(135deg, var(--accent), color-mix(in oklab, var(--blue) 60%, var(--accent)));box-shadow:0 18px 34px color-mix(in oklab, var(--blue) 30%, #000)}
+  .cta{border:none;color:#02141b;background:linear-gradient(135deg, var(--accent), color-mix(in oklab, var(--blue) 60%, var(--accent)));box-shadow:0 18px 34px color-mix(in oklab, var(--blue) 30%, #000)}
 
-  .kbd{font-family:var(--mono);font-size:.86rem;padding:6px 10px;border-radius:10px;background:var(--glass);color:var(--muted)}
-  .input,select,textarea{width:100%;padding:12px;border-radius:12px;background:var(--glass);color:var(--ink);outline:none}
+  .kbd{font-family:var(--mono);font-size:.86rem;padding:6px 10px;border-radius:10px;background:linear-gradient(180deg,var(--glass),transparent);color:var(--muted)}
+  .input,select,textarea{width:100%;padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);color:var(--ink);outline:none;border:1px solid rgba(255,255,255,0.02)}
 
-  .hero h1{font-size:var(--h1);line-height:1.05;margin:0}
+  .hero h1{font-size:var(--h1);line-height:1.03;margin:0}
   .lead{color:var(--muted);font-size:var(--lead);max-width:68ch}
-  .glass{position:relative;min-height:520px;border-radius:var(--rad-lg);background:linear-gradient(180deg, color-mix(in oklab, #fff 9%, transparent), color-mix(in oklab, #fff 2%, transparent));box-shadow:var(--shadow);overflow:hidden;backdrop-filter:blur(calc(var(--blur)*1.2))}
-  .blob{position:absolute;width:360px;height:360px;filter:blur(42px);opacity:.75;mix-blend-mode:screen;border-radius:50%;animation:float 14s ease-in-out infinite;will-change:transform}
+  .glass{position:relative;min-height:520px;border-radius:var(--rad-lg);background:linear-gradient(180deg,color-mix(in oklab,#fff 6%, transparent), color-mix(in oklab,#fff 2%, transparent));box-shadow:0 28px 80px rgba(1,8,20,.36);overflow:hidden}
+  .blob{position:absolute;width:300px;height:300px;filter:blur(42px);opacity:.75;mix-blend-mode:screen;border-radius:50%;animation:float 14s ease-in-out infinite;will-change:transform}
   @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-16px)}100%{transform:translateY(0)}}
-  .b1{background:radial-gradient(circle at 30% 30%, var(--accent), transparent 60%);left:-60px;top:-60px}
-  .b2{background:radial-gradient(circle at 70% 30%, var(--blue), transparent 60%);right:-80px;top:40px;animation-delay:-4s}
-  .b3{background:radial-gradient(circle at 40% 70%, var(--violet), transparent 65%);left:140px;bottom:-100px;animation-delay:-8s}
-  .panel{position:absolute;inset:auto 16px 16px 16px;border-radius:16px;background:var(--glass-2);padding:14px}
+  .b1{background:radial-gradient(circle at 30% 30%, var(--accent), transparent 60%);left:-40px;top:-40px}
+  .b2{background:radial-gradient(circle at 70% 30%, var(--blue), transparent 60%);right:-60px;top:20px;animation-delay:-4s}
+  .b3{background:radial-gradient(circle at 40% 70%, var(--violet), transparent 65%);left:100px;bottom:-80px;animation-delay:-8s}
+  .panel{position:absolute;inset:auto 14px 18px 14px;border-radius:14px;background:linear-gradient(180deg,color-mix(in oklab,#fff 8%, transparent),transparent);padding:12px}
 
   .tabs{display:flex;gap:8px;flex-wrap:wrap}
-  .tab{padding:9px 12px;border-radius:12px;background:var(--glass);color:var(--muted);cursor:pointer}
-  .tab.active{background:linear-gradient(135deg, color-mix(in oklab, var(--accent) 18%, transparent), transparent);color:var(--bg);font-weight:900}
+  .tab{padding:9px 12px;border-radius:12px;background:linear-gradient(180deg,var(--glass),transparent);color:var(--muted);cursor:pointer}
+  .tab.active{background:linear-gradient(135deg, color-mix(in oklab, var(--accent) 18%, transparent), transparent);color:var(--bg-900);font-weight:900}
   .tab:focus-visible{box-shadow:var(--focus)}
 
   .grid{display:grid;gap:12px}
@@ -117,25 +130,36 @@
   @media (max-width:980px){.g-3{grid-template-columns:1fr 1fr}.g-4{grid-template-columns:1fr 1fr}}
   @media (max-width:680px){.g-3,.g-4,.g-2{grid-template-columns:1fr}}
 
-  /* Reveal & parallax */
-  .reveal{opacity:0;transform:translateY(18px) scale(.985);filter:saturate(.85);transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease), filter var(--dur) var(--ease);will-change:transform}
+  /* Reveal & parallax with stagger support */
+  .reveal{opacity:0;transform:translateY(18px) scale(.995);filter:saturate(.75);transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease), filter var(--dur) var(--ease);will-change:transform,opacity}
   .reveal.show{opacity:1;transform:none;filter:none}
   .parallax{will-change:transform}
 
+  /* Section dividers (soft waves) */
+  .section-divider{position:absolute;left:0;right:0;height:120px;pointer-events:none;z-index:1;display:block}
+  .divider-top{top:-40px;transform:translateY(-6px)}
+  .divider-bottom{bottom:-40px;transform:translateY(6px)}
+  .section .divider-clip{display:block;width:100%;height:120px}
+
   /* Seamless blend without borders */
   .blend-mask{position:absolute;inset:-80px 0 0 0;pointer-events:none;
-    -webkit-mask-image:linear-gradient(to bottom, transparent 0, #000 16%, #000 84%, transparent 100%);
-            mask-image:linear-gradient(to bottom, transparent 0, #000 16%, #000 84%, transparent 100%);
+    -webkit-mask-image:linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
+            mask-image:linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
     background:radial-gradient(600px 200px at 50% 0%, color-mix(in oklab, var(--accent) 10%, transparent), transparent 60%)
   }
 
-  .toast{position:fixed;right:16px;bottom:16px;padding:12px 14px;background:var(--glass-2);border-radius:12px;box-shadow:var(--shadow);z-index:150;transform:translateY(20px);opacity:0;transition:transform .2s var(--ease), opacity .2s var(--ease)}
+  .toast{position:fixed;right:16px;bottom:16px;padding:12px 14px;background:linear-gradient(180deg,var(--glass-2),transparent);border-radius:12px;box-shadow:0 14px 36px rgba(0,0,0,.35);z-index:250;transform:translateY(20px);opacity:0;transition:transform .28s,var(--dur) var(--ease),opacity .28s}
   .toast.show{transform:none;opacity:1}
 
-  footer{padding:50px 0;background:var(--glass)}
+  footer{padding:50px 0;background:linear-gradient(180deg, transparent, rgba(255,255,255,0.02))}
 
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
   @media print{.sidebar,.topbar,.aurora,.spotlight,.particles,.cursor-dot,.cursor-ring,.progress{display:none!important}body{background:#fff;color:#000}.card{box-shadow:none}}
+  /* small responsive tweaks */
+  @media (max-width:720px){
+    .hero h1{font-size:2rem}
+    .glass{min-height:360px}
+  }
 </style>
 </head>
 <body>
@@ -147,7 +171,7 @@
   <div class="cursor-dot" aria-hidden="true"></div>
   <div class="cursor-ring" aria-hidden="true"></div>
 
-  <div class="app">
+  <div class="app" id="app">
     <aside class="sidebar" aria-label="Primary">
       <div class="sb-logo" title="Linktern">🔗</div>
       <button class="sb-btn active" data-jump="home" title="Home" aria-current="page">🏠</button>
@@ -163,44 +187,53 @@
     </aside>
 
     <div>
-      <div class="topbar">
+      <div class="topbar" role="region" aria-label="Site bar">
         <div class="inner">
-          <div class="switch" aria-label="Site stats">
-            <span class="pill">🌍 <span id="statCountries">0</span> countries</span>
-            <span class="pill">👥 <span id="statLearners">0</span> learners</span>
+          <div class="switch" aria-label="Site stats" style="display:flex;gap:8px;align-items:center;">
+            <span class="pill">🌍 <strong id="statCountries">0</strong> countries</span>
+            <span class="pill">👥 <strong id="statLearners">0</strong> learners</span>
             <span class="pill">✅ Verified roles</span>
           </div>
-          <div class="switch"><button class="kbd" id="kbdHint">⌘/Ctrl + K</button></div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <input id="search" class="input" placeholder="Try: data, ux, frontend, product…" aria-label="Search internships and tracks" style="width:280px;max-width:40vw"/>
+            <button class="btn" id="searchBtn" aria-label="Search">Search</button>
+            <button class="kbd" id="kbdHint" title="Open command palette">⌘/Ctrl + K</button>
+          </div>
         </div>
       </div>
 
-      <main id="main">
+      <main id="main" tabindex="-1">
         <div class="blend-mask" aria-hidden="true"></div>
 
         <!-- HERO -->
         <section id="home" class="section hero parallax" data-parallax="0.08" data-spy>
-          <div class="row cols-2">
-            <div class="card reveal" style="padding:18px">
+          <div class="section-divider divider-top" aria-hidden="true">
+            <!-- top wave -->
+            <svg class="divider-clip" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0,0 C300,80 900,0 1200,60 L1200,120 L0,120 Z" fill="rgba(255,255,255,0.02)"/></svg>
+          </div>
+
+          <div class="row cols-2" style="align-items:start;gap:18px;">
+            <div class="card reveal" style="padding:20px">
               <span class="pill">New • Aurora Flow</span>
-              <h1 style="margin-top:10px">Careers that feel <span style="background:linear-gradient(135deg,var(--accent),var(--blue),var(--violet),var(--rose));-webkit-background-clip:text;background-clip:text;color:transparent">real</span>. Learning that feels fun.</h1>
+              <h1 style="margin-top:12px">Careers that feel <span style="background:linear-gradient(135deg,var(--accent),var(--blue),var(--violet),var(--rose));-webkit-background-clip:text;background-clip:text;color:transparent">human</span></h1>
               <p class="lead" style="margin-top:8px">Play the quiz, explore adaptive pathways, collect badges, and match to internships that value growth.</p>
               <div class="row" style="grid-template-columns:1fr auto; margin-top:var(--space)">
-                <input id="search" class="input" placeholder="Try: data, ux, frontend, product…" aria-label="Search internships and tracks"/>
-                <button id="searchBtn" class="btn cta">Search</button>
+                <input id="searchInline" class="input" placeholder="Search internships, companies or skills…" aria-label="Search internships and tracks"/>
+                <button id="searchBtnInline" class="btn cta">Search</button>
               </div>
-              <div class="row" style="grid-template-columns:repeat(3,auto); gap:10px; margin-top:10px">
+              <div class="row" style="grid-template-columns:repeat(3,auto); gap:10px; margin-top:12px">
                 <button class="btn" id="startQuiz">🎯 Start Quiz</button>
                 <button class="btn" id="openStories">📚 Success Stories</button>
                 <button class="btn" id="openSim">🧪 Try a Simulation</button>
               </div>
               <div class="card" style="margin-top:var(--space)">
                 <strong>Activity streak</strong>
-                <div id="heat" class="grid" style="grid-template-columns:repeat(30,10px); gap:4px; margin-top:8px"></div>
+                <div id="heat" class="grid" style="grid-template-columns:repeat(30,10px); gap:6px; margin-top:8px"></div>
               </div>
             </div>
 
             <div class="glass reveal parallax" id="aurora" data-parallax="0.12" aria-hidden="true">
-              <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+              <div class="blob b1" aria-hidden="true"></div><div class="blob b2" aria-hidden="true"></div><div class="blob b3" aria-hidden="true"></div>
               <div class="panel">
                 <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:8px">
                   <strong>AI Suggestions</strong>
@@ -217,9 +250,13 @@
 
           <!-- marquee to fill space & motion -->
           <div class="card reveal" style="margin-top:16px; overflow:hidden">
-            <div id="marquee" style="display:flex; gap:26px; white-space:nowrap; will-change:transform">
-              <span class="pill">🚀 Gojek</span><span class="pill">🧩 Shopee</span><span class="pill">🧭 Grab</span><span class="pill">🧱 Tokopedia</span><span class="pill">💳 Stripe</span><span class="pill">🧠 Google</span><span class="pill">📘 Meta</span><span class="pill">📝 Notion</span>
+            <div id="marquee" style="display:flex; gap:26px; white-space:nowrap; will-change:transform; align-items:center; padding:8px 0;">
+              <span class="pill">🚀 Gojek</span><span class="pill">🧩 Shopee</span><span class="pill">🧭 Grab</span><span class="pill">🧱 Tokopedia</span><span class="pill">💳 Stripe</span><span class="pill">📦 Lazada</span><span class="pill">💡 Canva</span>
             </div>
+          </div>
+
+          <div class="section-divider divider-bottom" aria-hidden="true">
+            <svg class="divider-clip" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0,60 C300,0 900,120 1200,60 L1200,120 L0,120 Z" fill="linear-gradient(180deg, rgba(255,255,255,0.02), transparent)"/></svg>
           </div>
         </section>
 
@@ -280,15 +317,15 @@
         <section id="internships" class="section parallax" data-parallax="0.03" data-spy>
           <div class="row" style="align-items:end; grid-template-columns:1fr auto">
             <div><h2>Verified Internships</h2><p class="lead">Curated roles with learning value and real mentorship.</p></div>
-            <div class="row g-2" style="grid-template-columns:repeat(5, minmax(140px, 1fr))">
+            <div class="row g-2" style="grid-template-columns:repeat(5, minmax(140px, 1fr)); gap:8px;">
               <select id="filterTrack" aria-label="Filter by track"></select>
-              <select id="filterLoc" aria-label="Filter by location"><option value="all">All locations</option><option>Remote</option><option>Indonesia</option><option>Singapore</option><option>India</option><option>USA</option></select>
-              <select id="filterType" aria-label="Filter by type"><option value="all">All types</option><option>Summer</option><option>3–6 mo</option><option>6 mo</option></select>
-              <select id="filterPay" aria-label="Filter by pay"><option value="all">Any pay</option><option>Paid</option></select>
-              <select id="sortBy" aria-label="Sort"><option value="recent">Most recent</option><option value="company">Company</option><option value="role">Role</option></select>
+              <select id="filterLoc" aria-label="Filter by location"></select>
+              <select id="filterType" aria-label="Filter by type"></select>
+              <select id="filterPay" aria-label="Filter by pay"></select>
+              <select id="sortBy" aria-label="Sort"></select>
             </div>
           </div>
-          <div class="row" style="align-items:center; grid-template-columns:auto 1fr auto">
+          <div class="row" style="align-items:center; grid-template-columns:auto 1fr auto; margin-top:8px;">
             <div class="switch">
               <label for="viewGrid" class="pill">View</label>
               <button class="btn" id="viewGrid" aria-pressed="true">🔲 Grid</button>
@@ -345,276 +382,574 @@
     </div>
   </div>
 
-  <!-- Drawer & Modals (unchanged structure, borderless via globals) -->
-  <aside id="drawer" class="drawer" aria-hidden="true" aria-label="Internship details" style="position:fixed; right:0; top:0; height:100dvh; width:min(520px, 96%); transform:translateX(100%); transition:transform .3s var(--ease); background:var(--glass-2); backdrop-filter:blur(calc(var(--blur)*1.2)); z-index:130; box-shadow:var(--shadow); display:flex; flex-direction:column">
-    <header style="display:flex; align-items:center; justify-content:space-between; padding:14px"><strong id="drawerTitle">Role</strong><button class="btn" id="drawerClose">✖</button></header>
+  <!-- Drawer & Modals -->
+  <aside id="drawer" class="drawer" aria-hidden="true" aria-label="Internship details" style="position:fixed; right:0; top:0; height:100dvh; width:min(520px, 96%); transform:translateX(100%); transition:transform .36s var(--ease); z-index:260; box-shadow:0 30px 80px rgba(0,0,0,.6);">
+    <header style="display:flex; align-items:center; justify-content:space-between; padding:14px; background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent)"><strong id="drawerTitle">Role</strong><button class="btn" id="drawerClose" aria-label="Close drawer">✖</button></header>
     <div id="drawerBody" style="padding:14px; overflow:auto"></div>
   </aside>
 
+  <!-- Settings Modal -->
+  <dialog id="settingsModal" aria-label="Settings" style="padding:0;border-radius:14px;">
+    <form method="dialog" style="display:flex; justify-content:space-between; align-items:center; padding:14px; border-bottom:1px solid rgba(255,255,255,0.02)"><h2>Settings</h2><button class="btn">✖</button></form>
+    <div style="padding:14px; display:grid; gap:10px; width:min(720px,92vw)">
+      <div style="display:flex; gap:12px; align-items:center;">
+        <label style="min-width:100px"><strong>Accent</strong></label>
+        <select id="accentPicker" class="input" style="max-width:260px;">
+          <option value="mint">Mint</option><option value="blue">Blue</option><option value="violet">Violet</option><option value="rose">Rose</option><option value="amber">Amber</option>
+        </select>
+        <button class="btn" id="resetPrefs">Reset</button>
+      </div>
+      <div style="display:flex; gap:12px; align-items:center;">
+        <label style="min-width:100px"><strong>Density</strong></label>
+        <select id="densityPicker" class="input" style="max-width:160px;">
+          <option value="cozy">Cozy</option><option value="compact">Compact</option><option value="comfy">Comfy</option>
+        </select>
+        <label style="min-width:100px"><strong>Text</strong></label>
+        <select id="fsPicker" class="input" style="max-width:120px;"><option value="0.92">Small</option><option value="1" selected>Normal</option><option value="1.1">Large</option></select>
+      </div>
+      <div style="margin-top:6px;color:var(--muted);font-size:.95rem">Keyboard: <kbd>⌘/Ctrl+K</kbd> opens command palette; <kbd>/</kbd> focuses search; <kbd>?</kbd> shows shortcuts.</div>
+    </div>
+  </dialog>
+
   <dialog id="quizModal" aria-label="Career Quiz">
-    <form method="dialog" style="display:flex; justify-content:space-between; align-items:center"><h2>Career Discovery Quiz</h2><button class="btn">✖</button></form>
-    <div class="row cols-2">
-      <div class="card"><h3>Questions</h3><div id="quizForm" class="grid" style="gap:12px; margin-top:10px"></div><button class="btn cta" id="quizSubmit" style="margin-top:10px">See My Matches</button></div>
-      <div class="card"><h3>Your Match</h3><p id="quizResult" class="lead" style="font-size:1rem">Answer questions to see a suggested track and internships.</p><div id="quizBadges" class="grid" style="grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); margin-top:10px"></div></div>
+    <form method="dialog" style="display:flex; justify-content:space-between; align-items:center; padding:12px; border-bottom:1px solid rgba(255,255,255,0.02)"><h2>Career Discovery Quiz</h2><button class="btn">✖</button></form>
+    <div style="padding:14px;">
+      <div class="row cols-2">
+        <div class="card"><h3>Questions</h3><div id="quizForm" class="grid" style="gap:12px; margin-top:10px"></div><button class="btn cta" id="quizSubmit" style="margin-top:10px">See My Matches</button></div>
+        <div class="card"><h3>Your Match</h3><p id="quizResult" class="lead" style="font-size:1rem">Answer questions to see a suggested track and internships.</p><div id="quizBadges" class="grid" style="margin-top:8px"></div></div>
+      </div>
     </div>
   </dialog>
 
   <dialog id="simModal" aria-label="Role Simulation">
-    <form method="dialog" style="display:flex; justify-content:space-between; align-items:center"><h2>Try This Role</h2><button class="btn">✖</button></form>
-    <div class="row cols-2">
-      <div class="card"><h3>Pick a Simulation</h3><div class="tabs" id="simTabs"></div><div id="simContent" style="margin-top:12px"></div></div>
-      <div class="card"><h3>Submit & Feedback</h3><textarea id="simAnswer" rows="8" class="input" placeholder="Write your approach…"></textarea><div style="display:flex; gap:8px; margin-top:10px"><button class="btn cta" id="simSubmit">Get Feedback</button><button class="btn" id="simBadge">Claim Practice Badge</button></div><p id="simFeedback" class="lead" style="font-size:.95rem; color:var(--muted); margin-top:10px"></p></div>
+    <form method="dialog" style="display:flex; justify-content:space-between; align-items:center; padding:12px; border-bottom:1px solid rgba(255,255,255,0.02)"><h2>Try This Role</h2><button class="btn">✖</button></form>
+    <div style="padding:14px;">
+      <div class="row cols-2">
+        <div class="card"><h3>Pick a Simulation</h3><div class="tabs" id="simTabs"></div><div id="simContent" style="margin-top:12px"></div></div>
+        <div class="card"><h3>Submit & Feedback</h3><textarea id="simAnswer" rows="8" class="input" placeholder="Write your approach…"></textarea><div style="display:flex; gap:8px; margin-top:10px"><button class="btn cta" id="simSubmit">Submit</button><button class="btn" id="simBadge">Get Practice Badge</button></div><p id="simFeedback" class="lead" style="font-size:.95rem; color:var(--muted); margin-top:8px"></p></div>
+      </div>
     </div>
   </dialog>
 
   <dialog id="storyModal" aria-label="Success Stories">
-    <form method="dialog" style="display:flex; justify-content:space-between; align-items:center"><h2>Success Stories</h2><button class="btn">✖</button></form>
-    <div class="grid g-2" id="storyGrid"></div>
+    <form method="dialog" style="display:flex; justify-content:space-between; align-items:center; padding:12px; border-bottom:1px solid rgba(255,255,255,0.02)"><h2>Success Stories</h2><button class="btn">✖</button></form>
+    <div style="padding:14px;">
+      <div class="grid g-2" id="storyGrid"></div>
+    </div>
   </dialog>
 
   <dialog id="circleModal" aria-label="Join Mentorship Circle">
-    <form method="dialog" style="display:flex; justify-content:space-between; align-items:center"><h2>Join a Mentorship Circle</h2><button class="btn">✖</button></form>
-    <div class="row cols-2">
-      <div class="card">
-        <div class="row g-2">
-          <div><label><strong>Choose Track</strong></label><select id="circleTrack" class="input"></select></div>
-          <div><label><strong>Your Name</strong></label><input id="circleName" class="input" placeholder="e.g., Kartik"></div>
-          <div><label><strong>Email</strong></label><input id="circleMail" class="input" placeholder="you@example.com"></div>
+    <form method="dialog" style="display:flex; justify-content:space-between; align-items:center; padding:12px; border-bottom:1px solid rgba(255,255,255,0.02)"><h2>Join a Mentorship Circle</h2><button class="btn">✖</button></form>
+    <div style="padding:14px;">
+      <div class="row cols-2">
+        <div class="card">
+          <div class="row g-2">
+            <div><label><strong>Choose Track</strong></label><select id="circleTrack" class="input"></select></div>
+            <div><label><strong>Your Name</strong></label><input id="circleName" class="input" placeholder="e.g., Kartik"></div>
+            <div><label><strong>Email</strong></label><input id="circleMail" class="input" placeholder="you@example.com"></div>
+          </div>
+          <button class="btn cta" id="circleJoin" style="margin-top:10px">Request Invite</button>
+          <p id="circleMsg" class="lead" style="font-size:.95rem; color:var(--muted); margin-top:8px"></p>
         </div>
-        <button class="btn cta" id="circleJoin" style="margin-top:10px">Request Invite</button>
-        <p id="circleMsg" class="lead" style="font-size:.95rem; color:var(--muted); margin-top:8px"></p>
+        <div class="card"><h3>What you get</h3><ul><li>Small-group mentor time</li><li>Peer accountability</li><li>Priority for partner roles</li></ul></div>
       </div>
-      <div class="card"><h3>What you get</h3><ul><li>Small-group mentor time</li><li>Peer accountability</li><li>Priority for partner roles</li></ul></div>
     </div>
   </dialog>
 
   <dialog id="projectModal" aria-label="Add Project">
-    <form method="dialog" style="display:flex; justify-content:space-between; align-items:center"><h2>Add Project</h2><button class="btn">✖</button></form>
-    <div class="row cols-2">
-      <div class="card">
-        <div class="row g-2">
-          <div><label><strong>Title</strong></label><input id="prTitle" class="input"></div>
-          <div><label><strong>Track</strong></label><select id="prTrack" class="input"></select></div>
+    <form method="dialog" style="display:flex; justify-content:space-between; align-items:center; padding:12px; border-bottom:1px solid rgba(255,255,255,0.02)"><h2>Add Project</h2><button class="btn">✖</button></form>
+    <div style="padding:14px;">
+      <div class="row cols-2">
+        <div class="card">
+          <div class="row g-2">
+            <div><label><strong>Title</strong></label><input id="prTitle" class="input"></div>
+            <div><label><strong>Track</strong></label><select id="prTrack" class="input"></select></div>
+          </div>
+          <div style="margin-top:8px"><label><strong>Summary</strong></label><textarea id="prSummary" rows="4" class="input"></textarea></div>
+          <div class="row g-2" style="margin-top:8px">
+            <div><label><strong>Skills (comma)</strong></label><input id="prSkills" class="input" placeholder="Python, Figma, SQL"></div>
+            <div><label><strong>Links (comma)</strong></label><input id="prLinks" class="input" placeholder="repo, demo"></div>
+          </div>
+          <button class="btn cta" id="prSave" style="margin-top:10px">Save Project</button>
+          <p id="prMsg" class="lead" style="font-size:.95rem; color:var(--muted); margin-top:8px"></p>
         </div>
-        <div style="margin-top:8px"><label><strong>Summary</strong></label><textarea id="prSummary" rows="4" class="input"></textarea></div>
-        <div class="row g-2" style="margin-top:8px">
-          <div><label><strong>Skills (comma)</strong></label><input id="prSkills" class="input" placeholder="Python, Figma, SQL"></div>
-          <div><label><strong>Links (comma)</strong></label><input id="prLinks" class="input" placeholder="repo, demo"></div>
-        </div>
-        <button class="btn cta" id="prSave" style="margin-top:10px">Save Project</button>
-        <p id="prMsg" class="lead" style="font-size:.95rem; color:var(--muted); margin-top:8px"></p>
+        <div class="card"><h3>Tips</h3><ul><li>Connect outcomes to role</li><li>Attach repo/demo</li><li>Quantify impact</li></ul></div>
       </div>
-      <div class="card"><h3>Tips</h3><ul><li>Connect outcomes to role</li><li>Attach repo/demo</li><li>Quantify impact</li></ul></div>
     </div>
   </dialog>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
+  <button id="backTop" title="Back to top" style="position:fixed; right:18px; bottom:90px; z-index:300; padding:10px 12px; border-radius:12px; background:linear-gradient(180deg,var(--glass),transparent); border:none; box-shadow:0 12px 30px rgba(0,0,0,.45); display:none;">↑ Top</button>
+
 <script>
-/* ===================== DATA (same) ===================== */
-const TRACKS=[{id:'data',name:'Data Science',color:'linear-gradient(135deg, var(--accent), var(--blue))',modules:['Intro to Python & Pandas','EDA on Kaggle Dataset','SQL Basics + Joins','Build a Regression Model','Dashboard in Looker Studio'],badges:['Python','SQL','EDA','ML-Basics']},{id:'ux',name:'UX / Product Design',color:'linear-gradient(135deg, var(--violet), var(--blue))',modules:['Figma Fundamentals','User Interviews (3 peers)','Lo-fi Wireframes','Hi-fi Prototype','Usability Testing & Iteration'],badges:['Figma','Research','Prototyping']},{id:'web',name:'Web / Frontend',color:'linear-gradient(135deg, var(--blue), var(--accent))',modules:['HTML/CSS Refresher','Modern JS (ES6+)','Component Patterns','API Fetch & State','Deploy on Netlify'],badges:['HTML+CSS','JavaScript','APIs']},{id:'pm',name:'Product / Biz',color:'linear-gradient(135deg, color-mix(in oklab, var(--accent) 40%, #f7b955), var(--blue))',modules:['PRD Basics','User Persona + JTBD','Competitive Analysis','MVP Scope & Metrics','Roadmap & Launch Review'],badges:['PRD','JTBD','Analytics']}];
-const DISCOVER=[{title:'Role Quiz: Find Your Fit',cat:'all',icon:'🧭',desc:'Answer 6 quick questions. Get a track and starter plan.',action:()=>openModal('quizModal')},{title:'Data Analyst Simulation',cat:'tech',icon:'📊',desc:'You’re given a CSV. What KPI would you report and why?',action:()=>openModal('simModal','data')},{title:'UX Challenge: Redesign a Flow',cat:'design',icon:'🎨',desc:'Improve onboarding step 3 with a quick test plan.',action:()=>openModal('simModal','ux')},{title:'PM Scenario: Prioritize Backlog',cat:'biz',icon:'🧮',desc:'Pick 3 features for the sprint. Explain trade-offs.',action:()=>openModal('simModal','pm')},{title:'Success Stories',cat:'all',icon:'📚',desc:'How students from 50+ countries landed their first roles.',action:()=>openModal('storyModal')},{title:'Portfolio Clinic',cat:'all',icon:'🧰',desc:'What recruiters want — with before/after examples.',action:()=>jump('portfolio')}];
-const MENTORS=[{name:'Aditya',title:'Data Analyst @ Google',track:'data'},{name:'Maya',title:'Product Designer @ Traveloka',track:'ux'},{name:'Rafi',title:'Frontend @ Tokopedia',track:'web'},{name:'Tasha',title:'PM @ Gojek',track:'pm'},{name:'Nadia',title:'Researcher @ Microsoft',track:'data'},{name:'Ken',title:'UX Lead @ Grab',track:'ux'},{name:'Anya',title:'SWE @ Stripe',track:'web'},{name:'Dion',title:'Growth PM @ Shopee',track:'pm'}];
-const INTERNSHIPS=[{id:1,company:'Gojek',role:'Data Analyst Intern',track:'data',loc:'Indonesia',added:'2025-09-14',pay:'Paid',type:'Summer',url:'#'},{id:2,company:'Shopee',role:'UX Design Intern',track:'ux',loc:'Singapore',added:'2025-10-01',pay:'Paid',type:'3–6 mo',url:'#'},{id:3,company:'Tokopedia',role:'Frontend Intern',track:'web',loc:'Indonesia',added:'2025-08-27',pay:'Paid',type:'Summer',url:'#'},{id:4,company:'Grab',role:'Product Intern',track:'pm',loc:'Singapore',added:'2025-09-29',pay:'Paid',type:'6 mo',url:'#'},{id:5,company:'Razorpay',role:'Data Science Intern',track:'data',loc:'India',added:'2025-09-10',pay:'Paid',type:'3 mo',url:'#'},{id:6,company:'Traveloka',role:'UX Research Intern',track:'ux',loc:'Indonesia',added:'2025-09-19',pay:'Paid',type:'3–6 mo',url:'#'},{id:7,company:'Stripe',role:'Frontend Intern',track:'web',loc:'Remote',added:'2025-10-05',pay:'Paid',type:'Summer',url:'#'},{id:8,company:'Notion',role:'Product Ops Intern',track:'pm',loc:'USA',added:'2025-10-08',pay:'Paid',type:'Summer',url:'#'},{id:9,company:'Google',role:'Data Analyst Intern',track:'data',loc:'USA',added:'2025-10-11',pay:'Paid',type:'Summer',url:'#'},{id:10,company:'Grab',role:'UX Designer Intern',track:'ux',loc:'Singapore',added:'2025-10-12',pay:'Paid',type:'6 mo',url:'#'},{id:11,company:'Meta',role:'Frontend Intern',track:'web',loc:'USA',added:'2025-10-13',pay:'Paid',type:'Summer',url:'#'},{id:12,company:'SEA Group',role:'Product Intern',track:'pm',loc:'Singapore',added:'2025-10-15',pay:'Paid',type:'3–6 mo',url:'#'}];
-const STORIES=[{name:'Aila — From school projects to Data Analyst offer',body:'Started with the quiz, finished Data track, shipped dashboards, and got a summer offer.'},{name:'Vyandra — Designed onboarding for a non-profit',body:'Used the UX track to interview, prototype, and test. Now freelancing with 3 clients.'},{name:'Kaka — Product intern at a fintech',body:'Built a PRD for user limits. Measured impact with a north star metric.'},{name:'Tien — Web intern at an edtech',body:'Implemented API fetch & state. Improved perf by 18%.'}];
-const SIMS=[{id:'data',name:'Data Analyst',prompt:'You receive a week of user activity (signups, sessions, churn). What KPI would you report and why? Outline a quick SQL or Pandas approach.'},{id:'ux',name:'UX Designer',prompt:'Onboarding drop-off at step 3 is 42%. Propose 2 hypotheses and a quick usability test plan. Sketch your revised flow.'},{id:'pm',name:'Product Manager',prompt:'Backlog: SSO, share button, analytics, mobile crash bug. Choose 3 for this sprint, with metrics.'}];
+/* ===================== DATA ===================== */
+const TRACKS = [
+  {id:'data',name:'Data Science',color:'var(--blue)',modules:['Intro to Python','EDA','SQL Basics','Modeling']},
+  {id:'ux',name:'Product Design',color:'var(--violet)',modules:['Design Thinking','Wireframing','Prototyping','User Research']},
+  {id:'web',name:'Frontend',color:'var(--mint)',modules:['HTML/CSS','JS Fundamentals','React','Performance']},
+  {id:'pm',name:'Product Mgmt',color:'var(--amber)',modules:['Roadmaps','Metrics','Stakeholders','Delivery']}
+];
 
-const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
-const state={theme:localStorage.getItem('theme')||'auto',accent:localStorage.getItem('accent')||'mint',density:localStorage.getItem('density')||'cozy',fs:parseFloat(localStorage.getItem('fs')||'1'),speed:localStorage.getItem('speed')||'standard',selectedTrack:localStorage.getItem('track')||'data',badges:new Set(JSON.parse(localStorage.getItem('badges')||'[]')),favs:new Set(JSON.parse(localStorage.getItem('favs')||'[]')),notes:JSON.parse(localStorage.getItem('notes')||'{}'),compare:new Set(JSON.parse(localStorage.getItem('compare')||'[]')),portfolio:JSON.parse(localStorage.getItem('portfolio')||'[]'),page:1, perPage:8, view:'grid'};
-const save=()=>{ localStorage.setItem('theme',state.theme); localStorage.setItem('accent',state.accent); localStorage.setItem('density',state.density); localStorage.setItem('fs',state.fs); localStorage.setItem('speed',state.speed); localStorage.setItem('track',state.selectedTrack); localStorage.setItem('badges',JSON.stringify([...state.badges])); localStorage.setItem('favs',JSON.stringify([...state.favs])); localStorage.setItem('compare',JSON.stringify([...state.compare])); localStorage.setItem('portfolio',JSON.stringify(state.portfolio)); localStorage.setItem('notes',JSON.stringify(state.notes)); };
+const DISCOVER = [
+  {title:'Role Quiz: Find Your Fit',cat:'all',icon:'🧭',desc:'Answer quick questions and receive a starter plan.',action:()=>openModal('quizModal')},
+  {title:'Data Analyst Simulation',cat:'tech',icon:'📊',desc:'Inspect a small dataset and outline KPIs.'},
+  {title:'Micro UX Challenge',cat:'design',icon:'🎨',desc:'Design a signup flow in 10 minutes.'}
+];
 
-function applyTheme(){ if(state.theme==='auto'){ document.documentElement.removeAttribute('data-theme'); } else document.documentElement.setAttribute('data-theme',state.theme); }
-function applyAccent(){ const map={mint:'var(--mint)',blue:'var(--blue)',violet:'var(--violet)',rose:'var(--rose)',amber:'var(--amber)'}; document.documentElement.style.setProperty('--accent',map[state.accent]||'var(--mint)'); }
-function applyDensity(){ document.documentElement.style.setProperty('--space', state.density==='compact'?'10px':state.density==='comfy'?'18px':'14px'); }
+const MENTORS = [
+  {name:'Aditya',title:'Data Analyst @ Gojek',track:'data'},
+  {name:'Maya',title:'Product Designer @ Traveloka',track:'ux'},
+  {name:'Rafi',title:'Frontend @ Tokopedia',track:'web'},
+  {name:'Tara',title:'PM @ Stripe',track:'pm'}
+];
+
+const INTERNSHIPS = [
+  {id:1,company:'Gojek',role:'Data Analyst Intern',track:'data',loc:'Indonesia',added:'2025-09-14',pay:'Paid',type:'Summer',url:'#'},
+  {id:2,company:'Shopee',role:'UX Design Intern',track:'ux',loc:'Singapore',added:'2025-09-01',pay:'Paid',type:'3–6 mo',url:'#'},
+  {id:3,company:'Tokopedia',role:'Frontend Intern',track:'web',loc:'Indonesia',added:'2025-08-22',pay:'Paid',type:'6 mo',url:'#'},
+  {id:4,company:'Stripe',role:'PM Intern',track:'pm',loc:'Remote',added:'2025-10-01',pay:'Paid',type:'3–6 mo',url:'#'}
+];
+
+const STORIES = [
+  {name:'Aila — From projects to Data role',body:'Started with the quiz, finished Data track, shipped dashboards, and got a summer offer.'},
+  {name:'Vyandra — Designed a product and landed interviews',body:'Built portfolio projects and improved interview outcomes.'}
+];
+
+const SIMS = [
+  {id:'data',name:'Data Analyst',prompt:'Outline KPIs and a quick SQL/Pandas approach for user retention.'},
+  {id:'ux',name:'Product Designer',prompt:'Sketch the primary task flow and metrics to measure success.'}
+];
+
+/* ===================== STATE & HELPERS ===================== */
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+
+const defaults = {
+  theme: localStorage.getItem('theme') || 'dark',
+  accent: localStorage.getItem('accent') || 'mint',
+  density: localStorage.getItem('density') || 'cozy',
+  fs: parseFloat(localStorage.getItem('fs')||'1'),
+  badges: new Set(JSON.parse(localStorage.getItem('badges')||'[]')),
+  favs: new Set(JSON.parse(localStorage.getItem('favs')||'[]')),
+  compare: new Set(JSON.parse(localStorage.getItem('compare')||'[]')),
+  notes: JSON.parse(localStorage.getItem('notes')||'{}'),
+  portfolio: JSON.parse(localStorage.getItem('portfolio')||'[]'),
+  page: 1, perPage: 6, view: 'grid', selectedTrack: 'data', speed: 'standard'
+};
+const state = {...defaults};
+function save(){ localStorage.setItem('theme', state.theme); localStorage.setItem('accent', state.accent); localStorage.setItem('density', state.density); localStorage.setItem('fs', state.fs); localStorage.setItem('badges', JSON.stringify([...state.badges])); localStorage.setItem('favs', JSON.stringify([...state.favs])); localStorage.setItem('compare', JSON.stringify([...state.compare])); localStorage.setItem('notes', JSON.stringify(state.notes)); localStorage.setItem('portfolio', JSON.stringify(state.portfolio)); }
+
+function applyTheme(){ if(state.theme==='auto'){ document.documentElement.removeAttribute('data-theme'); } else document.documentElement.setAttribute('data-theme', state.theme); }
+function applyAccent(){
+  const map = {mint:'var(--mint)', blue:'var(--blue)', violet:'var(--violet)', rose:'var(--rose)', amber:'var(--amber)'};
+  document.documentElement.style.setProperty('--accent', map[state.accent] || map.mint);
+}
+function applyDensity(){ const v = state.density; document.documentElement.style.setProperty('--space', v==='compact'?'10px':v==='comfy'?'18px':'14px'); }
 function applyFS(){ document.documentElement.style.setProperty('--fs', state.fs); document.documentElement.style.fontSize = `calc(16px * var(--fs, 1))`; }
 
-const el=(t,a={},...c)=>{ const e=Object.assign(document.createElement(t),a); for(const x of c){ if(typeof x==='string') e.appendChild(document.createTextNode(x)); else if(x) e.appendChild(x) } return e };
-const openModal=(id,preset)=>{ const d=document.getElementById(id); if(preset && id==='simModal'){ selectSim(preset) } d.showModal(); };
-const jump=id=>document.getElementById(id)?.scrollIntoView({behavior:'smooth', block:'start'});
-const fmtDate=iso=>new Date(iso).toLocaleDateString();
-const toastQueue=[]; const toast=(m,ms=1800)=>{ const t=$('#toast'); toastQueue.push({m,ms}); if(t.dataset.busy==='1') return; const run=()=>{ if(!toastQueue.length){ t.dataset.busy='0'; return } const {m,ms}=toastQueue.shift(); t.textContent=m; t.classList.add('show'); t.dataset.busy='1'; setTimeout(()=>{ t.classList.remove('show'); setTimeout(run,220); },ms); }; run(); };
-const debounce=(fn,ms=250)=>{ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a),ms) } };
-const highlight=(txt,q)=>{ if(!q) return txt; const i=txt.toLowerCase().indexOf(q.toLowerCase()); return i<0?txt:txt.slice(0,i)+`<mark>`+txt.slice(i,i+q.length)+`</mark>`+txt.slice(i+q.length) };
+/* handy element creation */
+const el = (t, a = {}, ...c) => {
+  const e = Object.assign(document.createElement(t), a);
+  for (const x of c) {
+    if (typeof x === 'string') e.appendChild(document.createTextNode(x));
+    else if (x) e.appendChild(x);
+  }
+  return e;
+};
+const openModal = (id, preset) => {
+  const d = document.getElementById(id);
+  if (!d) return;
+  if (preset && id === 'simModal') selectSim(preset);
+  d.showModal();
+};
+const jump = id => document.getElementById(id)?.scrollIntoView({behavior:'smooth', block:'start'});
+const fmtDate = iso => new Date(iso).toLocaleDateString();
+const toastQueue = [];
+const toastEl = $('#toast');
+function toast(m,ms=1600){
+  toastQueue.push({m,ms});
+  if (toastEl.dataset.busy==='1') return;
+  const run = () => {
+    if (!toastQueue.length){ toastEl.dataset.busy='0'; toastEl.classList.remove('show'); return; }
+    const t = toastQueue.shift();
+    toastEl.textContent = t.m;
+    toastEl.classList.add('show');
+    toastEl.dataset.busy='1';
+    setTimeout(()=>{ toastEl.classList.remove('show'); setTimeout(run,220); }, t.ms);
+  };
+  run();
+}
+const debounce = (fn,ms=200)=>{ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a),ms)}};
+const clamp = (v,a,b)=> Math.max(a, Math.min(b, v));
 
-/* ========= Ambient: spotlight, cursor, particles ========= */
-(()=>{ const spot=$('.spotlight'); let mx=innerWidth/2,my=innerHeight/2, tx=mx,ty=my; const loop=()=>{ mx+=(tx-mx)*.12; my+=(ty-my)*.12; spot.style.setProperty('--mx',mx+'px'); spot.style.setProperty('--my',my+'px'); requestAnimationFrame(loop) }; addEventListener('pointermove',e=>{ tx=e.clientX; ty=e.clientY },{passive:true}); loop() })();
-
-(()=>{ const dot=$('.cursor-dot'), ring=$('.cursor-ring'); let x=0,y=0, rx=0,ry=0, tx=0,ty=0; const lerp=(a,b,t)=>a+(b-a)*t;
-  addEventListener('pointermove',e=>{ tx=e.clientX; ty=e.clientY; dot.style.opacity=1; ring.style.opacity=1 },{passive:true});
-  addEventListener('mousedown',e=>{ const p=document.createElement('span'); p.className='cursor-pulse'; p.style.left=e.clientX+'px'; p.style.top=e.clientY+'px'; document.body.appendChild(p); p.animate([{transform:'scale(1)',opacity:.9},{transform:'scale(22)',opacity:0}],{duration:420,easing:'cubic-bezier(.22,.61,.36,1)'}).onfinish=()=>p.remove(); },{passive:true});
-  const loop=()=>{ x=lerp(x,tx,.35); y=lerp(y,ty,.35); rx=lerp(rx,tx,.18); ry=lerp(ry,ty,.18); dot.style.transform=`translate(${x}px,${y}px)`; ring.style.transform=`translate(${rx}px,${ry}px)`; requestAnimationFrame(loop) }; loop();
-  document.addEventListener('mousemove',e=>{ const m=e.target.closest('.btn, .tab, .sb-btn, .magnet'); ring.style.width=m?'46px':'34px'; ring.style.height=m?'46px':'34px' },{passive:true});
+/* ===================== Ambient: spotlight, cursor, particles ===================== */
+(()=>{ // spotlight follows pointer with smoothing
+  const spot = $('.spotlight');
+  if(!spot) return;
+  let mx = innerWidth/2, my = innerHeight/2, tx = mx, ty = my;
+  const onMove = (e)=>{ tx = e.clientX; ty = e.clientY; };
+  addEventListener('pointermove', onMove, {passive:true});
+  const loop = ()=>{ mx += (tx-mx)*.12; my += (ty-my)*.12; spot.style.setProperty('--mx', mx + 'px'); spot.style.setProperty('--my', my + 'px'); requestAnimationFrame(loop); };
+  loop();
 })();
 
-(()=>{ // particles
-  const c=document.getElementById('particles'); const ctx=c.getContext('2d'); const DPR= Math.max(1, devicePixelRatio||1);
-  let w=innerWidth, h=innerHeight; const resize=()=>{ w=innerWidth; h=innerHeight; c.width=w*DPR; c.height=h*DPR; c.style.width=w+'px'; c.style.height=h+'px'; ctx.setTransform(DPR,0,0,DPR,0,0) }; resize(); addEventListener('resize',resize);
-  const N=Math.min(120, Math.floor(w*h/18000)); const pts=Array.from({length:N},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,s:1+Math.random()*2}));
-  function step(){ ctx.clearRect(0,0,w,h); for(const p of pts){ p.x+=p.vx; p.y+=p.vy; if(p.x<0||p.x>w) p.vx*=-1; if(p.y<0||p.y>h) p.vy*=-1; ctx.globalAlpha=.6; ctx.fillStyle='rgba(255,255,255,.6)'; ctx.fillRect(p.x,p.y,p.s,p.s) } requestAnimationFrame(step) } step();
+(()=>{ const dot = $('.cursor-dot'), ring = $('.cursor-ring'); if(!dot||!ring) return;
+  let x=0,y=0, rx=0,ry=0, tx=innerWidth/2, ty=innerHeight/2;
+  const lerp=(a,b,t)=>a+(b-a)*t;
+  addEventListener('pointermove', e=>{ tx=e.clientX; ty=e.clientY; dot.style.opacity=1; ring.style.opacity=1 }, {passive:true});
+  addEventListener('mousedown', e=>{ const p=document.createElement('span'); p.className='cursor-pulse'; p.style.left=e.clientX+'px'; p.style.top=e.clientY+'px'; document.body.appendChild(p); p.animate([{opacity:1, transform:'scale(.8)'},{opacity:0, transform:'scale(2)'}],{duration:550, easing:'cubic-bezier(.2,.8,.2,1)'}).onfinish=()=>p.remove(); });
+  const loop = ()=>{ x=lerp(x,tx,.35); y=lerp(y,ty,.35); rx=lerp(rx,tx,.18); ry=lerp(ry,ty,.18); dot.style.transform=`translate(${x}px,${y}px)`; ring.style.transform=`translate(${rx}px,${ry}px)`; requestAnimationFrame(loop); };
+  loop();
+  document.addEventListener('mousemove', e=>{ const m = e.target.closest('.btn, .tab, .sb-btn, .magnet'); ring.style.width = m ? '46px' : '34px'; ring.style.height = m ? '46px' : '34px'; }, {passive:true});
 })();
 
-/* ========= Scroll progress, reveal, parallax, marquee, counters ========= */
-const progressEl=$('#progress');
-addEventListener('scroll',()=>{ const p= Math.min(1, scrollY/(document.body.scrollHeight - innerHeight)); progressEl.style.transform = `scaleX(${p})`; },{passive:true});
+/* lightweight particles (less heavy than before on mobile) */
+(()=>{ const c = document.getElementById('particles'); if(!c) return; const ctx = c.getContext('2d'); let DPR = Math.max(1, devicePixelRatio||1); let w=innerWidth, h=innerHeight; const resize = ()=>{ DPR = Math.max(1, devicePixelRatio||1); w=innerWidth; h=innerHeight; c.width = w*DPR; c.height = h*DPR; c.style.width = w+'px'; c.style.height = h+'px'; ctx.setTransform(DPR,0,0,DPR,0,0); };
+  resize(); addEventListener('resize', debounce(resize,120));
+  const N = Math.min(80, Math.floor(w*h/24000));
+  const pts = Array.from({length:N}, ()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:1+Math.random()*2}));
+  function step(){ ctx.clearRect(0,0,w,h); for(const p of pts){ p.x+=p.vx; p.y+=p.vy; if(p.x<0||p.x>w) p.vx*=-1; if(p.y<0||p.y>h) p.vy*=-1; ctx.globalAlpha = .6; ctx.fillStyle = 'rgba(255,255,255,.5)'; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); } requestAnimationFrame(step); }
+  step();
+})();
 
-const io=new IntersectionObserver((ents)=>{ ents.forEach(en=>{ if(en.isIntersecting) en.target.classList.add('show') }) },{threshold:.12});
-const revealScan=()=> $$('.reveal').forEach(el=> io.observe(el));
+/* ===================== Scroll progress, reveal, parallax, marquee, counters ===================== */
+const progressEl = $('#progress');
+let lastScroll = 0;
+addEventListener('scroll', debounce(()=>{
+  const p = Math.min(1, scrollY / (document.body.scrollHeight - innerHeight));
+  progressEl.style.transform = `scaleX(${p})`;
+  lastScroll = Date.now();
+  // back to top visibility
+  const bt = $('#backTop'); if(bt) bt.style.display = scrollY > 400 ? 'block' : 'none';
+}, 40), {passive:true});
 
-const spySections=[...$$('section[data-spy]')], spyBtns=[...$$('.sb-btn[data-jump]')];
-const spyIO=new IntersectionObserver((entries)=>{ entries.forEach(en=>{ if(en.isIntersecting){ const id=en.target.id; spyBtns.forEach(b=>{ const a=b.dataset.jump===id; b.classList.toggle('active',a); b.setAttribute('aria-current', a?'page':'false'); }); history.replaceState(null,'',`#${id}`);} })},{rootMargin:'-45% 0px -50% 0px', threshold:[0,.2,.6,1]});
+const io = new IntersectionObserver((entries)=>{ entries.forEach((en)=>{ if(en.isIntersecting){ // add delay per child
+    if(en.target.dataset.staggered==='1'){
+      const children = Array.from(en.target.children);
+      children.forEach((c,i)=> setTimeout(()=> c.classList.add('show'), i*90));
+    } else en.target.classList.add('show');
+    io.unobserve(en.target);
+  } }); }, {threshold: 0.12});
+const revealScan = ()=> $$('.reveal').forEach(el=> io.observe(el));
+
+const spySections = [...$$('section[data-spy]')], spyBtns = [...$$('.sb-btn[data-jump]')];
+const spyIO = new IntersectionObserver((entries)=>{ entries.forEach(en=>{ if(en.isIntersecting){ const id=en.target.id; spyBtns.forEach(b=>{ const a=b.dataset.jump===id; b.classList.toggle('active',a); }); } }); },{threshold:0.45});
 spySections.forEach(sec=>spyIO.observe(sec));
 
-const parallaxEls=[...$$('.parallax')];
-addEventListener('scroll',()=>{ const sy=scrollY; const wh=innerHeight; parallaxEls.forEach(el=>{ const r=el.getBoundingClientRect(); const f=parseFloat(el.dataset.parallax||0.06); const y=((r.top+sy)-sy-wh*.2)*f; el.style.transform=`translateY(${y}px)`; }); },{passive:true});
+/* smoother parallax using rAF */
+const parallaxEls = [...$$('.parallax')];
+let ticking = false;
+function onScrollParallax(){
+  if(ticking) return;
+  ticking = true;
+  requestAnimationFrame(()=>{ const sy = scrollY; parallaxEls.forEach(el=>{ const r = el.getBoundingClientRect(); const f = parseFloat(el.dataset.parallax||0.06); const offset = (r.top) * f; el.style.transform = `translateY(${offset}px)`; }); ticking = false; });
+}
+addEventListener('scroll', onScrollParallax, {passive:true});
 
-(function marquee(){ const wrap=$('#marquee'); let x=0; function loop(){ x-=0.5; wrap.style.transform=`translateX(${x}px)`; if(Math.abs(x)>wrap.scrollWidth/2) x=0; requestAnimationFrame(loop) } loop() })();
+/* marquee */
+(function marquee(){ const wrap = $('#marquee'); if(!wrap) return; let x = 0; let speed = 0.6; let paused=false;
+  wrap.addEventListener('mouseenter', ()=> paused=true);
+  wrap.addEventListener('mouseleave', ()=> paused=false);
+  function loop(){ if(!paused){ x -= speed; wrap.style.transform = `translateX(${x}px)`; const width = wrap.scrollWidth; if(Math.abs(x) > width/2) x = 0; } requestAnimationFrame(loop); }
+  loop();
+})();
 
-function animateCounter(el, to, dur=1200){ const from=0; const t0=performance.now(); const fmt=(n)=>n.toLocaleString(); function tick(t){ const p=Math.min(1,(t-t0)/dur); el.textContent=fmt(Math.floor(from+(to-from)*p)); if(p<1) requestAnimationFrame(tick) } requestAnimationFrame(tick) }
+function animateCounter(el, to, dur=1000){
+  const from = parseInt(el.textContent.replace(/,/g,'')) || 0; const start = performance.now(); const step = (t)=>{ const p = Math.min(1,(t-start)/dur); const eased = 1 - Math.pow(1-p,3); el.textContent = Math.floor(from + (to-from)*eased).toLocaleString(); if(p<1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+}
 
 /* ========= HERO / Streak ========= */
-function renderHeat(){ const wrap=$('#heat'); wrap.innerHTML=''; const days=30; const done=[...state.badges].length; for(let i=0;i<days;i++){ const on=i<Math.min(days, done); const s=document.createElement('span'); s.style.cssText=`width:10px;height:10px;border-radius:2px;background:${on?'color-mix(in oklab, var(--accent) 60%, #fff 0%)':'rgba(255,255,255,.08)'}`; wrap.appendChild(s) } }
+function renderHeat(){
+  const wrap = $('#heat'); if(!wrap) return; wrap.innerHTML=''; const days = 30; const done = state.badges.size;
+  for(let i=0;i<days;i++){
+    const on = i < Math.min(days, done);
+    const s = document.createElement('div');
+    s.style.width = '10px'; s.style.height = '10px'; s.style.borderRadius = '4px';
+    s.style.background = on ? 'linear-gradient(135deg,var(--accent),var(--blue))' : 'rgba(255,255,255,0.03)';
+    wrap.appendChild(s);
+  }
+}
 
 /* ========= Discover ========= */
 function renderDiscover(filter='all'){
-  const grid=$('#discoverGrid'); grid.innerHTML='';
-  const items=DISCOVER.filter(x=> filter==='all' || x.cat===filter);
-  // fill with more cards by repeating w/ variants to remove empty feel
-  const enriched=[...items, ...items.map(i=>({...i, title:i.title+' +', desc:i.desc}))];
-  enriched.forEach(item=>{
-    const card=el('article',{className:'card reveal magnet',tabIndex:0});
-    card.append(
-      el('div',{style:'display:flex; align-items:center; justify-content:space-between; gap:10px'}, el('h3',{},`${item.icon} ${item.title}`), el('span',{className:'pill'}, filter==='all'?'Mixed':item.cat.toUpperCase())),
-      el('p',{className:'lead',style:'font-size:.98rem; margin:.4rem 0; color:var(--muted)'}, item.desc),
-      el('div',{style:'margin-top:8px'}, el('button',{className:'btn',onclick:item.action},'Open'))
-    );
+  const grid = $('#discoverGrid'); if(!grid) return; grid.innerHTML=''; const items = DISCOVER.filter(x=> filter==='all' || x.cat===filter);
+  const enriched = [...items, ...items.map(i=>({...i, title: i.title+' +' }))];
+  enriched.forEach((item, idx)=>{
+    const card = el('article', {className:'card reveal magnet', tabIndex:0});
+    card.innerHTML = `<div style="display:flex; align-items:center; justify-content:space-between; gap:10px"><h3 style="margin:0">${item.icon} ${item.title}</h3><span class="pill">${filter==='all'?'Mixed':item.cat}</span></div><p class="lead" style="font-size:.98rem; margin:.4rem 0; color:var(--muted)">${item.desc}</p>`;
+    const actions = el('div', {style:'margin-top:8px;display:flex;gap:8px;'});
+    const open = el('button',{className:'btn'}, 'Open');
+    open.addEventListener('click', ()=> item.action ? item.action() : toast('Opening...'));
+    actions.appendChild(open);
+    card.appendChild(actions);
     grid.appendChild(card);
+    // stagger children reveal
+    card.dataset.staggered = '0';
   });
   revealScan(); bindMagnet();
 }
-$$('#discTabs .tab').forEach(t=> t.addEventListener('click',e=>{ $$('#discTabs .tab').forEach(x=>x.classList.remove('active')); e.currentTarget.classList.add('active'); renderDiscover(e.currentTarget.dataset.filter) }));
+$$('#discTabs .tab').forEach(t=> t.addEventListener('click', e=>{ $$('#discTabs .tab').forEach(x=>x.classList.remove('active')); e.currentTarget.classList.add('active'); renderDiscover(e.currentTarget.dataset.filter); }));
 
 /* ========= Pathways ========= */
-function renderTrackTabs(){ const tabs=$('#trackTabs'); tabs.innerHTML=''; for(const t of TRACKS){ const active=t.id===state.selectedTrack; const b=el('button',{className:'tab'+(active?' active':''),style:active?`background:${t.color}; color:#06121a; font-weight:900`:'',onclick:()=>{ state.selectedTrack=t.id; save(); renderTrackTabs(); renderTrackContent(); updateFilters(); updateRecommendations(); toast(`Track: ${t.name}`) }},t.name); tabs.appendChild(b); } }
-function renderTrackContent(){ const t=TRACKS.find(x=>x.id===state.selectedTrack); const box=$('#trackContent'); box.innerHTML=''; const msg={standard:'Complete modules to collect badges.',intense:'Intense: heavier load, extra recs.',weekend:'Weekend: lighter steps for Sat/Sun.'}; box.appendChild(el('p',{className:'lead',style:'font-size:.95rem; color:var(--muted)'}, msg[state.speed])); t.modules.forEach((m,i)=>{ const id=`${t.id}-m${i}`; const done=state.badges.has(id); const row=el('div',{className:'card reveal magnet',style:done?'outline:2px solid color-mix(in oklab, var(--accent) 40%, transparent); background:linear-gradient(135deg, color-mix(in oklab, var(--accent) 14%, transparent), transparent)':''}, el('div',{style:'display:flex; align-items:center; gap:12px; justify-content:space-between'}, el('div',{}, el('strong',{},`${i+1}. ${m}`), el('div',{className:'pill',style:'margin-top:6px'}, `${t.name} • Week ${i+1}`)), el('button',{className:'btn',onclick:()=>{ state.badges.add(id); save(); renderBadges(); renderTrackContent(); updateRecommendations(); confetti(); toast('Badge earned!'); updateMetrics(); }}, done?'✅ Completed':'Mark done') )); box.appendChild(row); }); revealScan(); bindMagnet(); }
-function renderBadges(){ const wrap=$('#badges'); wrap.innerHTML=''; if(!state.badges.size){ wrap.appendChild(el('span',{className:'pill'},'No badges yet. Complete a module!')); return } [...state.badges].forEach(id=>{ const [track,key]=id.split('-'); const t=TRACKS.find(x=>x.id===track); wrap.appendChild(el('span',{className:'pill'},`🏅 ${(t?.name||'Badge')} • ${key.toUpperCase()}`)) }); }
-$$('#speedTabs .tab').forEach(btn=> btn.addEventListener('click',e=>{ $$('#speedTabs .tab').forEach(x=>x.classList.remove('active')); e.currentTarget.classList.add('active'); state.speed=e.currentTarget.dataset.speed; save(); renderTrackContent(); toast(`Speed: ${state.speed}`) }));
+function renderTrackTabs(){
+  const tabs = $('#trackTabs'); if(!tabs) return; tabs.innerHTML='';
+  for(const t of TRACKS){
+    const active = t.id === state.selectedTrack;
+    const b = el('button',{className:'tab'+(active?' active':''), onclick:()=>{ state.selectedTrack = t.id; save(); renderTrackTabs(); renderTrackContent(); updateRecommendations(); }}, t.name);
+    tabs.appendChild(b);
+  }
+}
+function renderTrackContent(){
+  const t = TRACKS.find(x=>x.id===state.selectedTrack);
+  const box = $('#trackContent'); if(!box) return;
+  box.innerHTML = `
+    <div style="display:flex; gap:12px; align-items:center;">
+      <div style="width:10px;height:40px;background:linear-gradient(180deg,var(--accent),var(--blue));border-radius:6px"></div>
+      <div>
+        <h4 style="margin:0">${t.name}</h4>
+        <div class="lead" style="margin-top:6px;color:var(--muted)">Modules: ${t.modules.join(' • ')}</div>
+      </div>
+    </div>
+    <div style="display:flex; gap:8px; margin-top:8px;">
+      <button class="btn" id="previewTrack">Preview</button>
+      <button class="btn cta" id="startTrack">Start Track</button>
+    </div>
+  `;
+  $('#previewTrack')?.addEventListener('click', ()=>{ toast('Previewing track...'); });
+  $('#startTrack')?.addEventListener('click', ()=>{ state.badges.add(`${t.id}-started`); save(); renderBadges(); updateRecommendations(); toast('Track started'); });
+}
+function renderBadges(){
+  const wrap = $('#badges'); if(!wrap) return; wrap.innerHTML='';
+  if(!state.badges.size){ wrap.appendChild(el('span',{className:'pill'},'No badges yet. Complete a module!')); return; }
+  [...state.badges].forEach(b=> wrap.appendChild(el('div',{className:'card'}, b)));
+}
+$$('#speedTabs .tab').forEach(btn=> btn.addEventListener('click', e=>{ $$('#speedTabs .tab').forEach(x=>x.classList.remove('active')); e.currentTarget.classList.add('active'); state.speed = e.currentTarget.dataset.speed; save(); toast('Speed: '+state.speed); }));
 
 /* ========= Mentors ========= */
-function renderMentors(){ const grid=$('#mentorGrid'); grid.innerHTML=''; MENTORS.forEach(m=>{ grid.appendChild(el('article',{className:'card reveal magnet'}, el('div',{style:'display:flex; gap:10px; align-items:center'}, el('div',{className:'pill',style:'font-weight:900'}, m.name[0]), el('div',{}, el('h3',{},m.name), el('p',{className:'lead',style:'font-size:.95rem; color:var(--muted)'}, m.title))), el('span',{className:'pill'}, (TRACKS.find(t=>t.id===m.track)?.name||'Mentor')) )); }); revealScan(); bindMagnet(); }
-
-/* ========= Internships ========= */
-function updateFilters(){ const sel=$('#filterTrack'); sel.innerHTML=''; sel.appendChild(el('option',{value:'all'},'All tracks')); TRACKS.forEach(t=> sel.appendChild(el('option',{value:t.id,selected:t.id===state.selectedTrack}, t.name))); }
-;['filterTrack','filterLoc','filterType','filterPay','sortBy'].forEach(id=> document.getElementById(id).addEventListener('change',()=>{ state.page=1; renderInternships({}); }));
-$('#viewGrid').addEventListener('click',()=>{ state.view='grid'; renderInternships({}); $('#viewGrid').setAttribute('aria-pressed','true'); $('#viewList').setAttribute('aria-pressed','false'); });
-$('#viewList').addEventListener('click',()=>{ state.view='list'; renderInternships({}); $('#viewGrid').setAttribute('aria-pressed','false'); $('#viewList').setAttribute('aria-pressed','true'); });
-function paginate(arr){ const start=(state.page-1)*state.perPage; return arr.slice(start, start+state.perPage); }
-function renderInternships({q=''}={}){
-  const list=$('#internList'); list.innerHTML='';
-  const tval=$('#filterTrack').value||'all', lval=$('#filterLoc').value||'all', type=$('#filterType').value||'all', pay=$('#filterPay').value||'all', sort=$('#sortBy').value||'recent';
-  let items=INTERNSHIPS.filter(it=>(tval==='all'||it.track===tval)&&(lval==='all'||it.loc===lval)&&(type==='all'||it.type===type)&&(pay==='all'||it.pay===pay)&&(!q||(it.role+it.company+it.loc).toLowerCase().includes(q)));
-  const total=items.length; if(sort==='recent') items.sort((a,b)=> new Date(b.added)-new Date(a.added)); if(sort==='company') items.sort((a,b)=> a.company.localeCompare(b.company)); if(sort==='role') items.sort((a,b)=> a.role.localeCompare(b.role));
-  const totalPages=Math.max(1, Math.ceil(items.length/state.perPage)); if(state.page>totalPages) state.page=totalPages;
-  $('#pageInfo').textContent=`Page ${state.page} / ${totalPages}`; $('#prevPage').disabled=state.page===1; $('#nextPage').disabled=state.page===totalPages; $('#resultInfo').textContent=`${total} result${total!==1?'s':''}`;
-  for(const it of paginate(items)){
-    const fav=state.favs.has(it.id); const cmp=state.compare.has(it.id);
-    const wrap=el('div',{className:'card reveal magnet',style: state.view==='list'?'':'display:grid; grid-template-columns:1fr auto; align-items:center'});
-    const left=el('div',{},
-      el('div',{style:'display:flex; flex-wrap:wrap; align-items:center; gap:8px'}, (()=>{ const s=document.createElement('strong'); s.innerHTML=q?highlight(it.role,q):it.role; return s; })(), el('span',{className:'pill'}, it.company), el('span',{className:'pill'}, it.loc), el('span',{className:'pill'}, `Added ${fmtDate(it.added)}`), el('span',{className:'pill'}, it.pay), el('span',{className:'pill'}, it.type) ),
-      el('p',{className:'lead',style:'font-size:.92rem; color:var(--muted); margin-top:6px'}, 'Track: '+(TRACKS.find(t=>t.id===it.track)?.name||it.track)),
-      el('div',{}, el('textarea',{className:'input',rows:2, placeholder:'Notes (saved)', value: state.notes[it.id]||'', oninput:(e)=>{ state.notes[it.id]=e.target.value; save(); }}))
-    );
-    const right=el('div',{style:'display:grid; gap:8px; justify-items:end'},
-      el('div',{}, el('button',{className:'btn',onclick:()=>{ fav?state.favs.delete(it.id):state.favs.add(it.id); save(); renderInternships({q}); renderSaved(); renderCompare(); toast(fav?'Removed from saved':'Saved'); updateMetrics(); }}, fav?'★ Saved':'☆ Save'), ' ', el('button',{className:'btn',onclick:()=>openDrawer(it)}, '🔍 Details') ),
-      el('div',{}, el('button',{className:'btn',onclick:()=>{ if(!cmp && state.compare.size>=3){ toast('Compare limit: 3'); return } cmp?state.compare.delete(it.id):state.compare.add(it.id); save(); renderInternships({q}); renderCompare(); }}, cmp?'✅ In Compare':'➕ Compare'), ' ', el('a',{className:'btn cta',href:it.url}, 'Apply') )
-    );
-    if(state.view==='list'){ wrap.append(left,right) } else { wrap.style.gridTemplateColumns="auto 1fr auto"; wrap.append(el('div',{className:'pill'}, it.company[0]), left, right) }
-    list.appendChild(wrap);
-  }
-  if(!items.length){ list.appendChild(el('p',{className:'lead',style:'color:var(--muted)'},'No results. Try another filter.')); }
+function renderMentors(){
+  const grid = $('#mentorGrid'); if(!grid) return; grid.innerHTML='';
+  MENTORS.forEach(m=>{
+    grid.appendChild(el('article',{className:'card reveal magnet'},
+      el('div',{style:'display:flex; gap:10px; align-items:center'},
+         el('div',{className:'pill', style:'min-width:44px;min-height:44px;display:grid;place-items:center;border-radius:10px;background:linear-gradient(180deg,var(--glass),transparent)'}, m.name[0]),
+         el('div',{}, el('strong',{},m.name), el('div',{className:'lead', style:'color:var(--muted)'}, m.title))
+      ),
+      el('div',{style:'margin-top:8px'}, el('button',{className:'btn', onclick:()=>toast('Requested intro to '+m.name)}, 'Request Intro'))
+    ));
+  });
   revealScan(); bindMagnet();
 }
-$('#prevPage').addEventListener('click',()=>{ if(state.page>1){ state.page--; renderInternships({}); }});
-$('#nextPage').addEventListener('click',()=>{ state.page++; renderInternships({}); });
-function renderSaved(){ const wrap=$('#savedWrap'); wrap.innerHTML=''; const saved=INTERNSHIPS.filter(i=> state.favs.has(i.id)); if(!saved.length){ wrap.textContent='No saved roles yet.'; return } saved.forEach(s=> wrap.appendChild(el('span',{className:'pill'}, `${s.company} • ${s.role}`))); }
-function renderCompare(){ const wrap=$('#compareWrap'); wrap.innerHTML=''; const items=INTERNSHIPS.filter(i=> state.compare.has(i.id)); if(!items.length){ wrap.appendChild(el('p',{className:'lead',style:'color:var(--muted)'},'Pick up to 3 saved roles to compare.')); return } wrap.style.gridTemplateColumns=`repeat(${items.length}, 1fr)`; items.forEach(it=>{ wrap.appendChild(el('div',{className:'card magnet'}, el('strong',{}, `${it.company} — ${it.role}`), el('p',{className:'lead',style:'font-size:.92rem; color:var(--muted)'}, `${(TRACKS.find(t=>t.id===it.track)||{}).name||it.track} • ${it.loc} • ${it.type} • ${it.pay}`), el('button',{className:'btn',onclick:()=>{ state.compare.delete(it.id); save(); renderCompare(); renderInternships({}); }}, 'Remove') )); }); }
+
+/* ========= Internships ========= */
+function updateFilters(){
+  const sel = $('#filterTrack'); sel.innerHTML=''; sel.appendChild(el('option',{value:'all'}, 'All tracks'));
+  TRACKS.forEach(t=> sel.appendChild(el('option',{value:t.id, selected:t.id===state.selectedTrack}, t.name)));
+  const loc = $('#filterLoc'); loc.innerHTML=''; ['all','Remote','Indonesia','Singapore','India'].forEach(o=> loc.appendChild(el('option',{value:o}, o==='all'?'All locations':o)));
+  const type = $('#filterType'); type.innerHTML=''; ['all','Summer','3–6 mo','6 mo'].forEach(o=> type.appendChild(el('option',{value:o}, o==='all'?'All types':o)));
+  const pay = $('#filterPay'); pay.innerHTML=''; ['all','Paid','Unpaid'].forEach(o=> pay.appendChild(el('option',{value:o}, o==='all'?'Any pay':o)));
+  const sort = $('#sortBy'); sort.innerHTML=''; [['recent','Most recent'],['company','Company'],['role','Role']].forEach(([v,label])=> sort.appendChild(el('option',{value:v}, label)));
+}
+;['filterTrack','filterLoc','filterType','filterPay','sortBy'].forEach(id=> document.getElementById(id).addEventListener('change', ()=>{ state.page=1; renderInternships({}); }));
+
+$('#viewGrid').addEventListener('click', ()=>{ state.view='grid'; renderInternships({}); $('#viewGrid').setAttribute('aria-pressed','true'); $('#viewList').setAttribute('aria-pressed','false'); });
+$('#viewList').addEventListener('click', ()=>{ state.view='list'; renderInternships({}); $('#viewGrid').setAttribute('aria-pressed','false'); $('#viewList').setAttribute('aria-pressed','true'); });
+function paginate(arr){ const start=(state.page-1)*state.perPage; return arr.slice(start, start+state.perPage); }
+
+function renderInternships({q=''} = {}){
+  const list = $('#internList'); if(!list) return; list.innerHTML='';
+  const tval = $('#filterTrack').value || 'all', lval = $('#filterLoc').value || 'all', type = $('#filterType').value || 'all', pay = $('#filterPay').value || 'all', sort = $('#sortBy').value || 'recent';
+  let items = INTERNSHIPS.filter(it=> (tval==='all'||it.track===tval) && (lval==='all'||it.loc===lval) && (type==='all'||it.type===type) && (pay==='all'||it.pay===pay) && (!q || (it.role+' '+it.company+' '+it.loc).toLowerCase().includes(q.toLowerCase())));
+  const total = items.length;
+  if(sort==='recent') items.sort((a,b)=> new Date(b.added)-new Date(a.added));
+  if(sort==='company') items.sort((a,b)=> a.company.localeCompare(b.company));
+  if(sort==='role') items.sort((a,b)=> a.role.localeCompare(b.role));
+  const totalPages = Math.max(1, Math.ceil(items.length/state.perPage)); if(state.page>totalPages) state.page = totalPages;
+  $('#pageInfo').textContent = `Page ${state.page} / ${totalPages}`; $('#prevPage').disabled = state.page===1; $('#nextPage').disabled = state.page===totalPages; $('#resultInfo').textContent = `${total} results`;
+  const pageItems = paginate(items);
+  for(const it of pageItems){
+    const fav = state.favs.has(it.id); const cmp = state.compare.has(it.id);
+    const wrap = el('div',{className:'card reveal magnet', style: state.view==='list' ? '' : 'display:grid; grid-template-columns:1fr auto; align-items:center;'});
+    const left = el('div', {},
+      el('div',{style:'display:flex; flex-wrap:wrap; align-items:center; gap:8px'}, (()=>{
+        const s = document.createElement('strong'); s.innerHTML = q ? highlight(it.role, q) : it.role; return s;
+      })(), el('span',{className:'pill'}, it.company)),
+      el('p',{className:'lead',style:'font-size:.92rem; color:var(--muted); margin-top:6px'}, 'Track: '+(TRACKS.find(t=>t.id===it.track)?.name||it.track)),
+      el('div', {style:'margin-top:8px'}, el('textarea',{className:'input', rows:2, placeholder:'Notes (saved)', value: state.notes[it.id]||'', oninput:(e)=>{ state.notes[it.id]=e.target.value; save(); }}))
+    );
+    const right = el('div',{style:'display:grid; gap:8px; justify-items:end'},
+      el('div', {}, el('button',{className:'btn', onclick:()=>{ if(fav){ state.favs.delete(it.id); toast('Removed from saved'); } else { state.favs.add(it.id); toast('Saved'); } save(); renderInternships({q}); renderSaved(); renderCompare(); }}, fav ? '★ Saved' : '☆ Save')),
+      el('div', {}, el('button',{className:'btn', onclick:()=>{ if(!cmp && state.compare.size>=3){ toast('Compare limit: 3'); return } if(cmp){ state.compare.delete(it.id); } else { state.compare.add(it.id); } save(); renderInternships({q}); renderCompare(); }}, cmp ? '✓ Compared' : '+ Compare')),
+      el('div', {}, el('button',{className:'btn', onclick:()=> openDrawer(it) }, 'Open'))
+    );
+    if(state.view==='list'){ wrap.append(left, right); } else { wrap.style.gridTemplateColumns = "auto 1fr auto"; wrap.append(el('div',{className:'pill'}, it.company[0]), left, right); }
+    list.appendChild(wrap);
+  }
+  if(!items.length){ list.appendChild(el('p',{className:'lead', style:'color:var(--muted)'}, 'No results. Try another filter.')); }
+  revealScan(); bindMagnet();
+}
+$('#prevPage').addEventListener('click', ()=>{ if(state.page>1){ state.page--; renderInternships({}); }});
+$('#nextPage').addEventListener('click', ()=>{ state.page++; renderInternships({}); });
+
+function renderSaved(){
+  const wrap = $('#savedWrap'); if(!wrap) return; wrap.innerHTML=''; const saved = INTERNSHIPS.filter(i=> state.favs.has(i.id));
+  if(!saved.length){ wrap.textContent = 'No saved roles yet.'; return; }
+  saved.forEach(s=> wrap.appendChild(el('div',{className:'card reveal'}, el('strong',{}, s.role), el('div',{className:'lead', style:'color:var(--muted)'}, s.company))));
+}
+function renderCompare(){
+  const wrap = $('#compareWrap'); if(!wrap) return; wrap.innerHTML=''; const items = INTERNSHIPS.filter(i=> state.compare.has(i.id));
+  if(!items.length){ wrap.appendChild(el('p',{className:'lead', style:'color:var(--muted)'}, 'No items to compare.')); return; }
+  items.forEach(it=> wrap.appendChild(el('div',{className:'card reveal'}, el('strong',{}, it.role), el('div',{className:'lead', style:'color:var(--muted)'}, it.company))));
+}
 
 /* ========= Drawer ========= */
-function openDrawer(it){ const d=$('#drawer'); $('#drawerTitle').textContent=it.role; const b=$('#drawerBody'); b.innerHTML=''; b.append( el('div',{className:'card'}, el('div',{className:'pill'}, it.company[0]), el('div',{}, el('strong',{}, it.company), el('p',{className:'lead',style:'font-size:.92rem; color:var(--muted)'}, `${it.loc} • ${it.type} • ${it.pay}`)) ), el('p',{className:'lead',style:'color:var(--muted)'}, 'What you’ll do'), el('ul',{}, el('li',{},'Collaborate with mentors on real tasks'), el('li',{},'Ship a scoped project'), el('li',{},'Share learnings in monthly AMA')), el('p',{className:'lead',style:'color:var(--muted); margin-top:8px'}, 'Nice to have'), el('ul',{}, el('li',{},'Curiosity'), el('li',{},'Growth mindset'), el('li',{},'Team vibes')), el('div',{className:'switch',style:'margin-top:8px'}, el('button',{className:'btn',onclick:()=>{ state.favs.add(it.id); save(); renderInternships({}); renderSaved(); toast('Saved'); updateMetrics(); }}, '★ Save'), el('a',{className:'btn cta',href:it.url}, 'Apply') ) ); d.style.transform='translateX(0)'; d.setAttribute('aria-hidden','false'); }
-$('#drawerClose').addEventListener('click',()=>{ $('#drawer').style.transform='translateX(100%)'; $('#drawer').setAttribute('aria-hidden','true'); });
+function openDrawer(it){
+  const d = $('#drawer'); if(!d) return;
+  $('#drawerTitle').textContent = it.role;
+  const b = $('#drawerBody'); b.innerHTML = '';
+  b.appendChild(el('div',{className:'card'}, el('div',{className:'pill'}, it.company[0]), el('div',{}, el('strong',{}, it.company), el('p',{className:'lead', style:'color:var(--muted)'}, `${it.role} • ${it.loc} • ${fmtDate(it.added)}`)), el('div',{style:'margin-top:10px'}, el('a',{href:it.url}, 'View Posting'))));
+  d.style.transform = 'translateX(0)'; d.setAttribute('aria-hidden','false');
+}
+$('#drawerClose').addEventListener('click', ()=>{ $('#drawer').style.transform='translateX(100%)'; $('#drawer').setAttribute('aria-hidden','true'); });
 
 /* ========= Quiz / Sims / Stories ========= */
-const QUIZ_QS=[{id:'q1',q:'Which activity sounds fun right now?',opts:[['data','Exploring patterns in a dataset'],['ux','Sketching a new app flow'],['web','Coding a mini-site'],['pm','Scoping an MVP']]},{id:'q2',q:'Pick a superpower',opts:[['data','Seeing trends'],['ux','Empathizing with users'],['web','Building fast'],['pm','Deciding clearly']]},{id:'q3',q:'Preferred output',opts:[['data','Charts & insights'],['ux','Prototypes'],['web','Deployed features'],['pm','Roadmaps']]},{id:'q4',q:'Your current strength',opts:[['web','JavaScript/HTML'],['data','Math/logic'],['ux','Creativity'],['pm','Communication']]},{id:'q5',q:'Pick a tool to learn next',opts:[['data','Pandas'],['ux','Figma'],['web','React'],['pm','Sheets/Notion']]},{id:'q6',q:'Time you can commit weekly',opts:[['intense','10+ hours'],['standard','5–8 hours'],['weekend','Weekends only'],['standard','It depends']]}];
-function renderQuiz(){ const form=$('#quizForm'); form.innerHTML=''; QUIZ_QS.forEach(({id,q,opts})=>{ const field=el('div',{}, el('label',{},q)); const sel=el('select',{className:'input',id}); sel.appendChild(el('option',{value:''},'– choose –')); opts.forEach(([val,txt])=> sel.appendChild(el('option',{value:val},txt))); field.appendChild(sel); form.appendChild(field); }); }
-$('#quizSubmit').addEventListener('click',()=>{ const picks={}; QUIZ_QS.forEach(({id})=>{ const v=document.getElementById(id).value; if(v) picks[v]=(picks[v]||0)+1; }); if(picks['intense']||picks['weekend']||picks['standard']){ state.speed=picks['intense']?'intense':picks['weekend']?'weekend':'standard'; $$('#speedTabs .tab').forEach(x=> x.classList.toggle('active', x.dataset.speed===state.speed)); } const counts=['data','ux','web','pm'].map(k=>[k,picks[k]||0]).sort((a,b)=>b[1]-a[1]); const best=counts[0][0]; const track=TRACKS.find(t=>t.id===best); state.selectedTrack=best; save(); renderTrackTabs(); renderTrackContent(); updateFilters(); renderInternships({}); updateRecommendations(); $('#quizResult').innerHTML=`<strong>${track.name}</strong> looks like your best starting point. We updated your pathway and recommendations.`; $('#quizBadges').innerHTML=track.badges.map(b=>`<span class='pill'>🏷️ ${b}</span>`).join(''); ping($('#quizSubmit')); toast('Pathway updated'); });
-function renderSimTabs(){ const wrap=$('#simTabs'); wrap.innerHTML=''; SIMS.forEach(s=> wrap.appendChild(el('button',{className:'tab',onclick:()=>selectSim(s.id)}, s.name))); }
-function selectSim(id){ const s=SIMS.find(x=>x.id===id)||SIMS[0]; $$('#simTabs .tab').forEach(t=> t.classList.toggle('active', t.textContent===s.name)); $('#simContent').innerHTML=`<div class='card'><p class='lead' style='font-size:.98rem; color:var(--muted)'>${s.prompt}</p></div>`; $('#simAnswer').value=''; $('#simFeedback').textContent=''; }
-$('#simSubmit').addEventListener('click',()=>{ const ans=$('#simAnswer').value.trim(); if(!ans){ $('#simFeedback').textContent='Write your approach first.'; return } $('#simFeedback').textContent='Nice! Clear structure. Consider success metrics and risks. Badge added.'; state.badges.add(`${state.selectedTrack}-sim`); save(); renderBadges(); updateRecommendations(); confetti(); toast('Practice badge'); updateMetrics(); });
-$('#simBadge').addEventListener('click',()=>{ state.badges.add(`${state.selectedTrack}-practice`); save(); renderBadges(); confetti(); toast('Practice badge'); updateMetrics(); });
-function renderStories(){ const grid=$('#storyGrid'); grid.innerHTML=''; STORIES.forEach(s=> grid.appendChild(el('article',{className:'card reveal magnet'}, el('h3',{},s.name), el('p',{className:'lead',style:'font-size:.98rem; color:var(--muted)'}, s.body))) ); revealScan(); bindMagnet(); }
+const QUIZ_QS = [
+  {id:'q1',q:'Which activity sounds fun right now?',opts:[['data','Exploring patterns in a dataset'],['ux','Sketching an app flow'],['web','Coding a mini-site'],['pm','Scoping an MVP']]}
+];
+function renderQuiz(){
+  const form = $('#quizForm'); if(!form) return; form.innerHTML='';
+  QUIZ_QS.forEach(({id,q,opts})=>{
+    const field = el('div', {}, el('label',{}, q));
+    const sel = el('select',{className:'input', id});
+    sel.appendChild(el('option',{value:''}, 'Choose...'));
+    opts.forEach(([v,label])=> sel.appendChild(el('option',{value:v}, label)));
+    field.appendChild(sel);
+    form.appendChild(field);
+  });
+}
+$('#quizSubmit').addEventListener('click', ()=>{ const picks = {}; QUIZ_QS.forEach(({id})=>{ const v = document.getElementById(id).value; if(v) picks[v] = (picks[v]||0)+1; }); const picked = Object.entries(picks).sort((a,b)=>b[1]-a[1])[0]; if(!picked) { toast('Answer something first'); return; } const track = picked[0]; $('#quizResult').textContent = `Suggested track: ${TRACKS.find(t=>t.id===track)?.name||track}`; state.selectedTrack = track; save(); renderTrackTabs(); renderTrackContent(); updateRecommendations(); toast('Quiz complete'); });
+
+function renderSimTabs(){ const wrap=$('#simTabs'); if(!wrap) return; wrap.innerHTML=''; SIMS.forEach(s=> wrap.appendChild(el('button',{className:'tab', onclick:()=>selectSim(s.id)}, s.name))); }
+function selectSim(id){ const s = SIMS.find(x=>x.id===id) || SIMS[0]; $$('#simTabs .tab').forEach(t=> t.classList.toggle('active', t.textContent === s.name)); $('#simContent').innerHTML = `<div class="card"><strong>${s.name}</strong><p class="lead" style="color:var(--muted)">${s.prompt}</p></div>`; }
+$('#simSubmit').addEventListener('click', ()=>{ const ans = $('#simAnswer').value.trim(); if(!ans){ $('#simFeedback').textContent = 'Write your approach first.'; return; } $('#simFeedback').textContent = 'Nice work — feedback: concise & actionable.'; toast('Submitted'); });
+
+$('#simBadge').addEventListener('click', ()=>{ state.badges.add(`${state.selectedTrack}-practice`); save(); renderBadges(); toast('Practice badge added'); updateMetrics(); });
+
+function renderStories(){ const grid = $('#storyGrid'); if(!grid) return; grid.innerHTML=''; STORIES.forEach(s=> grid.appendChild(el('article',{className:'card reveal magnet'}, el('h3',{}, s.name), el('p',{className:'lead'}, s.body)))); revealScan(); bindMagnet(); }
 
 /* ========= Portfolio ========= */
-function renderPortfolio(){ const grid=$('#portfolioGrid'); grid.innerHTML=''; if(!state.portfolio.length){ grid.appendChild(el('p',{className:'lead',style:'color:var(--muted)'},'No projects yet. Add your first one!')); return } state.portfolio.forEach((p,idx)=>{ const card=el('article',{className:'card reveal magnet',draggable:true,onDragStart:(e)=>{ e.dataTransfer.setData('text/plain', idx); },onDragOver:(e)=>{ e.preventDefault(); card.style.outline='2px dashed var(--accent)'; },onDragLeave:()=>{ card.style.outline='none' },onDrop:(e)=>{ e.preventDefault(); card.style.outline='none'; const from=+e.dataTransfer.getData('text/plain'); const to=idx; const item=state.portfolio.splice(from,1)[0]; state.portfolio.splice(to,0,item); save(); renderPortfolio(); toast('Reordered'); }}); card.append( el('div',{style:'display:flex; align-items:center; justify-content:space-between'}, el('h3',{},p.title), el('span',{className:'pill'}, p.track.toUpperCase())), el('p',{className:'lead',style:'font-size:.95rem; color:var(--muted); margin-top:6px'}, p.summary), el('div',{className:'switch',style:'flex-wrap:wrap; gap:6px; margin-top:8px'}, ...(p.skills||[]).map(s=> el('span',{className:'pill'}, s))), (p.links?.length? el('div',{className:'switch',style:'flex-wrap:wrap; gap:6px; margin-top:8px'}, ...p.links.map(l=> el('a',{className:'pill',href:l,target:'_blank',rel:'noopener'}, '🔗 Link'))) : el('span')), el('div',{style:'display:flex; gap:8px; margin-top:10px'}, el('button',{className:'btn',onclick:()=>{ state.portfolio.splice(idx,1); save(); renderPortfolio(); updateMetrics(); }}, 'Remove'), el('button',{className:'btn',onclick:()=> navigator.clipboard?.writeText(JSON.stringify(p))}, 'Copy JSON')) ); grid.appendChild(card); }); revealScan(); bindMagnet(); }
-$('#addProject').addEventListener('click',()=>{ fillTrackSelects(); $('#projectModal').showModal(); });
-$('#prSave').addEventListener('click',()=>{ const title=$('#prTitle').value.trim(), summary=$('#prSummary').value.trim(), track=$('#prTrack').value; const skills=$('#prSkills').value.split(',').map(x=>x.trim()).filter(Boolean); const links=$('#prLinks').value.split(',').map(x=>x.trim()).filter(Boolean); if(!title||!summary||!track){ $('#prMsg').textContent='Please complete all fields.'; return } state.portfolio.push({title,summary,track,skills,links}); save(); renderPortfolio(); $('#projectModal').close(); $('#prTitle').value=''; $('#prSummary').value=''; $('#prSkills').value=''; $('#prLinks').value=''; confetti(); toast('Project added'); updateMetrics(); });
-$('#exportPortfolio').addEventListener('click',()=>{ const data=new Blob([JSON.stringify(state.portfolio,null,2)],{type:'application/json'}); const url=URL.createObjectURL(data); const a=document.createElement('a'); a.href=url; a.download='linktern-portfolio.json'; a.click(); URL.revokeObjectURL(url); toast('Exported'); });
-$('#clearPortfolio').addEventListener('click',()=>{ if(confirm('Clear all projects?')){ state.portfolio=[]; save(); renderPortfolio(); updateMetrics(); }});
-$('#printResume').addEventListener('click',()=>{ window.print(); toast('Opening print dialog…'); });
+function renderPortfolio(){ const grid = $('#portfolioGrid'); if(!grid) return; grid.innerHTML=''; if(!state.portfolio.length){ grid.appendChild(el('p',{className:'lead', style:'color:var(--muted)'}, 'No projects yet. Add one to get started.')); return; }
+  state.portfolio.forEach((p, idx)=>{
+    const card = el('div',{className:'card reveal', draggable:true, ondragstart:(e)=> e.dataTransfer.setData('text/plain', idx) },
+      el('strong',{}, p.title), el('div',{className:'lead', style:'color:var(--muted)'}, p.track),
+      el('p',{}, p.summary)
+    );
+    // allow simple drag reorder
+    card.addEventListener('dragover', e=> e.preventDefault());
+    card.addEventListener('drop', e=>{
+      e.preventDefault();
+      const from = parseInt(e.dataTransfer.getData('text/plain')); const to = idx;
+      const item = state.portfolio.splice(from,1)[0]; state.portfolio.splice(to,0,item); save(); renderPortfolio(); updateMetrics();
+    });
+    grid.appendChild(card);
+  });
+}
+$('#addProject').addEventListener('click', ()=>{ fillTrackSelects(); $('#projectModal').showModal(); });
+$('#prSave').addEventListener('click', ()=>{ const title = $('#prTitle').value.trim(); const summary = $('#prSummary').value.trim(); const track = $('#prTrack').value; const skills = $('#prSkills').value.split(',').map(x=>x.trim()).filter(Boolean); const links = $('#prLinks').value.split(',').map(x=>x.trim()).filter(Boolean); if(!title){ $('#prMsg').textContent = 'Add a title'; return; } state.portfolio.push({title, summary, track, skills, links}); save(); renderPortfolio(); updateMetrics(); $('#prMsg').textContent='Saved'; setTimeout(()=> $('#projectModal').close(),700); });
+$('#exportPortfolio').addEventListener('click', ()=>{ const data = new Blob([JSON.stringify(state.portfolio,null,2)],{type:'application/json'}); const url = URL.createObjectURL(data); const a = document.createElement('a'); a.href=url; a.download='portfolio.json'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url); toast('Export ready'); });
+$('#clearPortfolio').addEventListener('click', ()=>{ if(confirm('Clear all projects?')){ state.portfolio = []; save(); renderPortfolio(); updateMetrics(); }});
+$('#printResume').addEventListener('click', ()=>{ window.print(); toast('Opening print dialog…'); });
 
 /* ========= Command palette & shortcuts ========= */
-const commands=[{k:'quiz',label:'Open Quiz',action:()=>{ renderQuiz(); openModal('quizModal'); }},{k:'stories',label:'Open Stories',action:()=>{ renderStories(); openModal('storyModal'); }},{k:'sim',label:'Try Simulation',action:()=>{ renderSimTabs(); selectSim('data'); openModal('simModal'); }},{k:'discover',label:'Jump: Discover',action:()=> jump('discover')},{k:'pathways',label:'Jump: Pathways',action:()=> jump('pathways')},{k:'mentors',label:'Jump: Mentors',action:()=> jump('mentors')},{k:'internships',label:'Jump: Internships',action:()=> jump('internships')},{k:'portfolio',label:'Jump: Portfolio',action:()=> jump('portfolio')},{k:'settings',label:'Open Settings',action:()=> openModal('settingsModal')}];
-function fuzzy(q, hay){ q=q.toLowerCase(); hay=hay.toLowerCase(); let i=0; for(const ch of hay){ if(ch===q[i]) i++; if(i===q.length) return true } return q==='' }
-function openPalette(){ const wrap=document.createElement('div'); wrap.style.cssText='position:fixed;inset:0;z-index:500;display:grid;place-items:center;background:rgba(0,0,0,.35)'; const box=document.createElement('div'); box.className='card'; box.style.cssText='width:min(720px,92%);max-height:70dvh;display:grid;grid-template-rows:auto 1fr;gap:10px'; box.innerHTML=`<input id="palIn" class="input" placeholder="Type a command… (e.g., quiz, sim, internships)"/><div id="palList" style="overflow:auto; display:grid; gap:6px"></div>`; wrap.appendChild(box); document.body.appendChild(wrap); const input=box.querySelector('#palIn'); const list=box.querySelector('#palList'); const render=(q='')=>{ list.innerHTML=''; commands.filter(c=>fuzzy(q, c.k+' '+c.label)).forEach((c,idx)=>{ const btn=el('button',{className:'btn',style:'justify-content:space-between',onclick:()=>{ c.action(); document.body.removeChild(wrap); }}, c.label); if(idx===0) btn.setAttribute('data-first','1'); list.appendChild(btn); }); if(!list.children.length) list.appendChild(el('div',{className:'pill'},'No matches')); }; render(); input.addEventListener('input', debounce(()=>render(input.value), 60)); wrap.addEventListener('click',e=>{ if(e.target===wrap) document.body.removeChild(wrap) }); document.addEventListener('keydown',function esc(e){ if(e.key==='Escape'){ document.removeEventListener('keydown',esc); document.body.contains(wrap)&&document.body.removeChild(wrap)} }); setTimeout(()=>{ input.focus(); const first=list.querySelector('[data-first]'); first?.focus(); }, 0); }
+const commands = [
+  {k:'quiz',label:'Open Quiz',action:()=>{ renderQuiz(); openModal('quizModal'); }},
+  {k:'stories',label:'Open Stories',action:()=>{ renderStories(); openModal('storyModal'); }},
+  {k:'sim',label:'Open Sim',action:()=>{ renderSimTabs(); selectSim('data'); openModal('simModal'); }}
+];
+
+function openPalette(){
+  const overlay = document.createElement('div'); overlay.style.cssText = 'position:fixed;inset:0;z-index:800;display:grid;place-items:center;background:rgba(0,0,0,.36)';
+  const box = document.createElement('div'); box.style.cssText='width:min(720px,92%);background:var(--card);padding:14px;border-radius:12px;box-shadow:0 18px 40px rgba(0,0,0,.5)';
+  const input = el('input',{className:'input', placeholder:'Type a command or search…', style:'width:100%;'}); box.appendChild(input);
+  const list = el('div', {style:'margin-top:10px;display:grid;gap:8px;max-height:260px;overflow:auto'});
+  commands.forEach(c=> list.appendChild(el('button',{className:'btn', onclick:()=>{ c.action(); document.body.removeChild(overlay); }}, c.label)));
+  box.appendChild(list); overlay.appendChild(box); overlay.addEventListener('click', (e)=>{ if(e.target===overlay) document.body.removeChild(overlay); });
+  document.body.appendChild(overlay); input.focus();
+}
+
 $('#openPalette').addEventListener('click', openPalette);
 
-/* ========= Settings ========= */
-function openSettings(){ $('#settingsModal').showModal(); }
-$('#openSettings').addEventListener('click', openSettings);
-$('#themeToggle').addEventListener('click',()=>{ state.theme= state.theme==='light'?'dark':state.theme==='dark'?'auto':'light'; save(); applyTheme(); toast('Theme: '+state.theme); });
-$('#accentCycle').addEventListener('click',()=>{ state.accent= state.accent==='mint'?'blue':state.accent==='blue'?'violet':state.accent==='violet'?'rose':state.accent==='rose'?'amber':'mint'; save(); applyAccent(); toast('Accent: '+state.accent); });
-$('#densityCycle').addEventListener('click',()=>{ state.density= state.density==='cozy'?'compact':state.density==='compact'?'comfy':'cozy'; save(); applyDensity(); toast('Density: '+state.density); });
-$('#fontCycle').addEventListener('click',()=>{ state.fs= state.fs===1?1.1:state.fs===1.1?0.92:1; save(); applyFS(); toast('Text size changed'); });
-function syncSettingsUI(){ const s=$('#settingsModal'); if(!s) return; const set=(id,val,fn)=>{ const n=s.querySelector('#'+id); if(!n) return; n.value=val; n.onchange=e=>{ fn(e.target.value) } }; set('themeSelect',state.theme,(v)=>{ state.theme=v; save(); applyTheme(); }); set('accentSelect',state.accent,(v)=>{ state.accent=v; save(); applyAccent(); }); set('densitySelect',state.density,(v)=>{ state.density=v; save(); applyDensity(); }); set('fontSelect',String(state.fs),(v)=>{ state.fs=parseFloat(v); save(); applyFS(); }); }
+/* fuzzy utility used for search suggestions */
+function fuzzy(q, hay){ q = q.toLowerCase(); hay = hay.toLowerCase(); let i=0; for(const ch of hay){ if(ch === q[i]) i++; if(i === q.length) return true; } return q === ''; }
+function highlight(txt,q){
+  if(!q) return txt; const i = txt.toLowerCase().indexOf(q.toLowerCase()); if(i<0) return txt; return txt.slice(0,i) + `<mark>${txt.slice(i,i+q.length)}</mark>` + txt.slice(i+q.length);
+}
 
 /* ========= Micro FX ========= */
-function ping(el){ const s=el.style; const prev=s.transform; s.transform='scale(0.98)'; setTimeout(()=> s.transform=prev || 'scale(1)', 140); }
-function confetti(){ const c=document.createElement('canvas'); c.width=innerWidth; c.height=220; c.style.cssText='position:fixed; left:0; top:0; pointer-events:none; z-index:120'; document.body.appendChild(c); const ctx=c.getContext('2d'); const colors=['#84ffd3','#76b7ff','#caa2ff','#ff9ac2','#ffd37a']; const parts=Array.from({length:120},()=>({x:Math.random()*innerWidth, y:-10, vy:2+Math.random()*3, s:2+Math.random()*4, col:colors[Math.floor(Math.random()*colors.length)]})); let t=0; (function loop(){ ctx.clearRect(0,0,c.width,c.height); parts.forEach(p=>{ p.y+=p.vy; ctx.globalAlpha=.9; ctx.fillStyle=p.col; ctx.fillRect(p.x,p.y,p.s,p.s); }); if((t+=1)<70) requestAnimationFrame(loop); else c.remove(); })(); }
+function ping(el){ const s = el.style; const prev = s.transform; s.transform = 'scale(0.98)'; setTimeout(()=> s.transform = prev || 'scale(1)', 140); }
+function confetti(){ /* simple confetti placeholder */ const c = document.createElement('div'); c.style.cssText='position:fixed;left:0;top:0;width:100%;height:220px;pointer-events:none;z-index:700'; document.body.appendChild(c); setTimeout(()=>c.remove(),900); }
 
 /* ========= Nav, Search, Metrics, Magnet ========= */
-$$('.sb-btn[data-jump]').forEach(b=> b.addEventListener('click',()=>{ $$('.sb-btn').forEach(x=> x.classList.remove('active')); b.classList.add('active'); jump(b.dataset.jump); }));
-const doSearch=()=>{ const q=($('#search').value||'').trim().toLowerCase(); if(!q){ toast('Type something to search'); return } jump('internships'); renderInternships({q}); };
-$('#searchBtn').addEventListener('click',doSearch);
-$('#search').addEventListener('keydown',(e)=>{ if(e.key==='Enter'){ e.preventDefault(); doSearch(); }});
+$$('.sb-btn[data-jump]').forEach(b=> b.addEventListener('click', ()=>{ $$('.sb-btn').forEach(x=> x.classList.remove('active')); b.classList.add('active'); jump(b.dataset.jump); }));
 
-function fillTrackSelects(){ ['circleTrack','prTrack'].forEach(id=>{ const sel=document.getElementById(id); if(!sel) return; sel.innerHTML=''; TRACKS.forEach(t=> sel.appendChild(el('option',{value:t.id,selected:t.id===state.selectedTrack}, t.name))); }); }
+const doSearch = () => { const q = ($('#search').value || '').trim(); if(!q){ toast('Type something to search'); return; } jump('internships'); renderInternships({q}); };
+$('#searchBtn').addEventListener('click', doSearch);
+$('#searchInline').addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); const q = e.target.value.trim(); renderInternships({q}); jump('internships'); }});
+$('#searchBtnInline').addEventListener('click', ()=>{ const q = $('#searchInline').value.trim(); renderInternships({q}); jump('internships'); });
 
+function fillTrackSelects(){
+  ['circleTrack','prTrack'].forEach(id=>{
+    const sel = document.getElementById(id); if(!sel) return; sel.innerHTML=''; TRACKS.forEach(t=> sel.appendChild(el('option',{value:t.id}, t.name)));
+  });
+}
+
+/* subtle magnet hover */
 function bindMagnet(){
-  const els=[...$$('.magnet')];
+  const els = [...$$('.magnet')];
   els.forEach(el=>{
-    el.onmousemove=(e)=>{ const r=el.getBoundingClientRect(); const x=((e.clientX-r.left)/r.width-.5)*8; const y=((e.clientY-r.top)/r.height-.5)*8; el.style.transform=`translate3d(${x}px,${y}px,0) scale(1.01)`; };
-    el.onmouseleave=()=>{ el.style.transform='translate3d(0,0,0)'; };
+    el.onmousemove = (e)=>{ const r = el.getBoundingClientRect(); const x = ((e.clientX-r.left)/r.width - .5) * 8; const y = ((e.clientY-r.top)/r.height - .5) * 8; el.style.transform = `translate3d(${x}px,${y}px,0) scale(1.01)`; };
+    el.onmouseleave = ()=>{ el.style.transform = 'translate3d(0,0,0)'; };
   });
 }
 
 /* ========= Metrics (animated counters) ========= */
 function updateMetrics(){
-  const badges=[...state.badges].length, saved=[...state.favs].length, projects=state.portfolio.length;
-  animateCounter($('#metricBadges'), badges, 500);
-  animateCounter($('#metricSaved'), saved, 500);
-  animateCounter($('#metricProjects'), projects, 500);
+  const badges = state.badges.size, saved = state.favs.size, projects = state.portfolio.length;
+  animateCounter($('#metricBadges'), badges, 600);
+  animateCounter($('#metricSaved'), saved, 600);
+  animateCounter($('#metricProjects'), projects, 600);
 }
 
 /* ========= Init ========= */
 function init(){
-  applyTheme(); applyAccent(); applyDensity(); applyFS(); syncSettingsUI();
-  document.getElementById('year').textContent=new Date().getFullYear();
-  renderHeat(); renderDiscover('all'); renderMentors(); renderTrackTabs(); renderTrackContent(); renderBadges(); updateRecommendations(); updateFilters(); renderInternships({}); renderSaved(); renderCompare(); renderPortfolio(); updateMetrics();
+  applyTheme(); applyAccent(); applyDensity(); applyFS();
+  document.getElementById('year').textContent = new Date().getFullYear();
+  renderHeat(); renderDiscover('all'); renderMentors(); renderTrackTabs(); renderTrackContent(); renderBadges(); updateFilters(); renderInternships({}); renderSaved(); renderCompare(); renderPortfolio(); updateMetrics(); renderStories();
   // Openers
-  $('#startQuiz').addEventListener('click',()=>{ renderQuiz(); openModal('quizModal'); });
-  $('#openStories').addEventListener('click',()=>{ renderStories(); openModal('storyModal'); });
-  $('#openSim').addEventListener('click',()=>{ renderSimTabs(); selectSim('data'); openModal('simModal'); });
+  $('#startQuiz').addEventListener('click', ()=>{ renderQuiz(); openModal('quizModal'); });
+  $('#openStories').addEventListener('click', ()=>{ renderStories(); openModal('storyModal'); });
+  $('#openSim').addEventListener('click', ()=>{ renderSimTabs(); selectSim('data'); openModal('simModal'); });
   $('#kbdHint').addEventListener('click', openPalette);
-  // Reduced motion
-  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){ const a=document.querySelector('.aurora'); if(a) a.style.animation='none'; }
+  // Settings actions
+  $('#openSettings').addEventListener('click', ()=> $('#settingsModal').showModal());
+  $('#themeToggle').addEventListener('click', ()=>{ state.theme = state.theme==='light'?'dark':state.theme==='dark'?'auto':'light'; save(); applyTheme(); toast('Theme: '+state.theme); });
+  $('#accentCycle').addEventListener('click', ()=>{ const seq = ['mint','blue','violet','rose','amber']; const idx = seq.indexOf(state.accent); state.accent = seq[(idx+1)%seq.length]; save(); applyAccent(); toast('Accent: '+state.accent); });
+  $('#densityCycle').addEventListener('click', ()=>{ state.density = state.density==='cozy'?'compact':state.density==='compact'?'comfy':'cozy'; save(); applyDensity(); toast('Density: '+state.density); });
+  $('#fontCycle').addEventListener('click', ()=>{ state.fs = state.fs===1?1.1:state.fs===1.1?0.92:1; save(); applyFS(); toast('Text size changed'); });
+  // Settings modal inputs
+  const accentPicker = $('#accentPicker'); if(accentPicker){ accentPicker.value = state.accent; accentPicker.addEventListener('change', e=>{ state.accent = e.target.value; save(); applyAccent(); toast('Accent set'); }); }
+  const densityPicker = $('#densityPicker'); if(densityPicker){ densityPicker.value = state.density; densityPicker.addEventListener('change', e=>{ state.density = e.target.value; save(); applyDensity(); toast('Density set'); }); }
+  const fsPicker = $('#fsPicker'); if(fsPicker){ fsPicker.value = state.fs; fsPicker.addEventListener('change', e=>{ state.fs = parseFloat(e.target.value); save(); applyFS(); toast('Text size'); }); }
+  $('#resetPrefs').addEventListener('click', ()=>{ localStorage.clear(); Object.assign(state, defaults); applyAccent(); applyDensity(); applyFS(); renderBadges(); renderPortfolio(); updateMetrics(); toast('Preferences reset'); });
+  // Keyboard shortcuts
+  addEventListener('keydown', (e)=> {
+    if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==='k'){ e.preventDefault(); openPalette(); }
+    if(e.key==='/' && document.activeElement.tagName.toLowerCase()!=='input'){ e.preventDefault(); $('#search').focus(); }
+    if(e.key==='?' ){ openPalette(); }
+  });
+  // reduced motion honor
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){ const a = document.querySelectorAll('.aurora,.blob'); a.forEach(x=> x.style.animation = 'none'); }
   revealScan();
   // Kick stats
   animateCounter($('#statCountries'), 50, 900);
@@ -624,16 +959,19 @@ init();
 
 /* ========= Recommendations ========= */
 function updateRecommendations(){
-  const reco=$('#recoList'); reco.innerHTML='';
-  const focus=state.selectedTrack; const done=[...state.badges].filter(b=>b.startsWith(focus)).length; const extra=Math.min(2, Math.floor(done/2));
-  const relevant=INTERNSHIPS.filter(i=>i.track===focus).slice(0,3+extra);
-  relevant.forEach(it=> reco.appendChild(el('div',{className:'card magnet'}, el('div',{className:'pill'}, it.company[0]), el('div',{}, el('strong',{}, it.role), el('p',{className:'lead',style:'font-size:.92rem; color:var(--muted)'}, `${it.company} • ${it.loc}`)) )) );
-  $('#aiStatus').textContent= done? `Ready — ${done} modules done` : 'Waiting for your quiz…';
+  const reco = $('#recoList'); if(!reco) return; reco.innerHTML='';
+  const focus = state.selectedTrack; const done = [...state.badges].filter(b=>b.startsWith(focus)).length; const extra = Math.min(2, Math.floor(done/2));
+  const relevant = INTERNSHIPS.filter(i=>i.track===focus).slice(0,3+extra);
+  relevant.forEach(it=> reco.appendChild(el('div',{className:'card magnet'}, el('div',{className:'pill'}, it.company[0]), el('div',{}, el('strong',{}, it.role), el('p',{className:'lead', style:'color:var(--muted)'}, it.company)))));
+  $('#aiStatus').textContent = done ? `Ready — ${done} modules done` : 'Waiting for your quiz…';
 }
 
 /* ========= Circle form ========= */
-$('#joinCircle')?.addEventListener('click',()=>{ fillTrackSelects(); $('#circleModal').showModal(); });
-$('#circleJoin')?.addEventListener('click',()=>{ const name=$('#circleName').value.trim(), mail=$('#circleMail').value.trim(); if(!name||!mail){ $('#circleMsg').textContent='Please add name & email.'; return } $('#circleMsg').textContent='Request sent. We will contact you shortly.'; toast('Circle request sent'); });
+$('#joinCircle')?.addEventListener('click', ()=>{ fillTrackSelects(); $('#circleModal').showModal(); });
+$('#circleJoin')?.addEventListener('click', ()=>{ const name = $('#circleName').value.trim(), mail = $('#circleMail').value.trim(); if(!name || !mail){ $('#circleMsg').textContent = 'Please add name & email.'; return; } $('#circleMsg').textContent='Request sent — we will email you.'; setTimeout(()=> $('#circleModal').close(), 900); });
+
+/* back to top */
+$('#backTop').addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
 
 </script>
 </body>
