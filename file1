@@ -1,178 +1,140 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Linktern — Explore • Learn • Link</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Crect width='128' height='128' rx='28' fill='%23070b12'/%3E%3Cpath d='M40 78a22 22 0 0 1 0 0' fill='%23fff'/%3E%3C/svg%3E" />
-<style>
-  :root{
-    /* improved, accessible palette */
-    --bg-900:#05060a; --bg-800:#071028; --bg-700:#0d1b3a;
-    --card:#0f1724; --glass:rgba(255,255,255,0.04); --glass-2:rgba(255,255,255,0.06);
-    --ink:#eaf2ff; --muted:#9fb1ca;
-    --mint:#66ffd3; --blue:#68a8ff; --violet:#caa2ff; --rose:#ff9ac2; --amber:#ffd37a;
-    --accent:var(--mint);
-    --font:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    --mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
-    --h1:clamp(2.4rem,6vw,4.2rem); --h2:clamp(1.5rem,3.4vw,2.4rem); --lead:clamp(1rem,1.4vw,1.08rem);
-    --rad:16px; --rad-lg:26px; --blur:18px; --grid:min(1180px,92%); --space:14px; --space-lg:20px;
-    --ease:cubic-bezier(.22,.61,.36,1); --dur:.7s;
-    --focus: 0 0 0 3px color-mix(in oklab, var(--accent) 50%, transparent);
-    --fs:1;
-  }
-  @media (prefers-color-scheme: light){
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Linktern — Explore, learn and link to curated internships, pathways and mentorship circles." />
+  <title>Linktern — Explore • Learn • Link</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* DESIGN SYSTEM */
     :root{
-      --bg-900:#f7f9ff; --bg-800:#eef4ff; --bg-700:#e3eeff;
-      --card:#ffffff; --glass:rgba(0,0,0,0.04); --glass-2:rgba(0,0,0,0.02);
-      --ink:#081022; --muted:#4b5b73; --accent:var(--blue);
-      --shadow:0 18px 40px rgba(6,10,23,.06);
+      --max-width:1180px;
+      --pad:18px;
+      --radius:14px;
+      --gap:14px;
+      --ease:cubic-bezier(.22,.61,.36,1);
+      --dur:420ms;
+
+      --bg-900:#061122;
+      --bg-800:#07162a;
+      --surface:#0f1724;
+      --muted:rgba(230,245,255,0.72);
+      --text:#eaf2ff;
+
+      --accent-mint:#4BE7C3;
+      --accent-blue:#5EA7FF;
+      --accent-violet:#BCA6FF;
+      --accent-rose:#FF9AC2;
+      --accent-amber:#FFD37A;
+      --accent:var(--accent-mint);
+
+      --focus: 0 0 0 4px color-mix(in oklab,var(--accent) 28%, transparent);
+      --card-shadow: 0 12px 30px rgba(0,8,20,0.45);
+
+      --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      --font-mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+      --fs:1;
+
+      --glass: rgba(255,255,255,0.03);
+      --glass-2: rgba(255,255,255,0.05);
     }
-  }
 
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  html{scroll-behavior:smooth}
-  body{
-    margin:0;color:var(--ink);font-family:var(--font);
-    background:
-      radial-gradient(1000px 700px at 8% -8%, rgba(104,138,255,0.08) 0%, transparent 50%),
-      radial-gradient(900px 600px at 95% 10%, rgba(202,162,255,0.06) 0%, transparent 50%),
-      linear-gradient(180deg,var(--bg-900), var(--bg-800));
-    -webkit-font-smoothing:antialiased;letter-spacing:.2px;overflow-x:hidden;
-    font-size:calc(16px * var(--fs));
-  }
+    @media (prefers-color-scheme: light){
+      :root{
+        --bg-900:#f7f9ff; --bg-800:#eef4ff; --surface:#fff; --muted:#42526e; --text:#081022; --glass:rgba(0,0,0,0.04); --card-shadow:0 12px 30px rgba(6,10,23,0.06);
+      }
+    }
 
-  /* Global borderless & accessible focus */
-  *{border-color:transparent}
-  .card,.pill,.btn,.input,select,textarea{border:none}
-  :focus{outline:none}
-  :focus-visible{box-shadow:var(--focus); border-radius:10px}
+    *{box-sizing:border-box}
+    html{font-family:var(--font-sans);font-size:calc(16px * var(--fs));scroll-behavior:smooth}
+    body{margin:0;background:linear-gradient(180deg,var(--bg-900),var(--bg-800));color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh;line-height:1.38;overflow-x:hidden}
 
-  /* Ambient layers */
-  .particles{position:fixed;inset:0;z-index:0;pointer-events:none;mix-blend-mode:screen;opacity:.6}
-  .aurora,.spotlight{position:fixed;inset:0;pointer-events:none;z-index:1}
-  .aurora{
-    filter:blur(80px) saturate(110%);
-    background:
-      radial-gradient(420px 420px at 12% 25%, color-mix(in oklab,var(--accent) 72%, transparent), transparent 60%),
-      radial-gradient(520px 520px at 80% 12%, color-mix(in oklab,var(--blue) 52%, transparent), transparent 60%),
-      radial-gradient(520px 520px at 60% 82%, color-mix(in oklab,var(--violet) 42%, transparent), transparent 60%);
-    opacity:.5; animation:waves 26s ease-in-out infinite alternate;
-    z-index:0;
-  }
-  @keyframes waves{0%{transform:translateY(-2%) scale(1)}50%{transform:translateY(3%) scale(1.05)}100%{transform:translateY(-1%) scale(1.02)}}
-  .spotlight{
-    background:radial-gradient(700px 700px at var(--mx,50%) var(--my,50%), color-mix(in oklab, var(--accent) 18%, transparent), transparent 60%);
-    mix-blend-mode:screen; opacity:.5; z-index:1;
-  }
+    .container{max-width:var(--max-width);margin:0 auto;padding:0 var(--pad)}
+    .app{display:grid;grid-template-columns:84px 1fr;min-height:100vh;gap:18px;align-items:start}
+    @media (max-width:980px){ .app{grid-template-columns:72px 1fr} }
+    @media (max-width:720px){ .app{grid-template-columns:1fr} .sidebar{position:sticky;top:0;z-index:40} }
 
-  /* Cursor */
-  .cursor-dot,.cursor-ring{position:fixed;top:0;left:0;translate:-50% -50%;pointer-events:none;z-index:300}
-  .cursor-dot{width:6px;height:6px;border-radius:999px;background:var(--accent);opacity:0;transition:opacity .18s, transform .12s}
-  .cursor-ring{width:34px;height:34px;border:1.2px solid color-mix(in oklab, var(--accent) 78%, #fff 0%);border-radius:999px;backdrop-filter:blur(2px);opacity:0;transition:opacity .18s,width .15s,height .15s}
-  .cursor-pulse{position:fixed;width:4px;height:4px;border-radius:50%;background:var(--accent);pointer-events:none;opacity:.9;z-index:301}
-  @media (pointer:coarse){.cursor-dot,.cursor-ring{display:none}}
+    .sidebar{padding:12px;display:flex;flex-direction:column;row-gap:10px;align-items:center;position:sticky;top:12px;height:calc(100vh - 24px);background:linear-gradient(180deg,var(--glass),transparent);backdrop-filter:blur(8px);border-radius:12px}
+    .sb-logo{width:54px;height:54px;border-radius:12px;display:grid;place-items:center;font-weight:900;background:conic-gradient(from 120deg,var(--accent),var(--accent-blue),var(--accent-violet));box-shadow:var(--card-shadow)}
+    .sb-btn{width:56px;height:56px;border-radius:12px;background:linear-gradient(180deg,var(--glass),var(--glass-2));display:grid;place-items:center;cursor:pointer;transition:transform .18s var(--ease);border:none;color:var(--text)}
+    .sb-btn:hover{transform:translateY(-6px)}
+    .sb-btn.active{outline:2px solid color-mix(in oklab,var(--accent) 30%, transparent);background:linear-gradient(135deg,color-mix(in oklab,var(--accent) 16%,transparent),transparent)}
+    .sb-bottom{margin-top:auto;display:grid;gap:10px}
 
-  /* App layout */
-  .app{position:relative;z-index:2;min-height:100dvh;display:grid;grid-template-columns:84px 1fr}
-  .sidebar{position:sticky;top:0;height:100dvh;padding:10px;background:linear-gradient(180deg,var(--glass),transparent);backdrop-filter:blur(calc(var(--blur)*.7));display:flex;flex-direction:column;align-items:center;gap:10px}
-  .sb-logo{width:54px;height:54px;border-radius:14px;display:grid;place-items:center;font-weight:900;background:conic-gradient(from 120deg, var(--mint), var(--blue), var(--violet), var(--rose));box-shadow:0 8px 30px rgba(0,0,0,.25);font-size:22px}
-  .sb-btn{width:56px;height:56px;border-radius:14px;background:linear-gradient(180deg,var(--glass),var(--glass-2));display:grid;place-items:center;cursor:pointer;transition:transform .18s var(--ease), background .18s var(--ease);font-size:18px}
-  .sb-btn:hover{transform:translateY(-4px)}
-  .sb-btn.active{outline:2px solid color-mix(in oklab, var(--accent) 46%, transparent);background:linear-gradient(135deg, color-mix(in oklab, var(--accent) 20%, transparent), transparent)}
-  .sb-btn:focus-visible{box-shadow:var(--focus)}
-  .sb-bottom{margin-top:auto;display:grid;gap:10px}
+    .topbar{position:sticky;top:0;z-index:120;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);backdrop-filter: blur(8px);padding:10px 0}
+    .topbar .inner{display:flex;gap:12px;align-items:center;justify-content:space-between;max-width:var(--max-width);margin:0 auto;padding:0 var(--pad)}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:linear-gradient(180deg,var(--glass),transparent);color:var(--muted);font-weight:600;font-size:.95rem}
+    .chip{display:inline-flex;gap:8px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.03);font-weight:600;color:var(--muted)}
 
-  main{width:var(--grid);margin-inline:auto;padding:18px 0 80px;scroll-snap-type:y proximity}
-  .section{padding:70px 0;position:relative;scroll-snap-align:start;scroll-padding-top:92px}
-  .row{display:grid;gap:12px}
-  .cols-2{grid-template-columns:1.1fr .9fr}
-  .cols-3{grid-template-columns:repeat(3,1fr)}
-  @media (max-width:1000px){.app{grid-template-columns:74px 1fr}.cols-2{grid-template-columns:1fr}.cols-3{grid-template-columns:1fr 1fr}}
-  @media (max-width:680px){.cols-3{grid-template-columns:1fr}}
+    .input,select,textarea{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:10px;padding:10px;border:1px solid rgba(255,255,255,0.03);color:var(--text);outline:none}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;cursor:pointer;background:linear-gradient(180deg,var(--glass),var(--glass-2));color:var(--text);border:none;transition:transform .18s var(--ease), box-shadow .18s}
+    .btn:hover{transform:translateY(-3px)}
+    .btn.cta{background:linear-gradient(135deg,var(--accent), color-mix(in oklab,var(--accent-blue) 60%, var(--accent))); color:var(--bg-900); font-weight:700; box-shadow: 0 12px 28px color-mix(in oklab,var(--accent-blue) 30%, #000)}
+    button:focus-visible{box-shadow:var(--focus);border-radius:10px}
 
-  .topbar{position:sticky;top:0;z-index:120;background:linear-gradient(180deg, rgba(0,0,0,0.08), transparent);backdrop-filter:blur(8px);padding:8px 0}
-  .topbar .inner{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:6px 0;width:var(--grid);margin-inline:auto}
-  .progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),color-mix(in oklab,var(--blue) 60%,var(--accent)));z-index:220;transform-origin:0 50%}
+    .card{background:linear-gradient(180deg,var(--surface), color-mix(in oklab,var(--surface) 96%, transparent));border-radius:var(--radius);padding:16px;box-shadow:var(--card-shadow)}
+    .glass{position:relative;min-height:420px;border-radius:var(--radius);background:linear-gradient(180deg,color-mix(in oklab,#fff 4%, transparent), transparent);padding:14px;overflow:hidden;box-shadow:var(--card-shadow)}
 
-  .pill{padding:8px 12px;border-radius:999px;background:linear-gradient(180deg,var(--glass),transparent);white-space:nowrap;display:inline-flex;align-items:center;gap:8px;color:var(--muted)}
+    .hero {padding:56px 0}
+    .hero .lead{color:var(--muted);font-size:1.02rem;max-width:64ch}
+    .hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;align-items:start}
+    @media (max-width:1000px){ .hero-grid{grid-template-columns:1fr} }
 
-  .card{background:linear-gradient(180deg,var(--card), color-mix(in oklab,var(--card) 96%, transparent));border-radius:var(--rad);padding:14px;box-shadow:0 18px 50px rgba(2,6,23,.45);backdrop-filter:blur(calc(var(--blur)*.8));color:var(--ink)}
-  .btn{display:inline-flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;cursor:pointer;background:linear-gradient(180deg,var(--glass),var(--glass-2));color:var(--ink);font-weight:800;transition:transform .12s var(--ease)}
-  .btn:hover{transform:translateY(-3px);background:linear-gradient(180deg,var(--glass-2),transparent)}
-  .btn:focus-visible{box-shadow:var(--focus)}
-  .cta{border:none;color:#02141b;background:linear-gradient(135deg, var(--accent), color-mix(in oklab, var(--blue) 60%, var(--accent)));box-shadow:0 18px 34px color-mix(in oklab, var(--blue) 30%, #000)}
+    section{padding:48px 0;position:relative}
+    h1,h2,h3,h4{margin:0 0 8px 0}
+    h1{font-size:clamp(2.2rem, 6vw, 3.6rem);line-height:1.02}
+    h2{font-size:clamp(1.3rem, 2.8vw, 1.9rem)}
+    .row{display:grid;gap:12px}
+    .cols-2{grid-template-columns:1fr .9fr}
+    .grid{display:grid;gap:12px}
 
-  .kbd{font-family:var(--mono);font-size:.86rem;padding:6px 10px;border-radius:10px;background:linear-gradient(180deg,var(--glass),transparent);color:var(--muted)}
-  .input,select,textarea{width:100%;padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);color:var(--ink);outline:none;border:1px solid rgba(255,255,255,0.02)}
+    .g-3{grid-template-columns:repeat(3,1fr)}
+    @media (max-width:980px){ .g-3{grid-template-columns:1fr 1fr} }
+    @media (max-width:680px){ .g-3{grid-template-columns:1fr} }
 
-  .hero h1{font-size:var(--h1);line-height:1.03;margin:0}
-  .lead{color:var(--muted);font-size:var(--lead);max-width:68ch}
-  .glass{position:relative;min-height:520px;border-radius:var(--rad-lg);background:linear-gradient(180deg,color-mix(in oklab,#fff 6%, transparent), color-mix(in oklab,#fff 2%, transparent));box-shadow:0 28px 80px rgba(1,8,20,.36);overflow:hidden}
-  .blob{position:absolute;width:300px;height:300px;filter:blur(42px);opacity:.75;mix-blend-mode:screen;border-radius:50%;animation:float 14s ease-in-out infinite;will-change:transform}
-  @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-16px)}100%{transform:translateY(0)}}
-  .b1{background:radial-gradient(circle at 30% 30%, var(--accent), transparent 60%);left:-40px;top:-40px}
-  .b2{background:radial-gradient(circle at 70% 30%, var(--blue), transparent 60%);right:-60px;top:20px;animation-delay:-4s}
-  .b3{background:radial-gradient(circle at 40% 70%, var(--violet), transparent 65%);left:100px;bottom:-80px;animation-delay:-8s}
-  .panel{position:absolute;inset:auto 14px 18px 14px;border-radius:14px;background:linear-gradient(180deg,color-mix(in oklab,#fff 8%, transparent),transparent);padding:12px}
+    .intern-card{display:grid;grid-template-columns:56px 1fr auto;gap:12px;align-items:center;padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent)}
+    .intern-company{width:56px;height:56px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(180deg,var(--glass),transparent);font-weight:700}
+    .intern-meta{color:var(--muted);font-size:.92rem}
 
-  .tabs{display:flex;gap:8px;flex-wrap:wrap}
-  .tab{padding:9px 12px;border-radius:12px;background:linear-gradient(180deg,var(--glass),transparent);color:var(--muted);cursor:pointer}
-  .tab.active{background:linear-gradient(135deg, color-mix(in oklab, var(--accent) 18%, transparent), transparent);color:var(--bg-900);font-weight:900}
-  .tab:focus-visible{box-shadow:var(--focus)}
+    .reveal{opacity:0;transform:translateY(18px) scale(.998);transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease);will-change:transform,opacity}
+    .reveal.show{opacity:1;transform:none}
 
-  .grid{display:grid;gap:12px}
-  .g-2{grid-template-columns:1fr 1fr}.g-3{grid-template-columns:1fr 1fr 1fr}.g-4{grid-template-columns:repeat(4,1fr)}
-  @media (max-width:980px){.g-3{grid-template-columns:1fr 1fr}.g-4{grid-template-columns:1fr 1fr}}
-  @media (max-width:680px){.g-3,.g-4,.g-2{grid-template-columns:1fr}}
+    .parallax{will-change:transform}
+    .magnet{transition:transform .18s var(--ease)}
 
-  /* Reveal & parallax with stagger support */
-  .reveal{opacity:0;transform:translateY(18px) scale(.995);filter:saturate(.75);transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease), filter var(--dur) var(--ease);will-change:transform,opacity}
-  .reveal.show{opacity:1;transform:none;filter:none}
-  .parallax{will-change:transform}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
-  /* Section dividers (soft waves) */
-  .section-divider{position:absolute;left:0;right:0;height:120px;pointer-events:none;z-index:1;display:block}
-  .divider-top{top:-40px;transform:translateY(-6px)}
-  .divider-bottom{bottom:-40px;transform:translateY(6px)}
-  .section .divider-clip{display:block;width:100%;height:120px}
+    .toast{position:fixed;right:16px;bottom:16px;padding:12px 14px;background:linear-gradient(180deg,var(--glass-2),transparent);border-radius:12px;box-shadow:0 14px 36px rgba(0,0,0,0.35);z-index:250;opacity:0;transform:translateY(8px);transition:opacity .18s,transform .18s}
+    .toast.show{opacity:1;transform:none}
 
-  /* Seamless blend without borders */
-  .blend-mask{position:absolute;inset:-80px 0 0 0;pointer-events:none;
-    -webkit-mask-image:linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
-            mask-image:linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
-    background:radial-gradient(600px 200px at 50% 0%, color-mix(in oklab, var(--accent) 10%, transparent), transparent 60%)
-  }
+    .kbd{font-family:var(--font-mono);padding:6px 8px;border-radius:8px;background:linear-gradient(180deg,var(--glass),transparent);font-size:.85rem}
+    footer{padding:40px 0;background:linear-gradient(180deg, transparent, rgba(255,255,255,0.02))}
 
-  .toast{position:fixed;right:16px;bottom:16px;padding:12px 14px;background:linear-gradient(180deg,var(--glass-2),transparent);border-radius:12px;box-shadow:0 14px 36px rgba(0,0,0,.35);z-index:250;transform:translateY(20px);opacity:0;transition:transform .28s,var(--dur) var(--ease),opacity .28s}
-  .toast.show{transform:none;opacity:1}
+    @media (prefers-reduced-motion: reduce){
+      *{transition:none!important;animation:none!important}
+    }
 
-  footer{padding:50px 0;background:linear-gradient(180deg, transparent, rgba(255,255,255,0.02))}
-
-  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-  @media print{.sidebar,.topbar,.aurora,.spotlight,.particles,.cursor-dot,.cursor-ring,.progress{display:none!important}body{background:#fff;color:#000}.card{box-shadow:none}}
-  /* small responsive tweaks */
-  @media (max-width:720px){
-    .hero h1{font-size:2rem}
-    .glass{min-height:360px}
-  }
-</style>
+    /* Cursor styling (small, accessible) */
+    .cursor-dot, .cursor-ring { position:fixed; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:transform .12s linear, opacity .12s linear; opacity:0; mix-blend-mode:screen }
+    .cursor-dot{width:8px;height:8px;border-radius:50%;background:var(--accent); box-shadow:0 0 8px color-mix(in oklab,var(--accent) 60%, transparent)}
+    .cursor-ring{width:36px;height:36px;border-radius:50%;border:2px solid color-mix(in oklab,var(--accent) 60%, transparent); backdrop-filter: blur(2px)}
+    @media (pointer:coarse){ .cursor-dot, .cursor-ring{ display:none } }
+  </style>
 </head>
 <body>
-  <a class="sr-only" href="#home">Skip to content</a>
-  <canvas class="particles" id="particles" aria-hidden="true"></canvas>
-  <div class="progress" id="progress" aria-hidden="true"></div>
-  <div class="aurora" aria-hidden="true"></div>
-  <div class="spotlight" aria-hidden="true"></div>
-  <div class="cursor-dot" aria-hidden="true"></div>
-  <div class="cursor-ring" aria-hidden="true"></div>
+  <a class="sr-only" href="#main">Skip to content</a>
 
-  <div class="app" id="app">
-    <aside class="sidebar" aria-label="Primary">
+  <!-- cursor -->
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+  <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+
+  <div class="app container" id="app">
+    <aside class="sidebar" aria-label="Primary navigation">
       <div class="sb-logo" title="Linktern">🔗</div>
       <button class="sb-btn active" data-jump="home" title="Home" aria-current="page">🏠</button>
       <button class="sb-btn" data-jump="discover" title="Discover">🧭</button>
@@ -180,22 +142,27 @@
       <button class="sb-btn" data-jump="mentors" title="Mentors">👥</button>
       <button class="sb-btn" data-jump="internships" title="Internships">💼</button>
       <button class="sb-btn" data-jump="portfolio" title="Portfolio">📁</button>
-      <div class="sb-bottom">
+
+      <div class="sb-bottom" aria-hidden="false">
         <button class="sb-btn" id="openPalette" title="Command Palette (⌘/Ctrl+K)">⌨️</button>
         <button class="sb-btn" id="openSettings" title="Settings">⚙️</button>
       </div>
     </aside>
 
-    <div>
+    <div style="min-width:0">
       <div class="topbar" role="region" aria-label="Site bar">
         <div class="inner">
-          <div class="switch" aria-label="Site stats" style="display:flex;gap:8px;align-items:center;">
+          <div style="display:flex;gap:10px;align-items:center;flex:1">
             <span class="pill">🌍 <strong id="statCountries">0</strong> countries</span>
             <span class="pill">👥 <strong id="statLearners">0</strong> learners</span>
-            <span class="pill">✅ Verified roles</span>
+            <span class="chip">✅ Verified roles</span>
           </div>
-          <div style="display:flex;align-items:center;gap:8px">
-            <input id="search" class="input" placeholder="Try: data, ux, frontend, product…" aria-label="Search internships and tracks" style="width:280px;max-width:40vw"/>
+
+          <div style="display:flex;align-items:center;gap:10px;flex:1;justify-content:flex-end">
+            <div style="position:relative;width:360px;max-width:48vw">
+              <input id="search" class="input" placeholder="Try: data, ux, frontend, product…" aria-label="Search internships and tracks" />
+              <div id="searchSuggest" style="position:absolute;left:0;right:0;top:46px;display:none;background:var(--surface);border-radius:10px;padding:8px;box-shadow:var(--card-shadow);z-index:80"></div>
+            </div>
             <button class="btn" id="searchBtn" aria-label="Search">Search</button>
             <button class="kbd" id="kbdHint" title="Open command palette">⌘/Ctrl + K</button>
           </div>
@@ -203,776 +170,862 @@
       </div>
 
       <main id="main" tabindex="-1">
-        <div class="blend-mask" aria-hidden="true"></div>
+        <div class="container">
+          <section id="home" class="hero" aria-labelledby="hero-heading">
+            <div class="hero-grid">
+              <div class="card reveal" data-parallax="0.04">
+                <span class="chip">New • Aurora Flow</span>
+                <h1 id="hero-heading" style="margin-top:12px">Careers that feel purposeful — <strong style="background:linear-gradient(90deg,var(--accent),var(--accent-blue));-webkit-background-clip:text;color:transparent">guided</strong>, practical, and kind.</h1>
+                <p class="lead" style="margin-top:8px">Play the quiz, explore adaptive pathways, collect badges, and match to internships that value growth and mentorship.</p>
 
-        <!-- HERO -->
-        <section id="home" class="section hero parallax" data-parallax="0.08" data-spy>
-          <div class="section-divider divider-top" aria-hidden="true">
-            <!-- top wave -->
-            <svg class="divider-clip" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0,0 C300,80 900,0 1200,60 L1200,120 L0,120 Z" fill="rgba(255,255,255,0.02)"/></svg>
-          </div>
+                <div style="display:flex;gap:10px;margin-top:16px">
+                  <input id="searchInline" class="input" placeholder="Search internships, companies or skills…" aria-label="Inline search" />
+                  <button id="searchBtnInline" class="btn cta">Search</button>
+                </div>
 
-          <div class="row cols-2" style="align-items:start;gap:18px;">
-            <div class="card reveal" style="padding:20px">
-              <span class="pill">New • Aurora Flow</span>
-              <h1 style="margin-top:12px">Careers that feel <span style="background:linear-gradient(135deg,var(--accent),var(--blue),var(--violet),var(--rose));-webkit-background-clip:text;background-clip:text;color:transparent">human</span></h1>
-              <p class="lead" style="margin-top:8px">Play the quiz, explore adaptive pathways, collect badges, and match to internships that value growth.</p>
-              <div class="row" style="grid-template-columns:1fr auto; margin-top:var(--space)">
-                <input id="searchInline" class="input" placeholder="Search internships, companies or skills…" aria-label="Search internships and tracks"/>
-                <button id="searchBtnInline" class="btn cta">Search</button>
-              </div>
-              <div class="row" style="grid-template-columns:repeat(3,auto); gap:10px; margin-top:12px">
-                <button class="btn" id="startQuiz">🎯 Start Quiz</button>
-                <button class="btn" id="openStories">📚 Success Stories</button>
-                <button class="btn" id="openSim">🧪 Try a Simulation</button>
-              </div>
-              <div class="card" style="margin-top:var(--space)">
-                <strong>Activity streak</strong>
-                <div id="heat" class="grid" style="grid-template-columns:repeat(30,10px); gap:6px; margin-top:8px"></div>
-              </div>
-            </div>
+                <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
+                  <button class="btn cta" id="startQuiz">🎯 Start Quiz</button>
+                  <button class="btn" id="openStories">📚 Success Stories</button>
+                  <button class="btn" id="openSim">🧪 Try a Simulation</button>
+                </div>
 
-            <div class="glass reveal parallax" id="aurora" data-parallax="0.12" aria-hidden="true">
-              <div class="blob b1" aria-hidden="true"></div><div class="blob b2" aria-hidden="true"></div><div class="blob b3" aria-hidden="true"></div>
-              <div class="panel">
-                <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:8px">
+                <div class="card" style="margin-top:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent)">
+                  <strong>Activity streak</strong>
+                  <div id="heat" style="display:flex;gap:6px;align-items:center;margin-top:12px;flex-wrap:wrap"></div>
+                </div>
+              </div>
+
+              <div class="glass reveal parallax" id="aurora" data-parallax="0.12" aria-hidden="true">
+                <div style="display:flex;align-items:center;justify-content:space-between">
                   <strong>AI Suggestions</strong>
-                  <span class="pill" id="aiStatus">Waiting for your quiz…</span>
+                  <span class="chip" id="aiStatus">Waiting for your quiz…</span>
                 </div>
-                <div class="grid g-3">
-                  <div class="card magnet">Complete modules to unlock tailored roles.</div>
-                  <div class="card magnet">Save internships and compare up to 3.</div>
-                  <div class="card magnet">Export your portfolio JSON or print résumé view.</div>
+
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px">
+                  <div class="card magnet" style="min-height:80px">Complete modules to unlock tailored roles.</div>
+                  <div class="card magnet" style="min-height:80px">Save internships and compare up to 3.</div>
+                  <div class="card magnet" style="min-height:80px">Export your portfolio JSON or print résumé view.</div>
+                </div>
+
+                <div style="display:flex;gap:10px;margin-top:12px;align-items:center;justify-content:flex-end">
+                  <button class="btn" id="saveDemo">✨ Try demo suggestion</button>
                 </div>
               </div>
             </div>
-          </div>
+          </section>
 
-          <!-- marquee to fill space & motion -->
-          <div class="card reveal" style="margin-top:16px; overflow:hidden">
-            <div id="marquee" style="display:flex; gap:26px; white-space:nowrap; will-change:transform; align-items:center; padding:8px 0;">
-              <span class="pill">🚀 Gojek</span><span class="pill">🧩 Shopee</span><span class="pill">🧭 Grab</span><span class="pill">🧱 Tokopedia</span><span class="pill">💳 Stripe</span><span class="pill">📦 Lazada</span><span class="pill">💡 Canva</span>
+          <section id="discover" aria-labelledby="discover-h">
+            <div style="display:flex;justify-content:space-between;align-items:end;gap:12px">
+              <div>
+                <h2 id="discover-h">Discovery Playground</h2>
+                <p class="lead">Mini challenges, simulations, and stories. Hover, tilt, drag — everything responds.</p>
+              </div>
+              <div class="tabs" role="tablist" id="discTabs" style="display:flex;gap:8px">
+                <button class="btn tab active" data-filter="all">All</button>
+                <button class="btn tab" data-filter="tech">Tech</button>
+                <button class="btn tab" data-filter="design">Design</button>
+                <button class="btn tab" data-filter="biz">Business</button>
+              </div>
             </div>
-          </div>
 
-          <div class="section-divider divider-bottom" aria-hidden="true">
-            <svg class="divider-clip" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0,60 C300,0 900,120 1200,60 L1200,120 L0,120 Z" fill="linear-gradient(180deg, rgba(255,255,255,0.02), transparent)"/></svg>
-          </div>
-        </section>
+            <div id="discoverGrid" class="grid g-3" style="margin-top:16px"></div>
+          </section>
 
-        <!-- DISCOVER -->
-        <section id="discover" class="section parallax" data-parallax="0.06" data-spy>
-          <div class="row" style="align-items:end; grid-template-columns:1fr auto">
-            <div><h2>Discovery Playground</h2><p class="lead">Mini challenges, simulations, and stories. Hover, tilt, drag — everything responds.</p></div>
-            <div class="tabs" role="tablist" id="discTabs">
-              <button class="tab active" data-filter="all">All</button>
-              <button class="tab" data-filter="tech">Tech</button>
-              <button class="tab" data-filter="design">Design</button>
-              <button class="tab" data-filter="biz">Business</button>
+          <section id="pathways" aria-labelledby="pathways-h">
+            <div style="display:flex;justify-content:space-between;align-items:end;gap:12px">
+              <div>
+                <h2 id="pathways-h">Pathways that adapt to you</h2>
+                <p class="lead">Switch speeds anytime. The more you do, the smarter your matches get.</p>
+              </div>
+              <div class="tabs" id="speedTabs" style="display:flex;gap:8px">
+                <button class="btn tab active" data-speed="standard">Standard</button>
+                <button class="btn tab" data-speed="intense">Intense</button>
+                <button class="btn tab" data-speed="weekend">Weekend-only</button>
+              </div>
             </div>
-          </div>
-          <div id="discoverGrid" class="grid g-3" style="margin-top:12px"></div>
-        </section>
 
-        <!-- PATHWAYS -->
-        <section id="pathways" class="section parallax" data-parallax="0.05" data-spy>
-          <div class="row" style="align-items:end; grid-template-columns:1fr auto">
-            <div><h2>Pathways that adapt to you</h2><p class="lead">Switch speeds anytime. The more you do, the smarter your matches get.</p></div>
-            <div class="tabs" id="speedTabs">
-              <button class="tab active" data-speed="standard">Standard</button>
-              <button class="tab" data-speed="intense">Intense</button>
-              <button class="tab" data-speed="weekend">Weekend-only</button>
-            </div>
-          </div>
-          <div class="row cols-2" style="margin-top:12px">
-            <div class="card">
-              <h3>Choose a Track</h3>
-              <p class="lead" style="font-size:.98rem">Pick a field and we’ll outline your next 4–6 weeks.</p>
-              <div id="trackTabs" class="tabs" style="margin-top:8px"></div>
-              <div id="trackContent" style="margin-top:12px"></div>
-            </div>
-            <div class="card">
-              <h3>Your Progress</h3>
-              <p class="lead" style="font-size:.98rem">Complete modules to unlock badges and tailored internship matches.</p>
-              <details open style="margin-top:6px"><summary>Badges</summary>
-                <div id="badges" class="grid" style="grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); margin-top:8px"></div>
-              </details>
-              <details style="margin-top:10px"><summary>Recommended Internships</summary>
-                <div id="recoList" class="grid" style="margin-top:10px"></div>
-              </details>
-            </div>
-          </div>
-        </section>
+            <div style="display:grid;grid-template-columns:1fr .9fr;gap:16px;margin-top:12px">
+              <div class="card">
+                <h3>Choose a Track</h3>
+                <p class="muted" style="margin-top:6px">Pick a field and we’ll outline your next 4–6 weeks.</p>
+                <div id="trackTabs" style="display:flex;gap:8px;margin-top:12px"></div>
+                <div id="trackContent" style="margin-top:12px"></div>
+              </div>
 
-        <!-- MENTORS -->
-        <section id="mentors" class="section parallax" data-parallax="0.04" data-spy>
-          <div class="row" style="align-items:center; grid-template-columns:1fr auto">
-            <div><h2>Mentorship Circles</h2><p class="lead">Monthly AMAs • Peer reviews • Real guidance</p></div>
-            <button class="btn" id="joinCircle">🤝 Join a Circle</button>
-          </div>
-          <div class="grid g-4" id="mentorGrid" style="margin-top:12px"></div>
-        </section>
+              <div class="card">
+                <h3>Your Progress</h3>
+                <p class="muted" style="margin-top:6px">Complete modules to unlock badges and tailored internship matches.</p>
+                <details open style="margin-top:8px"><summary>Badges</summary>
+                  <div id="badges" style="margin-top:8px;display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px"></div>
+                </details>
 
-        <!-- INTERNSHIPS -->
-        <section id="internships" class="section parallax" data-parallax="0.03" data-spy>
-          <div class="row" style="align-items:end; grid-template-columns:1fr auto">
-            <div><h2>Verified Internships</h2><p class="lead">Curated roles with learning value and real mentorship.</p></div>
-            <div class="row g-2" style="grid-template-columns:repeat(5, minmax(140px, 1fr)); gap:8px;">
-              <select id="filterTrack" aria-label="Filter by track"></select>
-              <select id="filterLoc" aria-label="Filter by location"></select>
-              <select id="filterType" aria-label="Filter by type"></select>
-              <select id="filterPay" aria-label="Filter by pay"></select>
-              <select id="sortBy" aria-label="Sort"></select>
+                <details style="margin-top:10px"><summary>Recommended Internships</summary>
+                  <div id="recoList" style="margin-top:10px"></div>
+                </details>
+              </div>
             </div>
-          </div>
-          <div class="row" style="align-items:center; grid-template-columns:auto 1fr auto; margin-top:8px;">
-            <div class="switch">
-              <label for="viewGrid" class="pill">View</label>
-              <button class="btn" id="viewGrid" aria-pressed="true">🔲 Grid</button>
-              <button class="btn" id="viewList" aria-pressed="false">☰ List</button>
-            </div>
-            <span id="resultInfo" class="pill" style="justify-self:center">Loading…</span>
-            <div class="switch">
-              <button class="btn" id="prevPage">◀ Prev</button>
-              <span id="pageInfo" class="pill">Page 1</span>
-              <button class="btn" id="nextPage">Next ▶</button>
-            </div>
-          </div>
-          <div id="internList" class="grid" style="margin-top:12px"></div>
-          <div class="row cols-2" style="margin-top:12px">
-            <div class="card"><strong>Compare (pick up to 3 saved)</strong><div id="compareWrap" class="grid" style="margin-top:8px"></div></div>
-            <div class="card"><strong>Saved</strong><div id="savedWrap" class="grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); margin-top:8px"></div></div>
-          </div>
-        </section>
+          </section>
 
-        <!-- PORTFOLIO -->
-        <section id="portfolio" class="section parallax" data-parallax="0.03" data-spy>
-          <div class="row" style="align-items:center; grid-template-columns:1fr auto">
-            <div><h2>Portfolio & Resume Builder</h2><p class="lead">Drag to reorder. Export JSON. Print résumé view.</p></div>
-            <div class="row" style="grid-template-columns:repeat(4,auto); gap:10px">
-              <button class="btn" id="addProject">➕ Add Project</button>
-              <button class="btn" id="exportPortfolio">⬇️ Export</button>
-              <button class="btn" id="printResume">🖨️ Print</button>
-              <button class="btn" id="clearPortfolio">🗑️ Clear</button>
+          <section id="mentors" aria-labelledby="mentors-h">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div><h2 id="mentors-h">Mentorship Circles</h2><p class="muted">Monthly AMAs • Peer reviews • Real guidance</p></div>
+              <button class="btn cta" id="joinCircle">🤝 Join a Circle</button>
             </div>
-          </div>
-          <div id="portfolioGrid" class="grid g-3" style="margin-top:12px"></div>
 
-          <!-- Live Metrics fill -->
-          <div class="grid g-3" style="margin-top:16px">
-            <div class="card"><strong>🎯 Badges earned</strong><div class="lead" id="metricBadges">0</div></div>
-            <div class="card"><strong>⭐ Saved roles</strong><div class="lead" id="metricSaved">0</div></div>
-            <div class="card"><strong>📦 Projects</strong><div class="lead" id="metricProjects">0</div></div>
-          </div>
-        </section>
+            <div id="mentorGrid" class="grid g-4" style="margin-top:12px"></div>
+          </section>
 
-        <footer>
-          <div style="width:var(--grid); margin-inline:auto; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap">
-            <div style="display:flex; align-items:center; gap:10px"><div class="sb-logo">🔗</div><strong>Linktern</strong></div>
-            <div class="muted">© <span id="year"></span> Linktern — Explore • Learn • Link</div>
-            <div class="switch">
-              <button class="pill" id="themeToggle">🌓 Theme</button>
-              <button class="pill" id="accentCycle">🎨 Accent</button>
-              <button class="pill" id="densityCycle">📐 Density</button>
-              <button class="pill" id="fontCycle">🔤 Text</button>
+          <section id="internships" aria-labelledby="intern-h">
+            <div style="display:flex;justify-content:space-between;align-items:end;gap:12px">
+              <div><h2 id="intern-h">Verified Internships</h2><p class="muted">Curated roles with learning value and real mentorship.</p></div>
+
+              <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+                <select id="filterTrack" class="input" aria-label="Filter by track"></select>
+                <select id="filterLoc" class="input" aria-label="Filter by location"></select>
+                <select id="filterType" class="input" aria-label="Filter by type"></select>
+                <select id="filterPay" class="input" aria-label="Filter by pay"></select>
+                <select id="sortBy" class="input" aria-label="Sort"></select>
+              </div>
             </div>
-          </div>
-        </footer>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px;gap:12px">
+              <div style="display:flex;align-items:center;gap:8px">
+                <span class="pill">View</span>
+                <button class="btn" id="viewGrid" aria-pressed="true">🔲 Grid</button>
+                <button class="btn" id="viewList" aria-pressed="false">☰ List</button>
+              </div>
+              <div style="display:flex;gap:10px;align-items:center">
+                <span id="resultInfo" class="muted">Loading…</span>
+                <div style="display:flex;align-items:center;gap:8px">
+                  <button class="btn" id="prevPage">◀ Prev</button>
+                  <span id="pageInfo" class="pill">Page 1</span>
+                  <button class="btn" id="nextPage">Next ▶</button>
+                </div>
+              </div>
+            </div>
+
+            <div id="internList" style="margin-top:12px;display:grid;gap:12px"></div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">
+              <div class="card"><strong>Compare (pick up to 3 saved)</strong><div id="compareWrap" style="margin-top:8px;display:grid;gap:8px"></div></div>
+              <div class="card"><strong>Saved</strong><div id="savedWrap" style="margin-top:8px;display:grid;gap:8px"></div></div>
+            </div>
+          </section>
+
+          <section id="portfolio" aria-labelledby="portfolio-h">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div><h2 id="portfolio-h">Portfolio & Resume Builder</h2><p class="muted">Drag to reorder. Export JSON. Print résumé view.</p></div>
+              <div style="display:flex;gap:8px">
+                <button class="btn" id="addProject">➕ Add Project</button>
+                <button class="btn" id="exportPortfolio">⬇️ Export</button>
+                <button class="btn" id="printResume">🖨️ Print</button>
+                <button class="btn" id="clearPortfolio">🗑️ Clear</button>
+              </div>
+            </div>
+
+            <div id="portfolioGrid" class="grid g-3" style="margin-top:12px"></div>
+
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px">
+              <div class="card"><strong>🎯 Badges earned</strong><div id="metricBadges" class="muted" style="margin-top:8px">0</div></div>
+              <div class="card"><strong>⭐ Saved roles</strong><div id="metricSaved" class="muted" style="margin-top:8px">0</div></div>
+              <div class="card"><strong>📦 Projects</strong><div id="metricProjects" class="muted" style="margin-top:8px">0</div></div>
+            </div>
+          </section>
+
+          <footer>
+            <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+              <div style="display:flex;align-items:center;gap:10px"><div class="sb-logo">🔗</div><strong>Linktern</strong></div>
+              <div class="muted">© <span id="year"></span> Linktern — Explore • Learn • Link</div>
+              <div style="display:flex;gap:8px;align-items:center">
+                <button class="pill" id="themeToggle">🌓 Theme</button>
+              </div>
+            </div>
+          </footer>
+        </div>
       </main>
     </div>
   </div>
 
-  <!-- Drawer & Modals -->
-  <aside id="drawer" class="drawer" aria-hidden="true" aria-label="Internship details" style="position:fixed; right:0; top:0; height:100dvh; width:min(520px, 96%); transform:translateX(100%); transition:transform .36s var(--ease); z-index:260; box-shadow:0 30px 80px rgba(0,0,0,.6);">
-    <header style="display:flex; align-items:center; justify-content:space-between; padding:14px; background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent)"><strong id="drawerTitle">Role</strong><button class="btn" id="drawerClose" aria-label="Close drawer">✖</button></header>
-    <div id="drawerBody" style="padding:14px; overflow:auto"></div>
+  <!-- Drawer -->
+  <aside id="drawer" aria-hidden="true" aria-label="Internship details" style="position:fixed;right:0;top:0;height:100vh;width:min(560px,96%);transform:translateX(100%);transition:transform .28s var(--ease);z-index:220;padding:18px">
+    <div class="card" style="height:100%;display:flex;flex-direction:column">
+      <header style="display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <strong id="drawerTitle">Role</strong>
+          <div class="muted" id="drawerCompany" style="font-size:.95rem"></div>
+        </div>
+        <button class="btn" id="drawerClose" aria-label="Close drawer">✖</button>
+      </header>
+      <div id="drawerBody" style="margin-top:12px;overflow:auto"></div>
+    </div>
   </aside>
 
-  <!-- Settings Modal -->
-  <dialog id="settingsModal" aria-label="Settings" style="padding:0;border-radius:14px;">
-    <form method="dialog" style="display:flex; justify-content:space-between; align-items:center; padding:14px; border-bottom:1px solid rgba(255,255,255,0.02)"><h2>Settings</h2><button class="btn">✖</button></form>
-    <div style="padding:14px; display:grid; gap:10px; width:min(720px,92vw)">
-      <div style="display:flex; gap:12px; align-items:center;">
-        <label style="min-width:100px"><strong>Accent</strong></label>
-        <select id="accentPicker" class="input" style="max-width:260px;">
-          <option value="mint">Mint</option><option value="blue">Blue</option><option value="violet">Violet</option><option value="rose">Rose</option><option value="amber">Amber</option>
-        </select>
-        <button class="btn" id="resetPrefs">Reset</button>
+  <!-- Dialogs -->
+  <dialog id="settingsModal" aria-label="Settings">
+    <form method="dialog" style="padding:0;border-radius:12px;overflow:hidden">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:14px;border-bottom:1px solid rgba(255,255,255,0.02)">
+        <h2 style="margin:0">Settings</h2>
+        <button class="btn">✖</button>
       </div>
-      <div style="display:flex; gap:12px; align-items:center;">
-        <label style="min-width:100px"><strong>Density</strong></label>
-        <select id="densityPicker" class="input" style="max-width:160px;">
-          <option value="cozy">Cozy</option><option value="compact">Compact</option><option value="comfy">Comfy</option>
-        </select>
-        <label style="min-width:100px"><strong>Text</strong></label>
-        <select id="fsPicker" class="input" style="max-width:120px;"><option value="0.92">Small</option><option value="1" selected>Normal</option><option value="1.1">Large</option></select>
+      <div style="padding:14px;display:grid;gap:10px;width:min(720px,92vw)">
+        <div style="display:flex;gap:12px;align-items:center">
+          <label style="min-width:100px"><strong>Accent</strong></label>
+          <select id="accentPicker" class="input" style="max-width:260px;">
+            <option value="mint">Mint</option><option value="blue">Blue</option><option value="violet">Violet</option><option value="rose">Rose</option><option value="amber">Amber</option>
+          </select>
+          <button class="btn" id="resetPrefs">Reset</button>
+        </div>
+        <div style="display:flex;gap:12px;align-items:center">
+          <label style="min-width:100px"><strong>Density</strong></label>
+          <select id="densityPicker" class="input" style="max-width:160px;">
+            <option value="cozy">Cozy</option><option value="compact">Compact</option><option value="comfy">Comfy</option>
+          </select>
+          <label style="min-width:100px"><strong>Text</strong></label>
+          <select id="fsPicker" class="input" style="max-width:120px;"><option value="0.92">Small</option><option value="1" selected>Normal</option><option value="1.1">Large</option></select>
+        </div>
+        <div style="margin-top:6px;color:var(--muted);font-size:.95rem">Keyboard: <kbd class="kbd">⌘/Ctrl+K</kbd> opens command palette; <kbd class="kbd">/</kbd> focuses search; <kbd class="kbd">?</kbd> shows shortcuts.</div>
       </div>
-      <div style="margin-top:6px;color:var(--muted);font-size:.95rem">Keyboard: <kbd>⌘/Ctrl+K</kbd> opens command palette; <kbd>/</kbd> focuses search; <kbd>?</kbd> shows shortcuts.</div>
-    </div>
+    </form>
   </dialog>
 
   <dialog id="quizModal" aria-label="Career Quiz">
-    <form method="dialog" style="display:flex; justify-content:space-between; align-items:center; padding:12px; border-bottom:1px solid rgba(255,255,255,0.02)"><h2>Career Discovery Quiz</h2><button class="btn">✖</button></form>
-    <div style="padding:14px;">
-      <div class="row cols-2">
-        <div class="card"><h3>Questions</h3><div id="quizForm" class="grid" style="gap:12px; margin-top:10px"></div><button class="btn cta" id="quizSubmit" style="margin-top:10px">See My Matches</button></div>
-        <div class="card"><h3>Your Match</h3><p id="quizResult" class="lead" style="font-size:1rem">Answer questions to see a suggested track and internships.</p><div id="quizBadges" class="grid" style="margin-top:8px"></div></div>
+    <form method="dialog" style="padding:0;border-radius:12px;overflow:hidden">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;border-bottom:1px solid rgba(255,255,255,0.02)">
+        <h2 style="margin:0">Career Discovery Quiz</h2><button class="btn">✖</button>
       </div>
-    </div>
+      <div style="padding:14px">
+        <div class="row cols-2">
+          <div class="card">
+            <h3>Questions</h3>
+            <div id="quizForm" style="margin-top:10px"></div>
+            <button class="btn cta" id="quizSubmit" style="margin-top:10px">See My Matches</button>
+          </div>
+          <div class="card">
+            <h3>Your Match</h3>
+            <p id="quizResult" class="muted" style="font-size:1rem">Answer questions to see a suggested track and internships.</p>
+            <div id="quizBadges" style="margin-top:8px;display:grid;gap:8px"></div>
+          </div>
+        </div>
+      </div>
+    </form>
   </dialog>
 
   <dialog id="simModal" aria-label="Role Simulation">
-    <form method="dialog" style="display:flex; justify-content:space-between; align-items:center; padding:12px; border-bottom:1px solid rgba(255,255,255,0.02)"><h2>Try This Role</h2><button class="btn">✖</button></form>
-    <div style="padding:14px;">
-      <div class="row cols-2">
-        <div class="card"><h3>Pick a Simulation</h3><div class="tabs" id="simTabs"></div><div id="simContent" style="margin-top:12px"></div></div>
-        <div class="card"><h3>Submit & Feedback</h3><textarea id="simAnswer" rows="8" class="input" placeholder="Write your approach…"></textarea><div style="display:flex; gap:8px; margin-top:10px"><button class="btn cta" id="simSubmit">Submit</button><button class="btn" id="simBadge">Get Practice Badge</button></div><p id="simFeedback" class="lead" style="font-size:.95rem; color:var(--muted); margin-top:8px"></p></div>
+    <form method="dialog" style="padding:0;border-radius:12px;overflow:hidden">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;border-bottom:1px solid rgba(255,255,255,0.02)">
+        <h2 style="margin:0">Try This Role</h2><button class="btn">✖</button>
       </div>
-    </div>
+      <div style="padding:14px">
+        <div style="display:grid;gap:12px">
+          <div class="card">
+            <h3>Pick a Simulation</h3>
+            <div class="tabs" id="simTabs" style="display:flex;gap:8px"></div>
+            <div id="simContent" style="margin-top:12px"></div>
+          </div>
+          <div class="card">
+            <h3>Submit & Feedback</h3>
+            <textarea id="simAnswer" rows="6" class="input" placeholder="Write your approach…"></textarea>
+            <div style="display:flex;gap:8px;margin-top:10px">
+              <button class="btn cta" id="simSubmit">Submit</button>
+              <button class="btn" id="simBadge">Claim Practice Badge</button>
+            </div>
+            <div id="simFeedback" class="muted" style="margin-top:8px"></div>
+          </div>
+        </div>
+      </div>
+    </form>
   </dialog>
 
   <dialog id="storyModal" aria-label="Success Stories">
-    <form method="dialog" style="display:flex; justify-content:space-between; align-items:center; padding:12px; border-bottom:1px solid rgba(255,255,255,0.02)"><h2>Success Stories</h2><button class="btn">✖</button></form>
-    <div style="padding:14px;">
-      <div class="grid g-2" id="storyGrid"></div>
-    </div>
+    <form method="dialog" style="padding:0;border-radius:12px;overflow:hidden">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;border-bottom:1px solid rgba(255,255,255,0.02)">
+        <h2 style="margin:0">Success Stories</h2><button class="btn">✖</button>
+      </div>
+      <div style="padding:14px">
+        <div id="storyGrid" style="display:grid;gap:12px"></div>
+      </div>
+    </form>
   </dialog>
 
   <dialog id="circleModal" aria-label="Join Mentorship Circle">
-    <form method="dialog" style="display:flex; justify-content:space-between; align-items:center; padding:12px; border-bottom:1px solid rgba(255,255,255,0.02)"><h2>Join a Mentorship Circle</h2><button class="btn">✖</button></form>
-    <div style="padding:14px;">
-      <div class="row cols-2">
-        <div class="card">
-          <div class="row g-2">
-            <div><label><strong>Choose Track</strong></label><select id="circleTrack" class="input"></select></div>
-            <div><label><strong>Your Name</strong></label><input id="circleName" class="input" placeholder="e.g., Kartik"></div>
-            <div><label><strong>Email</strong></label><input id="circleMail" class="input" placeholder="you@example.com"></div>
-          </div>
-          <button class="btn cta" id="circleJoin" style="margin-top:10px">Request Invite</button>
-          <p id="circleMsg" class="lead" style="font-size:.95rem; color:var(--muted); margin-top:8px"></p>
-        </div>
-        <div class="card"><h3>What you get</h3><ul><li>Small-group mentor time</li><li>Peer accountability</li><li>Priority for partner roles</li></ul></div>
+    <form method="dialog" style="padding:0;border-radius:12px;overflow:hidden">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;border-bottom:1px solid rgba(255,255,255,0.02)">
+        <h2 style="margin:0">Join a Mentorship Circle</h2><button class="btn">✖</button>
       </div>
-    </div>
+      <div style="padding:14px">
+        <div style="display:grid;gap:12px">
+          <div class="card">
+            <h3>Request Invite</h3>
+            <div style="display:grid;gap:8px">
+              <label><strong>Track</strong></label>
+              <select id="circleTrack" class="input"></select>
+              <label><strong>Your Name</strong></label>
+              <input id="circleName" class="input" placeholder="e.g., Kartik" />
+              <label><strong>Email</strong></label>
+              <input id="circleMail" class="input" placeholder="you@example.com" />
+              <button class="btn cta" id="circleJoin" style="margin-top:6px">Request Invite</button>
+              <div id="circleMsg" class="muted" style="margin-top:8px"></div>
+            </div>
+          </div>
+          <div class="card">
+            <h3>What you get</h3>
+            <ul style="margin-top:8px">
+              <li>Small-group mentor time</li>
+              <li>Peer accountability</li>
+              <li>Priority for partner roles</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </form>
   </dialog>
 
   <dialog id="projectModal" aria-label="Add Project">
-    <form method="dialog" style="display:flex; justify-content:space-between; align-items:center; padding:12px; border-bottom:1px solid rgba(255,255,255,0.02)"><h2>Add Project</h2><button class="btn">✖</button></form>
-    <div style="padding:14px;">
-      <div class="row cols-2">
-        <div class="card">
-          <div class="row g-2">
-            <div><label><strong>Title</strong></label><input id="prTitle" class="input"></div>
-            <div><label><strong>Track</strong></label><select id="prTrack" class="input"></select></div>
-          </div>
-          <div style="margin-top:8px"><label><strong>Summary</strong></label><textarea id="prSummary" rows="4" class="input"></textarea></div>
-          <div class="row g-2" style="margin-top:8px">
-            <div><label><strong>Skills (comma)</strong></label><input id="prSkills" class="input" placeholder="Python, Figma, SQL"></div>
-            <div><label><strong>Links (comma)</strong></label><input id="prLinks" class="input" placeholder="repo, demo"></div>
-          </div>
-          <button class="btn cta" id="prSave" style="margin-top:10px">Save Project</button>
-          <p id="prMsg" class="lead" style="font-size:.95rem; color:var(--muted); margin-top:8px"></p>
-        </div>
-        <div class="card"><h3>Tips</h3><ul><li>Connect outcomes to role</li><li>Attach repo/demo</li><li>Quantify impact</li></ul></div>
+    <form method="dialog" style="padding:0;border-radius:12px;overflow:hidden">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;border-bottom:1px solid rgba(255,255,255,0.02)">
+        <h2 style="margin:0">Add Project</h2><button class="btn">✖</button>
       </div>
-    </div>
+      <div style="padding:14px">
+        <div style="display:grid;gap:12px">
+          <div class="card">
+            <div style="display:grid;gap:8px">
+              <label><strong>Title</strong></label><input id="prTitle" class="input" />
+              <label><strong>Track</strong></label><select id="prTrack" class="input"></select>
+              <label><strong>Summary</strong></label><textarea id="prSummary" rows="4" class="input"></textarea>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                <div><label><strong>Skills (comma)</strong></label><input id="prSkills" class="input" placeholder="Python, Figma, SQL" /></div>
+                <div><label><strong>Links (comma)</strong></label><input id="prLinks" class="input" placeholder="repo, demo" /></div>
+              </div>
+              <button class="btn cta" id="prSave" style="margin-top:8px">Save Project</button>
+              <div id="prMsg" class="muted" style="margin-top:6px"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
   </dialog>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <button id="backTop" title="Back to top" style="position:fixed;right:18px;bottom:90px;z-index:300;padding:10px;border-radius:12px;background:linear-gradient(180deg,var(--glass),transparent);display:none">↑ Top</button>
 
-  <button id="backTop" title="Back to top" style="position:fixed; right:18px; bottom:90px; z-index:300; padding:10px 12px; border-radius:12px; background:linear-gradient(180deg,var(--glass),transparent); border:none; box-shadow:0 12px 30px rgba(0,0,0,.45); display:none;">↑ Top</button>
+  <script>
+  /* ===================== DATA ===================== */
+  const TRACKS = [
+    {id:'data',name:'Data Science',color:'var(--accent-blue)',modules:['Intro to Python','EDA','SQL Basics','Modeling']},
+    {id:'ux',name:'Product Design',color:'var(--accent-violet)',modules:['Design Thinking','Wireframing','Prototyping','User Research']},
+    {id:'web',name:'Frontend',color:'var(--accent-mint)',modules:['HTML/CSS','JS Fundamentals','React','Performance']},
+    {id:'pm',name:'Product Mgmt',color:'var(--accent-amber)',modules:['Roadmaps','Metrics','Stakeholders','Delivery']}
+  ];
 
-<script>
-/* ===================== DATA ===================== */
-const TRACKS = [
-  {id:'data',name:'Data Science',color:'var(--blue)',modules:['Intro to Python','EDA','SQL Basics','Modeling']},
-  {id:'ux',name:'Product Design',color:'var(--violet)',modules:['Design Thinking','Wireframing','Prototyping','User Research']},
-  {id:'web',name:'Frontend',color:'var(--mint)',modules:['HTML/CSS','JS Fundamentals','React','Performance']},
-  {id:'pm',name:'Product Mgmt',color:'var(--amber)',modules:['Roadmaps','Metrics','Stakeholders','Delivery']}
-];
+  const DISCOVER = [
+    {title:'Role Quiz: Find Your Fit',cat:'all',icon:'🧭',desc:'Answer quick questions and receive a starter plan.',action:()=>openModal('quizModal')},
+    {title:'Data Analyst Simulation',cat:'tech',icon:'📊',desc:'Inspect a small dataset and outline KPIs.'},
+    {title:'Micro UX Challenge',cat:'design',icon:'🎨',desc:'Design a signup flow in 10 minutes.'}
+  ];
 
-const DISCOVER = [
-  {title:'Role Quiz: Find Your Fit',cat:'all',icon:'🧭',desc:'Answer quick questions and receive a starter plan.',action:()=>openModal('quizModal')},
-  {title:'Data Analyst Simulation',cat:'tech',icon:'📊',desc:'Inspect a small dataset and outline KPIs.'},
-  {title:'Micro UX Challenge',cat:'design',icon:'🎨',desc:'Design a signup flow in 10 minutes.'}
-];
+  const MENTORS = [
+    {name:'Aditya',title:'Data Analyst @ Gojek',track:'data'},
+    {name:'Maya',title:'Product Designer @ Traveloka',track:'ux'},
+    {name:'Rafi',title:'Frontend @ Tokopedia',track:'web'},
+    {name:'Tara',title:'PM @ Stripe',track:'pm'}
+  ];
 
-const MENTORS = [
-  {name:'Aditya',title:'Data Analyst @ Gojek',track:'data'},
-  {name:'Maya',title:'Product Designer @ Traveloka',track:'ux'},
-  {name:'Rafi',title:'Frontend @ Tokopedia',track:'web'},
-  {name:'Tara',title:'PM @ Stripe',track:'pm'}
-];
+  const INTERNSHIPS = [
+    {id:1,company:'Gojek',role:'Data Analyst Intern',track:'data',loc:'Indonesia',added:'2025-09-14',pay:'Paid',type:'Summer',url:'#'},
+    {id:2,company:'Shopee',role:'UX Design Intern',track:'ux',loc:'Singapore',added:'2025-09-01',pay:'Paid',type:'3–6 mo',url:'#'},
+    {id:3,company:'Tokopedia',role:'Frontend Intern',track:'web',loc:'Indonesia',added:'2025-08-22',pay:'Paid',type:'6 mo',url:'#'},
+    {id:4,company:'Stripe',role:'PM Intern',track:'pm',loc:'Remote',added:'2025-10-01',pay:'Paid',type:'3–6 mo',url:'#'}
+  ];
 
-const INTERNSHIPS = [
-  {id:1,company:'Gojek',role:'Data Analyst Intern',track:'data',loc:'Indonesia',added:'2025-09-14',pay:'Paid',type:'Summer',url:'#'},
-  {id:2,company:'Shopee',role:'UX Design Intern',track:'ux',loc:'Singapore',added:'2025-09-01',pay:'Paid',type:'3–6 mo',url:'#'},
-  {id:3,company:'Tokopedia',role:'Frontend Intern',track:'web',loc:'Indonesia',added:'2025-08-22',pay:'Paid',type:'6 mo',url:'#'},
-  {id:4,company:'Stripe',role:'PM Intern',track:'pm',loc:'Remote',added:'2025-10-01',pay:'Paid',type:'3–6 mo',url:'#'}
-];
+  const STORIES = [
+    {name:'Aila — From projects to Data role',body:'Started with the quiz, finished Data track, shipped dashboards, and got a summer offer.'},
+    {name:'Vyandra — Designed a product and landed interviews',body:'Built portfolio projects and improved interview outcomes.'}
+  ];
 
-const STORIES = [
-  {name:'Aila — From projects to Data role',body:'Started with the quiz, finished Data track, shipped dashboards, and got a summer offer.'},
-  {name:'Vyandra — Designed a product and landed interviews',body:'Built portfolio projects and improved interview outcomes.'}
-];
+  const SIMS = [
+    {id:'data',name:'Data Analyst',prompt:'Outline KPIs and a quick SQL/Pandas approach for user retention.'},
+    {id:'ux',name:'Product Designer',prompt:'Sketch the primary task flow and metrics to measure success.'}
+  ];
 
-const SIMS = [
-  {id:'data',name:'Data Analyst',prompt:'Outline KPIs and a quick SQL/Pandas approach for user retention.'},
-  {id:'ux',name:'Product Designer',prompt:'Sketch the primary task flow and metrics to measure success.'}
-];
+  /* ===================== STATE & HELPERS ===================== */
+  const $ = s => document.querySelector(s);
+  const $$ = s => Array.from(document.querySelectorAll(s));
 
-/* ===================== STATE & HELPERS ===================== */
-const $ = s => document.querySelector(s);
-const $$ = s => Array.from(document.querySelectorAll(s));
-
-const defaults = {
-  theme: localStorage.getItem('theme') || 'dark',
-  accent: localStorage.getItem('accent') || 'mint',
-  density: localStorage.getItem('density') || 'cozy',
-  fs: parseFloat(localStorage.getItem('fs')||'1'),
-  badges: new Set(JSON.parse(localStorage.getItem('badges')||'[]')),
-  favs: new Set(JSON.parse(localStorage.getItem('favs')||'[]')),
-  compare: new Set(JSON.parse(localStorage.getItem('compare')||'[]')),
-  notes: JSON.parse(localStorage.getItem('notes')||'{}'),
-  portfolio: JSON.parse(localStorage.getItem('portfolio')||'[]'),
-  page: 1, perPage: 6, view: 'grid', selectedTrack: 'data', speed: 'standard'
-};
-const state = {...defaults};
-function save(){ localStorage.setItem('theme', state.theme); localStorage.setItem('accent', state.accent); localStorage.setItem('density', state.density); localStorage.setItem('fs', state.fs); localStorage.setItem('badges', JSON.stringify([...state.badges])); localStorage.setItem('favs', JSON.stringify([...state.favs])); localStorage.setItem('compare', JSON.stringify([...state.compare])); localStorage.setItem('notes', JSON.stringify(state.notes)); localStorage.setItem('portfolio', JSON.stringify(state.portfolio)); }
-
-function applyTheme(){ if(state.theme==='auto'){ document.documentElement.removeAttribute('data-theme'); } else document.documentElement.setAttribute('data-theme', state.theme); }
-function applyAccent(){
-  const map = {mint:'var(--mint)', blue:'var(--blue)', violet:'var(--violet)', rose:'var(--rose)', amber:'var(--amber)'};
-  document.documentElement.style.setProperty('--accent', map[state.accent] || map.mint);
-}
-function applyDensity(){ const v = state.density; document.documentElement.style.setProperty('--space', v==='compact'?'10px':v==='comfy'?'18px':'14px'); }
-function applyFS(){ document.documentElement.style.setProperty('--fs', state.fs); document.documentElement.style.fontSize = `calc(16px * var(--fs, 1))`; }
-
-/* handy element creation */
-const el = (t, a = {}, ...c) => {
-  const e = Object.assign(document.createElement(t), a);
-  for (const x of c) {
-    if (typeof x === 'string') e.appendChild(document.createTextNode(x));
-    else if (x) e.appendChild(x);
-  }
-  return e;
-};
-const openModal = (id, preset) => {
-  const d = document.getElementById(id);
-  if (!d) return;
-  if (preset && id === 'simModal') selectSim(preset);
-  d.showModal();
-};
-const jump = id => document.getElementById(id)?.scrollIntoView({behavior:'smooth', block:'start'});
-const fmtDate = iso => new Date(iso).toLocaleDateString();
-const toastQueue = [];
-const toastEl = $('#toast');
-function toast(m,ms=1600){
-  toastQueue.push({m,ms});
-  if (toastEl.dataset.busy==='1') return;
-  const run = () => {
-    if (!toastQueue.length){ toastEl.dataset.busy='0'; toastEl.classList.remove('show'); return; }
-    const t = toastQueue.shift();
-    toastEl.textContent = t.m;
-    toastEl.classList.add('show');
-    toastEl.dataset.busy='1';
-    setTimeout(()=>{ toastEl.classList.remove('show'); setTimeout(run,220); }, t.ms);
+  const defaults = {
+    theme: localStorage.getItem('theme') || 'dark',
+    accent: localStorage.getItem('accent') || 'mint',
+    density: localStorage.getItem('density') || 'cozy',
+    fs: parseFloat(localStorage.getItem('fs')||'1'),
+    badges: new Set(JSON.parse(localStorage.getItem('badges')||'[]')),
+    favs: new Set(JSON.parse(localStorage.getItem('favs')||'[]')),
+    compare: new Set(JSON.parse(localStorage.getItem('compare')||'[]')),
+    notes: JSON.parse(localStorage.getItem('notes')||'{}'),
+    portfolio: JSON.parse(localStorage.getItem('portfolio')||'[]'),
+    page: 1, perPage: 6, view: 'grid', selectedTrack: 'data', speed: 'standard'
   };
-  run();
-}
-const debounce = (fn,ms=200)=>{ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a),ms)}};
-const clamp = (v,a,b)=> Math.max(a, Math.min(b, v));
+  const state = {...defaults};
 
-/* ===================== Ambient: spotlight, cursor, particles ===================== */
-(()=>{ // spotlight follows pointer with smoothing
-  const spot = $('.spotlight');
-  if(!spot) return;
-  let mx = innerWidth/2, my = innerHeight/2, tx = mx, ty = my;
-  const onMove = (e)=>{ tx = e.clientX; ty = e.clientY; };
-  addEventListener('pointermove', onMove, {passive:true});
-  const loop = ()=>{ mx += (tx-mx)*.12; my += (ty-my)*.12; spot.style.setProperty('--mx', mx + 'px'); spot.style.setProperty('--my', my + 'px'); requestAnimationFrame(loop); };
-  loop();
-})();
-
-(()=>{ const dot = $('.cursor-dot'), ring = $('.cursor-ring'); if(!dot||!ring) return;
-  let x=0,y=0, rx=0,ry=0, tx=innerWidth/2, ty=innerHeight/2;
-  const lerp=(a,b,t)=>a+(b-a)*t;
-  addEventListener('pointermove', e=>{ tx=e.clientX; ty=e.clientY; dot.style.opacity=1; ring.style.opacity=1 }, {passive:true});
-  addEventListener('mousedown', e=>{ const p=document.createElement('span'); p.className='cursor-pulse'; p.style.left=e.clientX+'px'; p.style.top=e.clientY+'px'; document.body.appendChild(p); p.animate([{opacity:1, transform:'scale(.8)'},{opacity:0, transform:'scale(2)'}],{duration:550, easing:'cubic-bezier(.2,.8,.2,1)'}).onfinish=()=>p.remove(); });
-  const loop = ()=>{ x=lerp(x,tx,.35); y=lerp(y,ty,.35); rx=lerp(rx,tx,.18); ry=lerp(ry,ty,.18); dot.style.transform=`translate(${x}px,${y}px)`; ring.style.transform=`translate(${rx}px,${ry}px)`; requestAnimationFrame(loop); };
-  loop();
-  document.addEventListener('mousemove', e=>{ const m = e.target.closest('.btn, .tab, .sb-btn, .magnet'); ring.style.width = m ? '46px' : '34px'; ring.style.height = m ? '46px' : '34px'; }, {passive:true});
-})();
-
-/* lightweight particles (less heavy than before on mobile) */
-(()=>{ const c = document.getElementById('particles'); if(!c) return; const ctx = c.getContext('2d'); let DPR = Math.max(1, devicePixelRatio||1); let w=innerWidth, h=innerHeight; const resize = ()=>{ DPR = Math.max(1, devicePixelRatio||1); w=innerWidth; h=innerHeight; c.width = w*DPR; c.height = h*DPR; c.style.width = w+'px'; c.style.height = h+'px'; ctx.setTransform(DPR,0,0,DPR,0,0); };
-  resize(); addEventListener('resize', debounce(resize,120));
-  const N = Math.min(80, Math.floor(w*h/24000));
-  const pts = Array.from({length:N}, ()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:1+Math.random()*2}));
-  function step(){ ctx.clearRect(0,0,w,h); for(const p of pts){ p.x+=p.vx; p.y+=p.vy; if(p.x<0||p.x>w) p.vx*=-1; if(p.y<0||p.y>h) p.vy*=-1; ctx.globalAlpha = .6; ctx.fillStyle = 'rgba(255,255,255,.5)'; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); } requestAnimationFrame(step); }
-  step();
-})();
-
-/* ===================== Scroll progress, reveal, parallax, marquee, counters ===================== */
-const progressEl = $('#progress');
-let lastScroll = 0;
-addEventListener('scroll', debounce(()=>{
-  const p = Math.min(1, scrollY / (document.body.scrollHeight - innerHeight));
-  progressEl.style.transform = `scaleX(${p})`;
-  lastScroll = Date.now();
-  // back to top visibility
-  const bt = $('#backTop'); if(bt) bt.style.display = scrollY > 400 ? 'block' : 'none';
-}, 40), {passive:true});
-
-const io = new IntersectionObserver((entries)=>{ entries.forEach((en)=>{ if(en.isIntersecting){ // add delay per child
-    if(en.target.dataset.staggered==='1'){
-      const children = Array.from(en.target.children);
-      children.forEach((c,i)=> setTimeout(()=> c.classList.add('show'), i*90));
-    } else en.target.classList.add('show');
-    io.unobserve(en.target);
-  } }); }, {threshold: 0.12});
-const revealScan = ()=> $$('.reveal').forEach(el=> io.observe(el));
-
-const spySections = [...$$('section[data-spy]')], spyBtns = [...$$('.sb-btn[data-jump]')];
-const spyIO = new IntersectionObserver((entries)=>{ entries.forEach(en=>{ if(en.isIntersecting){ const id=en.target.id; spyBtns.forEach(b=>{ const a=b.dataset.jump===id; b.classList.toggle('active',a); }); } }); },{threshold:0.45});
-spySections.forEach(sec=>spyIO.observe(sec));
-
-/* smoother parallax using rAF */
-const parallaxEls = [...$$('.parallax')];
-let ticking = false;
-function onScrollParallax(){
-  if(ticking) return;
-  ticking = true;
-  requestAnimationFrame(()=>{ const sy = scrollY; parallaxEls.forEach(el=>{ const r = el.getBoundingClientRect(); const f = parseFloat(el.dataset.parallax||0.06); const offset = (r.top) * f; el.style.transform = `translateY(${offset}px)`; }); ticking = false; });
-}
-addEventListener('scroll', onScrollParallax, {passive:true});
-
-/* marquee */
-(function marquee(){ const wrap = $('#marquee'); if(!wrap) return; let x = 0; let speed = 0.6; let paused=false;
-  wrap.addEventListener('mouseenter', ()=> paused=true);
-  wrap.addEventListener('mouseleave', ()=> paused=false);
-  function loop(){ if(!paused){ x -= speed; wrap.style.transform = `translateX(${x}px)`; const width = wrap.scrollWidth; if(Math.abs(x) > width/2) x = 0; } requestAnimationFrame(loop); }
-  loop();
-})();
-
-function animateCounter(el, to, dur=1000){
-  const from = parseInt(el.textContent.replace(/,/g,'')) || 0; const start = performance.now(); const step = (t)=>{ const p = Math.min(1,(t-start)/dur); const eased = 1 - Math.pow(1-p,3); el.textContent = Math.floor(from + (to-from)*eased).toLocaleString(); if(p<1) requestAnimationFrame(step); };
-  requestAnimationFrame(step);
-}
-
-/* ========= HERO / Streak ========= */
-function renderHeat(){
-  const wrap = $('#heat'); if(!wrap) return; wrap.innerHTML=''; const days = 30; const done = state.badges.size;
-  for(let i=0;i<days;i++){
-    const on = i < Math.min(days, done);
-    const s = document.createElement('div');
-    s.style.width = '10px'; s.style.height = '10px'; s.style.borderRadius = '4px';
-    s.style.background = on ? 'linear-gradient(135deg,var(--accent),var(--blue))' : 'rgba(255,255,255,0.03)';
-    wrap.appendChild(s);
+  function save(){
+    try{
+      localStorage.setItem('theme', state.theme);
+      localStorage.setItem('accent', state.accent);
+      localStorage.setItem('density', state.density);
+      localStorage.setItem('fs', state.fs);
+      localStorage.setItem('badges', JSON.stringify([...state.badges]));
+      localStorage.setItem('favs', JSON.stringify([...state.favs]));
+      localStorage.setItem('compare', JSON.stringify([...state.compare]));
+      localStorage.setItem('notes', JSON.stringify(state.notes));
+      localStorage.setItem('portfolio', JSON.stringify(state.portfolio));
+    }catch(e){ /* storage might be disabled */ }
   }
-}
 
-/* ========= Discover ========= */
-function renderDiscover(filter='all'){
-  const grid = $('#discoverGrid'); if(!grid) return; grid.innerHTML=''; const items = DISCOVER.filter(x=> filter==='all' || x.cat===filter);
-  const enriched = [...items, ...items.map(i=>({...i, title: i.title+' +' }))];
-  enriched.forEach((item, idx)=>{
-    const card = el('article', {className:'card reveal magnet', tabIndex:0});
-    card.innerHTML = `<div style="display:flex; align-items:center; justify-content:space-between; gap:10px"><h3 style="margin:0">${item.icon} ${item.title}</h3><span class="pill">${filter==='all'?'Mixed':item.cat}</span></div><p class="lead" style="font-size:.98rem; margin:.4rem 0; color:var(--muted)">${item.desc}</p>`;
-    const actions = el('div', {style:'margin-top:8px;display:flex;gap:8px;'});
-    const open = el('button',{className:'btn'}, 'Open');
-    open.addEventListener('click', ()=> item.action ? item.action() : toast('Opening...'));
-    actions.appendChild(open);
-    card.appendChild(actions);
-    grid.appendChild(card);
-    // stagger children reveal
-    card.dataset.staggered = '0';
-  });
-  revealScan(); bindMagnet();
-}
-$$('#discTabs .tab').forEach(t=> t.addEventListener('click', e=>{ $$('#discTabs .tab').forEach(x=>x.classList.remove('active')); e.currentTarget.classList.add('active'); renderDiscover(e.currentTarget.dataset.filter); }));
-
-/* ========= Pathways ========= */
-function renderTrackTabs(){
-  const tabs = $('#trackTabs'); if(!tabs) return; tabs.innerHTML='';
-  for(const t of TRACKS){
-    const active = t.id === state.selectedTrack;
-    const b = el('button',{className:'tab'+(active?' active':''), onclick:()=>{ state.selectedTrack = t.id; save(); renderTrackTabs(); renderTrackContent(); updateRecommendations(); }}, t.name);
-    tabs.appendChild(b);
+  function applyTheme(){ if(state.theme==='auto'){ document.documentElement.removeAttribute('data-theme'); } else document.documentElement.setAttribute('data-theme', state.theme); }
+  function applyAccent(){
+    const map = {mint:'var(--accent-mint)', blue:'var(--accent-blue)', violet:'var(--accent-violet)', rose:'var(--accent-rose)', amber:'var(--accent-amber)'};
+    document.documentElement.style.setProperty('--accent', map[state.accent] || map.mint);
   }
-}
-function renderTrackContent(){
-  const t = TRACKS.find(x=>x.id===state.selectedTrack);
-  const box = $('#trackContent'); if(!box) return;
-  box.innerHTML = `
-    <div style="display:flex; gap:12px; align-items:center;">
-      <div style="width:10px;height:40px;background:linear-gradient(180deg,var(--accent),var(--blue));border-radius:6px"></div>
-      <div>
-        <h4 style="margin:0">${t.name}</h4>
-        <div class="lead" style="margin-top:6px;color:var(--muted)">Modules: ${t.modules.join(' • ')}</div>
-      </div>
-    </div>
-    <div style="display:flex; gap:8px; margin-top:8px;">
-      <button class="btn" id="previewTrack">Preview</button>
-      <button class="btn cta" id="startTrack">Start Track</button>
-    </div>
-  `;
-  $('#previewTrack')?.addEventListener('click', ()=>{ toast('Previewing track...'); });
-  $('#startTrack')?.addEventListener('click', ()=>{ state.badges.add(`${t.id}-started`); save(); renderBadges(); updateRecommendations(); toast('Track started'); });
-}
-function renderBadges(){
-  const wrap = $('#badges'); if(!wrap) return; wrap.innerHTML='';
-  if(!state.badges.size){ wrap.appendChild(el('span',{className:'pill'},'No badges yet. Complete a module!')); return; }
-  [...state.badges].forEach(b=> wrap.appendChild(el('div',{className:'card'}, b)));
-}
-$$('#speedTabs .tab').forEach(btn=> btn.addEventListener('click', e=>{ $$('#speedTabs .tab').forEach(x=>x.classList.remove('active')); e.currentTarget.classList.add('active'); state.speed = e.currentTarget.dataset.speed; save(); toast('Speed: '+state.speed); }));
+  function applyDensity(){ const v = state.density; document.documentElement.style.setProperty('--gap', v==='compact'?'8px':v==='comfy'?'20px':'14px'); }
+  function applyFS(){ document.documentElement.style.setProperty('--fs', state.fs); document.documentElement.style.fontSize = `calc(16px * var(--fs, 1))`; }
 
-/* ========= Mentors ========= */
-function renderMentors(){
-  const grid = $('#mentorGrid'); if(!grid) return; grid.innerHTML='';
-  MENTORS.forEach(m=>{
-    grid.appendChild(el('article',{className:'card reveal magnet'},
-      el('div',{style:'display:flex; gap:10px; align-items:center'},
-         el('div',{className:'pill', style:'min-width:44px;min-height:44px;display:grid;place-items:center;border-radius:10px;background:linear-gradient(180deg,var(--glass),transparent)'}, m.name[0]),
-         el('div',{}, el('strong',{},m.name), el('div',{className:'lead', style:'color:var(--muted)'}, m.title))
-      ),
-      el('div',{style:'margin-top:8px'}, el('button',{className:'btn', onclick:()=>toast('Requested intro to '+m.name)}, 'Request Intro'))
-    ));
-  });
-  revealScan(); bindMagnet();
-}
+  const el = (t, a = {}, ...c) => {
+    const e = Object.assign(document.createElement(t), a);
+    for (const x of c) {
+      if (typeof x === 'string') e.appendChild(document.createTextNode(x));
+      else if (x) e.appendChild(x);
+    }
+    return e;
+  };
 
-/* ========= Internships ========= */
-function updateFilters(){
-  const sel = $('#filterTrack'); sel.innerHTML=''; sel.appendChild(el('option',{value:'all'}, 'All tracks'));
-  TRACKS.forEach(t=> sel.appendChild(el('option',{value:t.id, selected:t.id===state.selectedTrack}, t.name)));
-  const loc = $('#filterLoc'); loc.innerHTML=''; ['all','Remote','Indonesia','Singapore','India'].forEach(o=> loc.appendChild(el('option',{value:o}, o==='all'?'All locations':o)));
-  const type = $('#filterType'); type.innerHTML=''; ['all','Summer','3–6 mo','6 mo'].forEach(o=> type.appendChild(el('option',{value:o}, o==='all'?'All types':o)));
-  const pay = $('#filterPay'); pay.innerHTML=''; ['all','Paid','Unpaid'].forEach(o=> pay.appendChild(el('option',{value:o}, o==='all'?'Any pay':o)));
-  const sort = $('#sortBy'); sort.innerHTML=''; [['recent','Most recent'],['company','Company'],['role','Role']].forEach(([v,label])=> sort.appendChild(el('option',{value:v}, label)));
-}
-;['filterTrack','filterLoc','filterType','filterPay','sortBy'].forEach(id=> document.getElementById(id).addEventListener('change', ()=>{ state.page=1; renderInternships({}); }));
+  const openModal = (id, preset) => {
+    const d = document.getElementById(id);
+    if (!d) return;
+    if (preset && id === 'simModal') selectSim(preset);
+    if(typeof d.showModal === 'function') d.showModal();
+    else d.style.display = 'block';
+  };
+  const closeModal = (id) => {
+    const d = document.getElementById(id);
+    if (!d) return;
+    if(typeof d.close === 'function') d.close();
+    else d.style.display = 'none';
+  };
+  const jump = id => document.getElementById(id)?.scrollIntoView({behavior:'smooth', block:'start'});
 
-$('#viewGrid').addEventListener('click', ()=>{ state.view='grid'; renderInternships({}); $('#viewGrid').setAttribute('aria-pressed','true'); $('#viewList').setAttribute('aria-pressed','false'); });
-$('#viewList').addEventListener('click', ()=>{ state.view='list'; renderInternships({}); $('#viewGrid').setAttribute('aria-pressed','false'); $('#viewList').setAttribute('aria-pressed','true'); });
-function paginate(arr){ const start=(state.page-1)*state.perPage; return arr.slice(start, start+state.perPage); }
-
-function renderInternships({q=''} = {}){
-  const list = $('#internList'); if(!list) return; list.innerHTML='';
-  const tval = $('#filterTrack').value || 'all', lval = $('#filterLoc').value || 'all', type = $('#filterType').value || 'all', pay = $('#filterPay').value || 'all', sort = $('#sortBy').value || 'recent';
-  let items = INTERNSHIPS.filter(it=> (tval==='all'||it.track===tval) && (lval==='all'||it.loc===lval) && (type==='all'||it.type===type) && (pay==='all'||it.pay===pay) && (!q || (it.role+' '+it.company+' '+it.loc).toLowerCase().includes(q.toLowerCase())));
-  const total = items.length;
-  if(sort==='recent') items.sort((a,b)=> new Date(b.added)-new Date(a.added));
-  if(sort==='company') items.sort((a,b)=> a.company.localeCompare(b.company));
-  if(sort==='role') items.sort((a,b)=> a.role.localeCompare(b.role));
-  const totalPages = Math.max(1, Math.ceil(items.length/state.perPage)); if(state.page>totalPages) state.page = totalPages;
-  $('#pageInfo').textContent = `Page ${state.page} / ${totalPages}`; $('#prevPage').disabled = state.page===1; $('#nextPage').disabled = state.page===totalPages; $('#resultInfo').textContent = `${total} results`;
-  const pageItems = paginate(items);
-  for(const it of pageItems){
-    const fav = state.favs.has(it.id); const cmp = state.compare.has(it.id);
-    const wrap = el('div',{className:'card reveal magnet', style: state.view==='list' ? '' : 'display:grid; grid-template-columns:1fr auto; align-items:center;'});
-    const left = el('div', {},
-      el('div',{style:'display:flex; flex-wrap:wrap; align-items:center; gap:8px'}, (()=>{
-        const s = document.createElement('strong'); s.innerHTML = q ? highlight(it.role, q) : it.role; return s;
-      })(), el('span',{className:'pill'}, it.company)),
-      el('p',{className:'lead',style:'font-size:.92rem; color:var(--muted); margin-top:6px'}, 'Track: '+(TRACKS.find(t=>t.id===it.track)?.name||it.track)),
-      el('div', {style:'margin-top:8px'}, el('textarea',{className:'input', rows:2, placeholder:'Notes (saved)', value: state.notes[it.id]||'', oninput:(e)=>{ state.notes[it.id]=e.target.value; save(); }}))
-    );
-    const right = el('div',{style:'display:grid; gap:8px; justify-items:end'},
-      el('div', {}, el('button',{className:'btn', onclick:()=>{ if(fav){ state.favs.delete(it.id); toast('Removed from saved'); } else { state.favs.add(it.id); toast('Saved'); } save(); renderInternships({q}); renderSaved(); renderCompare(); }}, fav ? '★ Saved' : '☆ Save')),
-      el('div', {}, el('button',{className:'btn', onclick:()=>{ if(!cmp && state.compare.size>=3){ toast('Compare limit: 3'); return } if(cmp){ state.compare.delete(it.id); } else { state.compare.add(it.id); } save(); renderInternships({q}); renderCompare(); }}, cmp ? '✓ Compared' : '+ Compare')),
-      el('div', {}, el('button',{className:'btn', onclick:()=> openDrawer(it) }, 'Open'))
-    );
-    if(state.view==='list'){ wrap.append(left, right); } else { wrap.style.gridTemplateColumns = "auto 1fr auto"; wrap.append(el('div',{className:'pill'}, it.company[0]), left, right); }
-    list.appendChild(wrap);
+  const toastEl = $('#toast');
+  let toastTimer = null;
+  function toast(m, ms=1600){
+    if(!toastEl) return;
+    if(toastTimer) clearTimeout(toastTimer);
+    toastEl.textContent = m;
+    toastEl.classList.add('show');
+    toastTimer = setTimeout(()=> toastEl.classList.remove('show'), ms);
   }
-  if(!items.length){ list.appendChild(el('p',{className:'lead', style:'color:var(--muted)'}, 'No results. Try another filter.')); }
-  revealScan(); bindMagnet();
-}
-$('#prevPage').addEventListener('click', ()=>{ if(state.page>1){ state.page--; renderInternships({}); }});
-$('#nextPage').addEventListener('click', ()=>{ state.page++; renderInternships({}); });
 
-function renderSaved(){
-  const wrap = $('#savedWrap'); if(!wrap) return; wrap.innerHTML=''; const saved = INTERNSHIPS.filter(i=> state.favs.has(i.id));
-  if(!saved.length){ wrap.textContent = 'No saved roles yet.'; return; }
-  saved.forEach(s=> wrap.appendChild(el('div',{className:'card reveal'}, el('strong',{}, s.role), el('div',{className:'lead', style:'color:var(--muted)'}, s.company))));
-}
-function renderCompare(){
-  const wrap = $('#compareWrap'); if(!wrap) return; wrap.innerHTML=''; const items = INTERNSHIPS.filter(i=> state.compare.has(i.id));
-  if(!items.length){ wrap.appendChild(el('p',{className:'lead', style:'color:var(--muted)'}, 'No items to compare.')); return; }
-  items.forEach(it=> wrap.appendChild(el('div',{className:'card reveal'}, el('strong',{}, it.role), el('div',{className:'lead', style:'color:var(--muted)'}, it.company))));
-}
+  const debounce = (fn,ms=200)=>{ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a),ms)}};
+  const clamp = (v,a,b)=> Math.max(a, Math.min(b, v));
 
-/* ========= Drawer ========= */
-function openDrawer(it){
-  const d = $('#drawer'); if(!d) return;
-  $('#drawerTitle').textContent = it.role;
-  const b = $('#drawerBody'); b.innerHTML = '';
-  b.appendChild(el('div',{className:'card'}, el('div',{className:'pill'}, it.company[0]), el('div',{}, el('strong',{}, it.company), el('p',{className:'lead', style:'color:var(--muted)'}, `${it.role} • ${it.loc} • ${fmtDate(it.added)}`)), el('div',{style:'margin-top:10px'}, el('a',{href:it.url}, 'View Posting'))));
-  d.style.transform = 'translateX(0)'; d.setAttribute('aria-hidden','false');
-}
-$('#drawerClose').addEventListener('click', ()=>{ $('#drawer').style.transform='translateX(100%)'; $('#drawer').setAttribute('aria-hidden','true'); });
-
-/* ========= Quiz / Sims / Stories ========= */
-const QUIZ_QS = [
-  {id:'q1',q:'Which activity sounds fun right now?',opts:[['data','Exploring patterns in a dataset'],['ux','Sketching an app flow'],['web','Coding a mini-site'],['pm','Scoping an MVP']]}
-];
-function renderQuiz(){
-  const form = $('#quizForm'); if(!form) return; form.innerHTML='';
-  QUIZ_QS.forEach(({id,q,opts})=>{
-    const field = el('div', {}, el('label',{}, q));
-    const sel = el('select',{className:'input', id});
-    sel.appendChild(el('option',{value:''}, 'Choose...'));
-    opts.forEach(([v,label])=> sel.appendChild(el('option',{value:v}, label)));
-    field.appendChild(sel);
-    form.appendChild(field);
-  });
-}
-$('#quizSubmit').addEventListener('click', ()=>{ const picks = {}; QUIZ_QS.forEach(({id})=>{ const v = document.getElementById(id).value; if(v) picks[v] = (picks[v]||0)+1; }); const picked = Object.entries(picks).sort((a,b)=>b[1]-a[1])[0]; if(!picked) { toast('Answer something first'); return; } const track = picked[0]; $('#quizResult').textContent = `Suggested track: ${TRACKS.find(t=>t.id===track)?.name||track}`; state.selectedTrack = track; save(); renderTrackTabs(); renderTrackContent(); updateRecommendations(); toast('Quiz complete'); });
-
-function renderSimTabs(){ const wrap=$('#simTabs'); if(!wrap) return; wrap.innerHTML=''; SIMS.forEach(s=> wrap.appendChild(el('button',{className:'tab', onclick:()=>selectSim(s.id)}, s.name))); }
-function selectSim(id){ const s = SIMS.find(x=>x.id===id) || SIMS[0]; $$('#simTabs .tab').forEach(t=> t.classList.toggle('active', t.textContent === s.name)); $('#simContent').innerHTML = `<div class="card"><strong>${s.name}</strong><p class="lead" style="color:var(--muted)">${s.prompt}</p></div>`; }
-$('#simSubmit').addEventListener('click', ()=>{ const ans = $('#simAnswer').value.trim(); if(!ans){ $('#simFeedback').textContent = 'Write your approach first.'; return; } $('#simFeedback').textContent = 'Nice work — feedback: concise & actionable.'; toast('Submitted'); });
-
-$('#simBadge').addEventListener('click', ()=>{ state.badges.add(`${state.selectedTrack}-practice`); save(); renderBadges(); toast('Practice badge added'); updateMetrics(); });
-
-function renderStories(){ const grid = $('#storyGrid'); if(!grid) return; grid.innerHTML=''; STORIES.forEach(s=> grid.appendChild(el('article',{className:'card reveal magnet'}, el('h3',{}, s.name), el('p',{className:'lead'}, s.body)))); revealScan(); bindMagnet(); }
-
-/* ========= Portfolio ========= */
-function renderPortfolio(){ const grid = $('#portfolioGrid'); if(!grid) return; grid.innerHTML=''; if(!state.portfolio.length){ grid.appendChild(el('p',{className:'lead', style:'color:var(--muted)'}, 'No projects yet. Add one to get started.')); return; }
-  state.portfolio.forEach((p, idx)=>{
-    const card = el('div',{className:'card reveal', draggable:true, ondragstart:(e)=> e.dataTransfer.setData('text/plain', idx) },
-      el('strong',{}, p.title), el('div',{className:'lead', style:'color:var(--muted)'}, p.track),
-      el('p',{}, p.summary)
-    );
-    // allow simple drag reorder
-    card.addEventListener('dragover', e=> e.preventDefault());
-    card.addEventListener('drop', e=>{
-      e.preventDefault();
-      const from = parseInt(e.dataTransfer.getData('text/plain')); const to = idx;
-      const item = state.portfolio.splice(from,1)[0]; state.portfolio.splice(to,0,item); save(); renderPortfolio(); updateMetrics();
+  /* CURSOR */
+  (function cursorFactory(){
+    const dot = $('#cursorDot'), ring = $('#cursorRing');
+    if(!dot || !ring) return;
+    let tx = innerWidth/2, ty = innerHeight/2, x = tx, y = ty, rx = tx, ry = ty;
+    const lerp = (a,b,t)=> a + (b-a)*t;
+    document.addEventListener('pointermove', (e)=>{ tx = e.clientX; ty = e.clientY; dot.style.opacity = 1; ring.style.opacity = 1; }, {passive:true});
+    document.addEventListener('pointerdown', ()=> {
+      dot.style.transform = `translate(${tx}px,${ty}px) scale(0.8)`; ring.style.transform = `translate(${tx}px,${ty}px) scale(0.9)`; setTimeout(()=>{ dot.style.transform = ''; ring.style.transform=''; },120);
     });
-    grid.appendChild(card);
+    function loop(){
+      x = lerp(x, tx, 0.28);
+      y = lerp(y, ty, 0.28);
+      rx = lerp(rx, tx, 0.12);
+      ry = lerp(ry, ty, 0.12);
+      dot.style.left = x + 'px'; dot.style.top = y + 'px';
+      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+      requestAnimationFrame(loop);
+    }
+    loop();
+    // hover scale on actionable elements
+    document.addEventListener('pointerover', (e)=> {
+      const target = e.target.closest('button, a, .btn, .tab, .sb-btn, .magnet');
+      if(target){ ring.style.transform = 'translate(-50%,-50%) scale(1.16)'; ring.style.borderColor = 'color-mix(in oklab, var(--accent) 80%, transparent)'; }
+    });
+    document.addEventListener('pointerout', (e)=> {
+      const target = e.target.closest('button, a, .btn, .tab, .sb-btn, .magnet');
+      if(target){ ring.style.transform = 'translate(-50%,-50%) scale(1)'; ring.style.borderColor = ''; }
+    });
+  })();
+
+  /* REVEAL / PARALLAX */
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(ent=>{
+      if(ent.isIntersecting){
+        ent.target.classList.add('show');
+        io.unobserve(ent.target);
+      }
+    });
+  }, {threshold:0.12});
+  function revealScan(){ $$('[data-parallax], .reveal').forEach(elm=> io.observe(elm)); }
+  const parallaxEls = [...$$('[data-parallax]')];
+  let ticking=false;
+  function onScrollParallax(){
+    if(ticking) return;
+    ticking = true;
+    requestAnimationFrame(()=> {
+      parallaxEls.forEach(el=>{
+        const f = parseFloat(el.dataset.parallax || 0.06);
+        const rect = el.getBoundingClientRect();
+        el.style.transform = `translateY(${Math.round(rect.top * f * -0.08)}px)`;
+      });
+      ticking=false;
+    });
+  }
+  addEventListener('scroll', debounce(onScrollParallax, 8), {passive:true});
+
+  /* SEARCH SUGGEST */
+  function buildSuggestions(q){
+    if(!q) return [];
+    const src = [...INTERNSHIPS.map(i=> i.role + ' at ' + i.company), ...TRACKS.map(t=> t.name), ...DISCOVER.map(d=> d.title)];
+    return src.filter(s=> s.toLowerCase().includes(q.toLowerCase())).slice(0,6);
+  }
+
+  /* RENDER HELPERS */
+  function renderHeat(){
+    const wrap = $('#heat'); if(!wrap) return; wrap.innerHTML=''; const days = 30; const done = state.badges.size;
+    for(let i=0;i<days;i++){
+      const s = document.createElement('div');
+      s.style.width='10px'; s.style.height='10px'; s.style.borderRadius='4px';
+      s.style.background = i < Math.min(days, done) ? 'linear-gradient(135deg,var(--accent),var(--accent-blue))' : 'rgba(255,255,255,0.03)';
+      wrap.appendChild(s);
+    }
+  }
+
+  function renderDiscover(filter='all'){
+    const grid = $('#discoverGrid'); if(!grid) return; grid.innerHTML='';
+    const items = DISCOVER.filter(x=> filter==='all' || x.cat===filter);
+    const enriched = [...items, ...items.map(i=>({...i, title: i.title+' +' }))];
+    enriched.forEach((item)=>{
+      const card = el('article',{className:'card reveal magnet',tabIndex:0});
+      card.innerHTML = `<div style="display:flex;align-items:center;justify-content:space-between"><h3 style="margin:0">${item.icon} ${item.title}</h3><span class="chip">${item.cat}</span></div><p class="muted" style="margin-top:8px">${item.desc}</p>`;
+      const actions = el('div',{style:'margin-top:12px;display:flex;gap:8px;align-items:center'});
+      const open = el('button',{className:'btn'}, 'Open');
+      open.addEventListener('click', ()=> item.action ? item.action() : toast('Opening...'));
+      actions.appendChild(open);
+      card.appendChild(actions);
+      grid.appendChild(card);
+    });
+    revealScan();
+    bindMagnet();
+  }
+
+  function renderTrackTabs(){
+    const tabs = $('#trackTabs'); if(!tabs) return; tabs.innerHTML='';
+    TRACKS.forEach(t=>{
+      const b = el('button',{className:'btn', onclick:()=>{ state.selectedTrack = t.id; save(); renderTrackTabs(); renderTrackContent(); updateRecommendations(); }}, t.name);
+      if(t.id === state.selectedTrack) b.classList.add('cta');
+      tabs.appendChild(b);
+    });
+  }
+  function renderTrackContent(){
+    const t = TRACKS.find(x=>x.id===state.selectedTrack);
+    const box = $('#trackContent'); if(!box) return;
+    box.innerHTML = `
+      <div style="display:flex;gap:12px;align-items:center">
+        <div style="width:10px;height:40px;background:linear-gradient(180deg,var(--accent),var(--accent-blue));border-radius:6px"></div>
+        <div>
+          <h4 style="margin:0">${t.name}</h4>
+          <div class="muted" style="margin-top:6px">${t.modules.join(' • ')}</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button class="btn" id="previewTrack">Preview</button>
+        <button class="btn cta" id="startTrack">Start Track</button>
+      </div>
+    `;
+    $('#previewTrack')?.addEventListener('click', ()=> toast('Previewing track...'));
+    $('#startTrack')?.addEventListener('click', ()=>{ state.badges.add(`${t.id}-started`); save(); renderBadges(); updateRecommendations(); toast('Track started'); updateMetrics(); });
+  }
+
+  function renderBadges(){
+    const wrap = $('#badges'); if(!wrap) return; wrap.innerHTML='';
+    if(!state.badges.size){ wrap.appendChild(el('span',{className:'chip'},'No badges yet. Complete a module!')); return; }
+    [...state.badges].forEach(b=>{
+      const d = el('div', {className:'card'}, b);
+      wrap.appendChild(d);
+    });
+  }
+
+  function renderMentors(){
+    const grid = $('#mentorGrid'); if(!grid) return; grid.innerHTML='';
+    MENTORS.forEach(m=>{
+      const card = el('article',{className:'card reveal magnet'});
+      card.innerHTML = `<div style="display:flex;gap:12px;align-items:center">
+        <div class="pill" style="min-width:44px;min-height:44px;display:grid;place-items:center;border-radius:10px;background:linear-gradient(180deg,var(--glass),transparent)">${m.name[0]}</div>
+        <div><strong>${m.name}</strong><div class="muted">${m.title}</div></div>
+        </div>
+        <div style="margin-top:10px"><button class="btn">Request Intro</button></div>`;
+      grid.appendChild(card);
+    });
+    revealScan();
+    bindMagnet();
+  }
+
+  function updateFilters(){
+    const sel = $('#filterTrack'); if(!sel) return; sel.innerHTML=''; sel.appendChild(el('option',{value:'all'}, 'All tracks'));
+    TRACKS.forEach(t=> sel.appendChild(el('option',{value:t.id, selected:t.id===state.selectedTrack}, t.name)));
+    const loc = $('#filterLoc'); if(loc) { loc.innerHTML=''; ['all','Remote','Indonesia','Singapore','India'].forEach(o=> loc.appendChild(el('option',{value:o}, o==='all'?'All locations':o))); }
+    const type = $('#filterType'); if(type){ type.innerHTML=''; ['all','Summer','3–6 mo','6 mo'].forEach(o=> type.appendChild(el('option',{value:o}, o==='all'?'All types':o))); }
+    const pay = $('#filterPay'); if(pay){ pay.innerHTML=''; ['all','Paid','Unpaid'].forEach(o=> pay.appendChild(el('option',{value:o}, o==='all'?'Any pay':o))); }
+    const sort = $('#sortBy'); if(sort){ sort.innerHTML=''; [['recent','Most recent'],['company','Company'],['role','Role']].forEach(([v,label])=> sort.appendChild(el('option',{value:v}, label))); }
+  }
+
+  ;['filterTrack','filterLoc','filterType','filterPay','sortBy'].forEach(id=>{
+    const elId = document.getElementById(id);
+    if(elId) elId.addEventListener('change', ()=>{ state.page=1; renderInternships({}); });
   });
-}
-$('#addProject').addEventListener('click', ()=>{ fillTrackSelects(); $('#projectModal').showModal(); });
-$('#prSave').addEventListener('click', ()=>{ const title = $('#prTitle').value.trim(); const summary = $('#prSummary').value.trim(); const track = $('#prTrack').value; const skills = $('#prSkills').value.split(',').map(x=>x.trim()).filter(Boolean); const links = $('#prLinks').value.split(',').map(x=>x.trim()).filter(Boolean); if(!title){ $('#prMsg').textContent = 'Add a title'; return; } state.portfolio.push({title, summary, track, skills, links}); save(); renderPortfolio(); updateMetrics(); $('#prMsg').textContent='Saved'; setTimeout(()=> $('#projectModal').close(),700); });
-$('#exportPortfolio').addEventListener('click', ()=>{ const data = new Blob([JSON.stringify(state.portfolio,null,2)],{type:'application/json'}); const url = URL.createObjectURL(data); const a = document.createElement('a'); a.href=url; a.download='portfolio.json'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url); toast('Export ready'); });
-$('#clearPortfolio').addEventListener('click', ()=>{ if(confirm('Clear all projects?')){ state.portfolio = []; save(); renderPortfolio(); updateMetrics(); }});
-$('#printResume').addEventListener('click', ()=>{ window.print(); toast('Opening print dialog…'); });
 
-/* ========= Command palette & shortcuts ========= */
-const commands = [
-  {k:'quiz',label:'Open Quiz',action:()=>{ renderQuiz(); openModal('quizModal'); }},
-  {k:'stories',label:'Open Stories',action:()=>{ renderStories(); openModal('storyModal'); }},
-  {k:'sim',label:'Open Sim',action:()=>{ renderSimTabs(); selectSim('data'); openModal('simModal'); }}
-];
+  $('#viewGrid')?.addEventListener('click', ()=>{ state.view='grid'; renderInternships({}); $('#viewGrid')?.setAttribute('aria-pressed','true'); $('#viewList')?.setAttribute('aria-pressed','false'); });
+  $('#viewList')?.addEventListener('click', ()=>{ state.view='list'; renderInternships({}); $('#viewGrid')?.setAttribute('aria-pressed','false'); $('#viewList')?.setAttribute('aria-pressed','true'); });
 
-function openPalette(){
-  const overlay = document.createElement('div'); overlay.style.cssText = 'position:fixed;inset:0;z-index:800;display:grid;place-items:center;background:rgba(0,0,0,.36)';
-  const box = document.createElement('div'); box.style.cssText='width:min(720px,92%);background:var(--card);padding:14px;border-radius:12px;box-shadow:0 18px 40px rgba(0,0,0,.5)';
-  const input = el('input',{className:'input', placeholder:'Type a command or search…', style:'width:100%;'}); box.appendChild(input);
-  const list = el('div', {style:'margin-top:10px;display:grid;gap:8px;max-height:260px;overflow:auto'});
-  commands.forEach(c=> list.appendChild(el('button',{className:'btn', onclick:()=>{ c.action(); document.body.removeChild(overlay); }}, c.label)));
-  box.appendChild(list); overlay.appendChild(box); overlay.addEventListener('click', (e)=>{ if(e.target===overlay) document.body.removeChild(overlay); });
-  document.body.appendChild(overlay); input.focus();
-}
+  function paginate(arr){ const start=(state.page-1)*state.perPage; return arr.slice(start, start+state.perPage); }
 
-$('#openPalette').addEventListener('click', openPalette);
+  function highlight(txt,q){
+    if(!q) return txt;
+    const idx = txt.toLowerCase().indexOf(q.toLowerCase());
+    if(idx<0) return txt;
+    return txt.slice(0,idx) + `<mark>${txt.slice(idx,idx+q.length)}</mark>` + txt.slice(idx+q.length);
+  }
 
-/* fuzzy utility used for search suggestions */
-function fuzzy(q, hay){ q = q.toLowerCase(); hay = hay.toLowerCase(); let i=0; for(const ch of hay){ if(ch === q[i]) i++; if(i === q.length) return true; } return q === ''; }
-function highlight(txt,q){
-  if(!q) return txt; const i = txt.toLowerCase().indexOf(q.toLowerCase()); if(i<0) return txt; return txt.slice(0,i) + `<mark>${txt.slice(i,i+q.length)}</mark>` + txt.slice(i+q.length);
-}
+  function renderInternships({q=''} = {}){
+    const list = $('#internList'); if(!list) return; list.innerHTML='';
+    const tval = $('#filterTrack')?.value || 'all', lval = $('#filterLoc')?.value || 'all', typeVal = $('#filterType')?.value || 'all', payVal = $('#filterPay')?.value || 'all', sort = $('#sortBy')?.value || 'recent';
+    let items = INTERNSHIPS.filter(it=> (tval==='all'||it.track===tval) && (lval==='all'||it.loc===lval) && (typeVal==='all'||it.type===typeVal) && (payVal==='all'||it.pay===payVal) && (!q || (it.role+' '+it.company).toLowerCase().includes(q.toLowerCase())));
+    const total = items.length;
+    if(sort==='recent') items.sort((a,b)=> new Date(b.added)-new Date(a.added));
+    if(sort==='company') items.sort((a,b)=> a.company.localeCompare(b.company));
+    if(sort==='role') items.sort((a,b)=> a.role.localeCompare(b.role));
+    const totalPages = Math.max(1, Math.ceil(items.length/state.perPage)); if(state.page>totalPages) state.page = totalPages;
+    $('#pageInfo').textContent = `Page ${state.page} / ${totalPages}`; if($('#prevPage')) $('#prevPage').disabled = state.page===1; if($('#nextPage')) $('#nextPage').disabled = state.page===totalPages; $('#resultInfo').textContent = `${total} results`;
+    const pageItems = paginate(items);
+    for(const it of pageItems){
+      const fav = state.favs.has(it.id); const cmp = state.compare.has(it.id);
+      const wrap = el('div',{className:'intern-card reveal magnet'});
+      const logo = el('div',{className:'intern-company'}, it.company[0]);
+      const left = el('div',{style:'min-width:0'},
+        el('div',{}, el('strong',{}, q ? highlight(it.role,q) : it.role)),
+        el('div',{className:'intern-meta'}, `${TRACKS.find(t=>t.id===it.track)?.name||it.track} • ${it.loc} • ${it.type}`),
+        el('div',{style:'margin-top:8px'}, el('textarea',{className:'input', rows:2, placeholder:'Notes (saved)', value: state.notes[it.id]||'', oninput:(e)=>{ state.notes[it.id]=e.target.value; save(); }}))
+      );
+      const actions = el('div',{style:'display:grid;gap:8px;justify-items:end;align-self:stretch'},
+        el('div',{}, el('button',{className:'btn', onclick:()=>{ if(fav){ state.favs.delete(it.id); toast('Removed from saved'); } else { state.favs.add(it.id); toast('Saved'); } save(); renderInternships({q}); renderSaved(); updateMetrics(); }}, fav ? 'Saved' : 'Save')),
+        el('div',{}, el('button',{className:'btn', onclick:()=>{ if(!cmp && state.compare.size>=3){ toast('Compare limit: 3'); return } if(cmp){ state.compare.delete(it.id); } else { state.compare.add(it.id); } save(); renderInternships({q}); renderCompare(); }}, cmp ? 'Remove' : 'Compare')),
+        el('div',{}, el('button',{className:'btn', onclick:()=> openDrawer(it) }, 'Open'))
+      );
+      wrap.append(logo,left,actions);
+      list.appendChild(wrap);
+    }
+    if(!items.length){ list.appendChild(el('p',{className:'muted'}, 'No results. Try another filter.')); }
+    revealScan(); bindMagnet();
+  }
 
-/* ========= Micro FX ========= */
-function ping(el){ const s = el.style; const prev = s.transform; s.transform = 'scale(0.98)'; setTimeout(()=> s.transform = prev || 'scale(1)', 140); }
-function confetti(){ /* simple confetti placeholder */ const c = document.createElement('div'); c.style.cssText='position:fixed;left:0;top:0;width:100%;height:220px;pointer-events:none;z-index:700'; document.body.appendChild(c); setTimeout(()=>c.remove(),900); }
+  $('#prevPage')?.addEventListener('click', ()=>{ if(state.page>1){ state.page--; renderInternships({}); }});
+  $('#nextPage')?.addEventListener('click', ()=>{ state.page++; renderInternships({}); });
 
-/* ========= Nav, Search, Metrics, Magnet ========= */
-$$('.sb-btn[data-jump]').forEach(b=> b.addEventListener('click', ()=>{ $$('.sb-btn').forEach(x=> x.classList.remove('active')); b.classList.add('active'); jump(b.dataset.jump); }));
+  function renderSaved(){
+    const wrap = $('#savedWrap'); if(!wrap) return; wrap.innerHTML=''; const saved = INTERNSHIPS.filter(i=> state.favs.has(i.id));
+    if(!saved.length){ wrap.textContent = 'No saved roles yet.'; return; }
+    saved.forEach(s=> wrap.appendChild(el('div',{className:'card reveal'}, el('strong',{}, s.role), el('div',{className:'muted'}, s.company))));
+  }
+  function renderCompare(){
+    const wrap = $('#compareWrap'); if(!wrap) return; wrap.innerHTML=''; const items = INTERNSHIPS.filter(i=> state.compare.has(i.id));
+    if(!items.length){ wrap.appendChild(el('p',{className:'muted'}, 'No items to compare.')); return; }
+    items.forEach(it=> wrap.appendChild(el('div',{className:'card reveal'}, el('strong',{}, it.role), el('div',{className:'muted'}, it.company))));
+  }
 
-const doSearch = () => { const q = ($('#search').value || '').trim(); if(!q){ toast('Type something to search'); return; } jump('internships'); renderInternships({q}); };
-$('#searchBtn').addEventListener('click', doSearch);
-$('#searchInline').addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); const q = e.target.value.trim(); renderInternships({q}); jump('internships'); }});
-$('#searchBtnInline').addEventListener('click', ()=>{ const q = $('#searchInline').value.trim(); renderInternships({q}); jump('internships'); });
+  /* DRAWER */
+  function openDrawer(it){
+    const d = $('#drawer'); if(!d) return;
+    $('#drawerTitle').textContent = it.role;
+    $('#drawerCompany').textContent = it.company;
+    const b = $('#drawerBody'); b.innerHTML = '';
+    b.appendChild(el('div',{className:'card'}, el('div',{className:'chip'}, it.company[0]), el('div',{}, el('strong',{}, it.company), el('div',{className:'muted'}, `${it.role} • ${it.loc} • ${it.type}`), el('p',{style:'margin-top:8px'}, 'Description: This role focuses on learning, mentorship and meaningful tasks.'))));
+    d.style.transform = 'translateX(0)'; d.setAttribute('aria-hidden','false');
+  }
+  $('#drawerClose')?.addEventListener('click', ()=>{ $('#drawer').style.transform='translateX(100%)'; $('#drawer').setAttribute('aria-hidden','true'); });
 
-function fillTrackSelects(){
-  ['circleTrack','prTrack'].forEach(id=>{
-    const sel = document.getElementById(id); if(!sel) return; sel.innerHTML=''; TRACKS.forEach(t=> sel.appendChild(el('option',{value:t.id}, t.name)));
-  });
-}
+  /* QUIZ / SIMS / STORIES */
+  const QUIZ_QS = [
+    {id:'q1',q:'Which activity sounds fun right now?',opts:[['data','Exploring patterns in a dataset'],['ux','Sketching an app flow'],['web','Coding a mini-site'],['pm','Scoping an MVP']]}
+  ];
+  function renderQuiz(){
+    const form = $('#quizForm'); if(!form) return; form.innerHTML='';
+    QUIZ_QS.forEach(({id,q,opts})=>{
+      const field = el('div', {}, el('label',{}, q));
+      const sel = el('select',{className:'input', id});
+      sel.appendChild(el('option',{value:''}, 'Choose...'));
+      opts.forEach(([v,label])=> sel.appendChild(el('option',{value:v}, label)));
+      field.appendChild(sel);
+      form.appendChild(field);
+    });
+  }
+  $('#quizSubmit')?.addEventListener('click', ()=>{ const picks = {}; QUIZ_QS.forEach(({id})=>{ const v = document.getElementById(id).value; if(v) picks[v] = (picks[v]||0)+1; }); const picked = Object.keys(picks).sort((a,b)=> picks[b]-picks[a])[0] || state.selectedTrack; $('#quizResult').textContent = `Suggested track: ${TRACKS.find(t=>t.id===picked)?.name || picked}`; state.selectedTrack = picked; save(); renderTrackTabs(); renderTrackContent(); updateRecommendations(); toast('Matches updated'); $('#quizBadges').innerHTML = ''; renderBadges(); });
 
-/* subtle magnet hover */
-function bindMagnet(){
-  const els = [...$$('.magnet')];
-  els.forEach(el=>{
-    el.onmousemove = (e)=>{ const r = el.getBoundingClientRect(); const x = ((e.clientX-r.left)/r.width - .5) * 8; const y = ((e.clientY-r.top)/r.height - .5) * 8; el.style.transform = `translate3d(${x}px,${y}px,0) scale(1.01)`; };
-    el.onmouseleave = ()=>{ el.style.transform = 'translate3d(0,0,0)'; };
-  });
-}
+  function renderSimTabs(){ const wrap=$('#simTabs'); if(!wrap) return; wrap.innerHTML=''; SIMS.forEach(s=> wrap.appendChild(el('button',{className:'btn', onclick:()=>selectSim(s.id)}, s.name))); }
+  function selectSim(id){ const s = SIMS.find(x=>x.id===id) || SIMS[0]; $$('#simTabs .btn').forEach(t=> t.classList.toggle('cta', t.textContent === s.name)); $('#simContent').innerHTML = `<div class="muted">${s.prompt}</div>`; }
+  $('#simSubmit')?.addEventListener('click', ()=>{ const ans = $('#simAnswer')?.value?.trim(); if(!ans){ $('#simFeedback').textContent = 'Write your approach first.'; return; } $('#simFeedback').textContent = 'Submitted — mentor review will follow.'; toast('Simulation submitted'); });
 
-/* ========= Metrics (animated counters) ========= */
-function updateMetrics(){
-  const badges = state.badges.size, saved = state.favs.size, projects = state.portfolio.length;
-  animateCounter($('#metricBadges'), badges, 600);
-  animateCounter($('#metricSaved'), saved, 600);
-  animateCounter($('#metricProjects'), projects, 600);
-}
+  $('#simBadge')?.addEventListener('click', ()=>{ state.badges.add(`${state.selectedTrack}-practice`); save(); renderBadges(); toast('Practice badge added'); updateMetrics(); });
 
-/* ========= Init ========= */
-function init(){
-  applyTheme(); applyAccent(); applyDensity(); applyFS();
-  document.getElementById('year').textContent = new Date().getFullYear();
-  renderHeat(); renderDiscover('all'); renderMentors(); renderTrackTabs(); renderTrackContent(); renderBadges(); updateFilters(); renderInternships({}); renderSaved(); renderCompare(); renderPortfolio(); updateMetrics(); renderStories();
-  // Openers
-  $('#startQuiz').addEventListener('click', ()=>{ renderQuiz(); openModal('quizModal'); });
-  $('#openStories').addEventListener('click', ()=>{ renderStories(); openModal('storyModal'); });
-  $('#openSim').addEventListener('click', ()=>{ renderSimTabs(); selectSim('data'); openModal('simModal'); });
-  $('#kbdHint').addEventListener('click', openPalette);
-  // Settings actions
-  $('#openSettings').addEventListener('click', ()=> $('#settingsModal').showModal());
-  $('#themeToggle').addEventListener('click', ()=>{ state.theme = state.theme==='light'?'dark':state.theme==='dark'?'auto':'light'; save(); applyTheme(); toast('Theme: '+state.theme); });
-  $('#accentCycle').addEventListener('click', ()=>{ const seq = ['mint','blue','violet','rose','amber']; const idx = seq.indexOf(state.accent); state.accent = seq[(idx+1)%seq.length]; save(); applyAccent(); toast('Accent: '+state.accent); });
-  $('#densityCycle').addEventListener('click', ()=>{ state.density = state.density==='cozy'?'compact':state.density==='compact'?'comfy':'cozy'; save(); applyDensity(); toast('Density: '+state.density); });
-  $('#fontCycle').addEventListener('click', ()=>{ state.fs = state.fs===1?1.1:state.fs===1.1?0.92:1; save(); applyFS(); toast('Text size changed'); });
-  // Settings modal inputs
-  const accentPicker = $('#accentPicker'); if(accentPicker){ accentPicker.value = state.accent; accentPicker.addEventListener('change', e=>{ state.accent = e.target.value; save(); applyAccent(); toast('Accent set'); }); }
-  const densityPicker = $('#densityPicker'); if(densityPicker){ densityPicker.value = state.density; densityPicker.addEventListener('change', e=>{ state.density = e.target.value; save(); applyDensity(); toast('Density set'); }); }
-  const fsPicker = $('#fsPicker'); if(fsPicker){ fsPicker.value = state.fs; fsPicker.addEventListener('change', e=>{ state.fs = parseFloat(e.target.value); save(); applyFS(); toast('Text size'); }); }
-  $('#resetPrefs').addEventListener('click', ()=>{ localStorage.clear(); Object.assign(state, defaults); applyAccent(); applyDensity(); applyFS(); renderBadges(); renderPortfolio(); updateMetrics(); toast('Preferences reset'); });
-  // Keyboard shortcuts
-  addEventListener('keydown', (e)=> {
-    if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==='k'){ e.preventDefault(); openPalette(); }
-    if(e.key==='/' && document.activeElement.tagName.toLowerCase()!=='input'){ e.preventDefault(); $('#search').focus(); }
-    if(e.key==='?' ){ openPalette(); }
-  });
-  // reduced motion honor
-  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){ const a = document.querySelectorAll('.aurora,.blob'); a.forEach(x=> x.style.animation = 'none'); }
-  revealScan();
-  // Kick stats
-  animateCounter($('#statCountries'), 50, 900);
-  animateCounter($('#statLearners'), 3000, 1100);
-}
-init();
+  function renderStories(){ const grid = $('#storyGrid'); if(!grid) return; grid.innerHTML=''; STORIES.forEach(s=> grid.appendChild(el('article',{className:'card reveal'}, el('h3',{}, s.name), el('p',{className:'muted'}, s.body)))); revealScan(); }
 
-/* ========= Recommendations ========= */
-function updateRecommendations(){
-  const reco = $('#recoList'); if(!reco) return; reco.innerHTML='';
-  const focus = state.selectedTrack; const done = [...state.badges].filter(b=>b.startsWith(focus)).length; const extra = Math.min(2, Math.floor(done/2));
-  const relevant = INTERNSHIPS.filter(i=>i.track===focus).slice(0,3+extra);
-  relevant.forEach(it=> reco.appendChild(el('div',{className:'card magnet'}, el('div',{className:'pill'}, it.company[0]), el('div',{}, el('strong',{}, it.role), el('p',{className:'lead', style:'color:var(--muted)'}, it.company)))));
-  $('#aiStatus').textContent = done ? `Ready — ${done} modules done` : 'Waiting for your quiz…';
-}
+  /* PORTFOLIO */
+  function renderPortfolio(){ const grid = $('#portfolioGrid'); if(!grid) return; grid.innerHTML=''; if(!state.portfolio.length){ grid.appendChild(el('p',{className:'muted'}, 'No projects added yet.')); return; }
+    state.portfolio.forEach((p, idx)=>{
+      const card = el('div',{className:'card reveal', draggable:true});
+      card.appendChild(el('strong',{}, p.title));
+      card.appendChild(el('div',{className:'muted'}, p.track));
+      card.appendChild(el('p',{}, p.summary));
+      card.addEventListener('dragstart', e=> e.dataTransfer.setData('text/plain', idx));
+      card.addEventListener('dragover', e=> e.preventDefault());
+      card.addEventListener('drop', e=>{
+        e.preventDefault();
+        const from = parseInt(e.dataTransfer.getData('text/plain'),10); const to = idx;
+        const item = state.portfolio.splice(from,1)[0]; state.portfolio.splice(to,0,item); save(); renderPortfolio(); updateMetrics();
+      });
+      grid.appendChild(card);
+    });
+    revealScan();
+  }
+  $('#addProject')?.addEventListener('click', ()=>{ fillTrackSelects(); openModal('projectModal'); });
+  $('#prSave')?.addEventListener('click', ()=>{ const title = $('#prTitle')?.value.trim(); const summary = $('#prSummary')?.value.trim(); const track = $('#prTrack')?.value; if(!title || !summary){ $('#prMsg').textContent = 'Add title and summary'; return; } state.portfolio.push({title,summary,track}); save(); renderPortfolio(); updateMetrics(); $('#prMsg').textContent='Saved'; setTimeout(()=> closeModal('projectModal'), 700); });
 
-/* ========= Circle form ========= */
-$('#joinCircle')?.addEventListener('click', ()=>{ fillTrackSelects(); $('#circleModal').showModal(); });
-$('#circleJoin')?.addEventListener('click', ()=>{ const name = $('#circleName').value.trim(), mail = $('#circleMail').value.trim(); if(!name || !mail){ $('#circleMsg').textContent = 'Please add name & email.'; return; } $('#circleMsg').textContent='Request sent — we will email you.'; setTimeout(()=> $('#circleModal').close(), 900); });
+  $('#exportPortfolio')?.addEventListener('click', ()=>{ try{ const data = new Blob([JSON.stringify(state.portfolio,null,2)],{type:'application/json'}); const url = URL.createObjectURL(data); const a = document.createElement('a'); a.href=url; a.download='portfolio.json'; a.click(); URL.revokeObjectURL(url); toast('Export ready'); }catch(e){ toast('Export failed'); } });
+  $('#clearPortfolio')?.addEventListener('click', ()=>{ if(confirm('Clear all projects?')){ state.portfolio = []; save(); renderPortfolio(); updateMetrics(); }});
+  $('#printResume')?.addEventListener('click', ()=>{ window.print(); toast('Opening print dialog…'); });
 
-/* back to top */
-$('#backTop').addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+  /* COMMAND PALETTE & SHORTCUTS */
+  const commands = [
+    {k:'quiz',label:'Open Quiz',action:()=>{ renderQuiz(); openModal('quizModal'); }},
+    {k:'stories',label:'Open Stories',action:()=>{ renderStories(); openModal('storyModal'); }},
+    {k:'sim',label:'Open Sim',action:()=>{ renderSimTabs(); selectSim('data'); openModal('simModal'); }}
+  ];
+  function openPalette(){
+    const overlay = document.createElement('div'); overlay.style.cssText = 'position:fixed;inset:0;z-index:800;display:grid;place-items:center;background:rgba(0,0,0,.36)';
+    const box = document.createElement('div'); box.style.cssText='width:min(720px,92%);background:var(--surface);padding:14px;border-radius:12px;box-shadow:var(--card-shadow)';
+    const input = el('input',{className:'input', placeholder:'Type a command or search…', style:'width:100%;'});
+    box.appendChild(input);
+    const list = el('div',{style:'margin-top:10px;display:grid;gap:8px;max-height:260px;overflow:auto'});
+    commands.forEach(c=> list.appendChild(el('button',{className:'btn', onclick:()=>{ c.action(); document.body.removeChild(overlay); }}, c.label)));
+    box.appendChild(list); overlay.appendChild(box);
+    overlay.addEventListener('click', (e)=>{ if(e.target===overlay) document.body.removeChild(overlay); });
+    document.body.appendChild(overlay); input.focus();
+  }
+  $('#openPalette')?.addEventListener('click', openPalette);
 
-</script>
+  /* search suggest UI */
+  const suggestBox = $('#searchSuggest');
+  $('#search')?.addEventListener('input', debounce((e)=>{
+    const q = e.target.value.trim();
+    if(!suggestBox) return;
+    const data = buildSuggestions(q);
+    suggestBox.innerHTML = '';
+    if(!data.length){ suggestBox.style.display='none'; return; }
+    data.forEach(s=>{
+      const b = el('button',{className:'btn', style:'display:block; width:100%; textAlign:left'}, s);
+      b.addEventListener('click', ()=>{ $('#search').value = s; suggestBox.style.display='none'; renderInternships({q:s}); jump('internships'); });
+      suggestBox.appendChild(b);
+    });
+    suggestBox.style.display='block';
+  },120));
+  addEventListener('click', (e)=>{ if(!e.target.closest('#search')) suggestBox && (suggestBox.style.display='none'); });
+
+  /* MICRO FX: magnet */
+  function bindMagnet(){
+    const els = [...$$('.magnet')];
+    els.forEach(el=>{
+      el.onmousemove = (e)=>{ const r = el.getBoundingClientRect(); const x = ((e.clientX-r.left)/r.width - .5) * 8; const y = ((e.clientY-r.top)/r.height - .5) * 8; el.style.transform = `translate3d(${x}px,${y}px,0) scale(1.01)`; };
+      el.onmouseleave = ()=>{ el.style.transform = 'translate3d(0,0,0)'; };
+    });
+  }
+
+  /* METRICS */
+  function animateCounter(el, to, dur=800){
+    if(!el) return;
+    const from = parseInt(el.textContent.replace(/,/g,'')) || 0; const start = performance.now();
+    const step = (t)=>{ const p = Math.min(1,(t-start)/dur); const val = Math.round(from + (to-from) * (1- Math.pow(1-p,3))); el.textContent = val.toLocaleString(); if(p<1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  }
+  function updateMetrics(){
+    const badges = state.badges.size, saved = state.favs.size, projects = state.portfolio.length;
+    animateCounter($('#metricBadges'), badges, 600);
+    animateCounter($('#metricSaved'), saved, 600);
+    animateCounter($('#metricProjects'), projects, 600);
+  }
+
+  /* RECOMMENDATIONS */
+  function updateRecommendations(){
+    const reco = $('#recoList'); if(!reco) return; reco.innerHTML='';
+    const focus = state.selectedTrack; const done = [...state.badges].filter(b=>b.startsWith(focus)).length; const extra = Math.min(2, Math.floor(done/2));
+    const relevant = INTERNSHIPS.filter(i=>i.track===focus).slice(0,3+extra);
+    relevant.forEach(it=>{
+      const card = el('div',{className:'card magnet'}, el('div',{className:'chip'}, it.company[0]), el('div',{}, el('strong',{}, it.role), el('div',{className:'muted'}, it.company)));
+      reco.appendChild(card);
+    });
+    $('#aiStatus').textContent = state.badges.size ? `Ready — ${state.badges.size} modules done` : 'Waiting for your quiz…';
+  }
+
+  /* CIRCLE FORM */
+  $('#joinCircle')?.addEventListener('click', ()=>{ fillTrackSelects(); openModal('circleModal'); });
+  $('#circleJoin')?.addEventListener('click', ()=>{ const name = $('#circleName')?.value.trim(), mail = $('#circleMail')?.value.trim(); if(!name || !mail){ $('#circleMsg').textContent = 'Please add name & email'; return; } $('#circleMsg').textContent = 'Request sent — we will email invite soon'; toast('Requested invite'); setTimeout(()=> closeModal('circleModal'), 900); });
+
+  /* BACK TO TOP */
+  $('#backTop')?.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+  addEventListener('scroll', debounce(()=>{
+    const bt = $('#backTop'); if(bt) bt.style.display = window.scrollY > 400 ? 'block' : 'none';
+  }, 100), {passive:true});
+
+  /* UTIL */
+  function fillTrackSelects(){
+    ['filterTrack','circleTrack','prTrack'].forEach(id=>{
+      const sel = document.getElementById(id); if(!sel) return; sel.innerHTML=''; TRACKS.forEach(t=> sel.appendChild(el('option',{value:t.id}, t.name)));
+    });
+  }
+
+  /* INIT */
+  function init(){
+    applyTheme(); applyAccent(); applyDensity(); applyFS();
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    renderHeat(); renderDiscover('all'); renderMentors(); renderTrackTabs(); renderTrackContent(); renderBadges(); updateFilters(); renderInternships({}); renderSaved(); renderCompare(); renderPortfolio(); updateRecommendations(); updateMetrics(); renderStories();
+    $('#startQuiz')?.addEventListener('click', ()=>{ renderQuiz(); openModal('quizModal'); });
+    $('#openStories')?.addEventListener('click', ()=>{ renderStories(); openModal('storyModal'); });
+    $('#openSim')?.addEventListener('click', ()=>{ renderSimTabs(); selectSim('data'); openModal('simModal'); });
+    $('#kbdHint')?.addEventListener('click', openPalette);
+
+    $('#openSettings')?.addEventListener('click', ()=> openModal('settingsModal'));
+    $('#themeToggle')?.addEventListener('click', ()=>{ state.theme = state.theme==='light'?'dark':state.theme==='dark'?'auto':'light'; save(); applyTheme(); toast('Theme: '+state.theme); });
+    $('#accentPicker')?.addEventListener('change', e=>{ state.accent = e.target.value; save(); applyAccent(); toast('Accent: '+state.accent); });
+    $('#densityPicker')?.addEventListener('change', e=>{ state.density = e.target.value; save(); applyDensity(); toast('Density: '+state.density); });
+    $('#fsPicker')?.addEventListener('change', e=>{ state.fs = parseFloat(e.target.value); save(); applyFS(); toast('Text size changed'); });
+    $('#resetPrefs')?.addEventListener('click', ()=>{ localStorage.clear(); Object.assign(state, defaults); save(); applyAccent(); applyDensity(); applyFS(); renderBadges(); renderPortfolio(); updateMetrics(); toast('Preferences reset'); });
+
+    $('#searchBtn')?.addEventListener('click', ()=>{ const q = ($('#search')?.value || '').trim(); if(!q){ toast('Type something to search'); return; } renderInternships({q}); jump('internships'); });
+    $('#searchInline')?.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); const q = e.target.value.trim(); renderInternships({q}); jump('internships'); }});
+    $('#searchBtnInline')?.addEventListener('click', ()=>{ const q = $('#searchInline')?.value.trim(); renderInternships({q}); jump('internships'); });
+
+    addEventListener('keydown', (e)=> {
+      if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==='k'){ e.preventDefault(); openPalette(); }
+      if(e.key==='/' && (document.activeElement.tagName.toLowerCase()!=='input')){ e.preventDefault(); $('#search')?.focus(); }
+      if(e.key==='?' ){ openPalette(); }
+    });
+
+    revealScan();
+    requestAnimationFrame(onScrollParallax);
+    animateCounter($('#statCountries'), 50, 900);
+    animateCounter($('#statLearners'), 3000, 1100);
+  }
+  init();
+
+  window._linktern = {state, save, renderInternships, renderPortfolio};
+  </script>
 </body>
 </html>
